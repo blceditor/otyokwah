@@ -1,0 +1,683 @@
+/**
+ * REQ-CMS-018: Dark Mode Full Coverage for Keystatic CMS
+ *
+ * Overrides Keystatic's internal styles to support dark mode.
+ * Keystatic uses Voussoir UI which applies .kui-scheme--dark class
+ * and --kui-color-* CSS custom properties.
+ *
+ * Two targeting strategies:
+ * 1. .dark class (from next-themes/Tailwind)
+ * 2. Override --kui-color-* variables when .dark is present
+ */
+
+/* Override Voussoir's CSS variables when .dark class is present */
+/* This ensures our custom components AND Keystatic internals use dark colors */
+.dark,
+html.dark {
+  /* Voussoir slate scale for dark mode */
+  --kui-color-scale-slate12: #f8f8f8;
+  --kui-color-scale-slate11: #e3e3e3;
+  --kui-color-scale-slate10: #b9b9b9;
+  --kui-color-scale-slate9: #909090;
+  --kui-color-scale-slate8: #6e6e6e;
+  --kui-color-scale-slate7: #5a5a5a;
+  --kui-color-scale-slate6: #4a4a4a;
+  --kui-color-scale-slate5: #3e3e3e;
+  --kui-color-scale-slate4: #323232;
+  --kui-color-scale-slate3: #2f2f2f;
+  --kui-color-scale-slate2: #252525;
+  --kui-color-scale-slate1: #1f1f1f;
+
+  /* Semantic background colors */
+  --kui-color-background-canvas: #1a1a1a;
+  --kui-color-background-surface: #262626;
+  --kui-color-background-surface-secondary: #2f2f2f;
+  --kui-color-background-surface-tertiary: #323232;
+
+  /* Semantic text colors */
+  --kui-color-foreground-neutral: #e3e3e3;
+  --kui-color-foreground-neutral-emphasis: #f8f8f8;
+  --kui-color-foreground-neutral-secondary: #b9b9b9;
+  --kui-color-foreground-neutral-tertiary: #909090;
+
+  /* Border colors */
+  --kui-color-border: #4a4a4a;
+  --kui-color-border-emphasis: #5a5a5a;
+  --kui-color-border-muted: #3e3e3e;
+}
+
+/* Also apply when Keystatic's own dark mode is active */
+.kui-scheme--dark {
+  color-scheme: dark;
+}
+
+/* Define dark mode color palette */
+:root {
+  --keystatic-bg-light: #ffffff;
+  --keystatic-bg-dark: #1a1a1a;
+  --keystatic-surface-light: #f9fafb;
+  --keystatic-surface-dark: #262626;
+  --keystatic-text-light: #111827;
+  --keystatic-text-dark: #e5e5e5;
+  --keystatic-text-muted-light: #6b7280;
+  --keystatic-text-muted-dark: #a3a3a3;
+  --keystatic-border-light: #e5e7eb;
+  --keystatic-border-dark: #404040;
+}
+
+/* Dark mode overrides for Keystatic's main content area */
+.dark main,
+.dark [role="main"] {
+  background-color: var(--keystatic-bg-dark) !important;
+  color: var(--keystatic-text-dark) !important;
+}
+
+/* Target Keystatic's navigation and sidebar */
+.dark nav,
+.dark aside {
+  background-color: var(--keystatic-surface-dark) !important;
+  border-color: var(--keystatic-border-dark) !important;
+}
+
+/* Override form elements */
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: var(--keystatic-surface-dark) !important;
+  border-color: var(--keystatic-border-dark) !important;
+  color: var(--keystatic-text-dark) !important;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: var(--keystatic-text-muted-dark) !important;
+}
+
+/* Override buttons - preserve primary color buttons */
+.dark
+  button:not([class*="bg-purple"]):not([class*="bg-blue"]):not(
+    [class*="bg-green"]
+  ):not([class*="bg-red"]) {
+  color: var(--keystatic-text-dark);
+}
+
+/* Override Keystatic's list items and collections */
+.dark ul[role="list"] li,
+.dark [role="listitem"] {
+  background-color: var(--keystatic-bg-dark);
+  border-color: var(--keystatic-border-dark);
+}
+
+.dark ul[role="list"] li:hover,
+.dark [role="listitem"]:hover {
+  background-color: var(--keystatic-surface-dark);
+}
+
+/* Override Keystatic's dialog/modal backgrounds */
+.dark [role="dialog"],
+.dark [data-radix-portal] {
+  --tw-bg-opacity: 1;
+}
+
+.dark [role="dialog"] > div {
+  background-color: var(--keystatic-surface-dark) !important;
+  border-color: var(--keystatic-border-dark) !important;
+}
+
+/* Override fieldsets and form groups */
+.dark fieldset,
+.dark [role="group"] {
+  border-color: var(--keystatic-border-dark) !important;
+}
+
+.dark fieldset legend,
+.dark label {
+  color: var(--keystatic-text-dark) !important;
+}
+
+/* Override heading and text elements */
+.dark h1,
+.dark h2,
+.dark h3,
+.dark h4,
+.dark h5,
+.dark h6 {
+  color: var(--keystatic-text-dark) !important;
+}
+
+.dark p,
+.dark span:not([class*="text-"]) {
+  color: var(--keystatic-text-dark);
+}
+
+/* Override table elements */
+.dark table {
+  border-color: var(--keystatic-border-dark) !important;
+}
+
+.dark th,
+.dark td {
+  border-color: var(--keystatic-border-dark) !important;
+  color: var(--keystatic-text-dark);
+}
+
+.dark tr:nth-child(even) {
+  background-color: var(--keystatic-surface-dark);
+}
+
+/* Override code and pre elements */
+.dark code,
+.dark pre {
+  background-color: var(--keystatic-surface-dark) !important;
+  color: var(--keystatic-text-dark) !important;
+}
+
+/* Override scrollbar for dark mode */
+.dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: var(--keystatic-bg-dark);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background-color: var(--keystatic-border-dark);
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: #525252;
+}
+
+/* Override Keystatic-specific data attributes if present */
+.dark [data-keystatic-wrapper] {
+  background-color: var(--keystatic-bg-dark) !important;
+}
+
+/* Ensure smooth transitions for all dark mode changes */
+main,
+nav,
+aside,
+input,
+textarea,
+select,
+button,
+ul,
+li,
+fieldset,
+table,
+th,
+td,
+code,
+pre {
+  transition:
+    background-color 200ms ease-in-out,
+    border-color 200ms ease-in-out,
+    color 200ms ease-in-out;
+}
+
+/* Fix for top nav area */
+.dark header[role="banner"] {
+  background-color: var(--keystatic-surface-dark) !important;
+  border-color: var(--keystatic-border-dark) !important;
+}
+
+/* Fix accordion panels */
+.dark [data-state="open"],
+.dark [data-state="closed"] {
+  background-color: var(--keystatic-bg-dark);
+  border-color: var(--keystatic-border-dark);
+}
+
+/* Fix rich text editor area */
+.dark [contenteditable="true"],
+.dark .ProseMirror {
+  background-color: var(--keystatic-surface-dark) !important;
+  color: var(--keystatic-text-dark) !important;
+}
+
+/* Fix dropdown menus */
+.dark [role="menu"],
+.dark [role="listbox"] {
+  background-color: var(--keystatic-surface-dark) !important;
+  border-color: var(--keystatic-border-dark) !important;
+}
+
+.dark [role="menuitem"],
+.dark [role="option"] {
+  color: var(--keystatic-text-dark) !important;
+}
+
+.dark [role="menuitem"]:hover,
+.dark [role="option"]:hover,
+.dark [role="option"][data-highlighted] {
+  background-color: var(--keystatic-bg-dark) !important;
+}
+
+/* REQ-CMS-001: Dark Mode Full Coverage for Page Editor Fields */
+/* Target Keystatic's data-keystatic-field inputs specifically */
+html.dark [data-keystatic-field] input,
+html.dark [data-keystatic-field] textarea,
+.dark [data-keystatic-field] input,
+.dark [data-keystatic-field] textarea {
+  background-color: var(--keystatic-surface-dark) !important;
+  color: var(--keystatic-text-dark) !important;
+  border-color: var(--keystatic-border-dark) !important;
+}
+
+/* Field labels with proper dark mode contrast */
+html.dark .kui-field-label,
+html.dark [data-field-label],
+.dark .kui-field-label,
+.dark [data-field-label] {
+  color: var(--keystatic-text-dark) !important;
+}
+
+/* Field descriptions and hint text */
+html.dark [data-field-description],
+html.dark .kui-field-description,
+html.dark [class*="description"],
+.dark [data-field-description],
+.dark .kui-field-description,
+.dark [class*="description"] {
+  color: var(--keystatic-text-muted-dark) !important;
+}
+
+/* Collapsed fieldset headers (SEO section) */
+html.dark details summary,
+html.dark details > summary,
+.dark details summary,
+.dark details > summary {
+  background-color: var(--keystatic-surface-dark) !important;
+  color: var(--keystatic-text-dark) !important;
+  border-color: var(--keystatic-border-dark) !important;
+}
+
+/* SEO Accordion dark mode styling */
+html.dark .seo-accordion summary,
+.dark .seo-accordion summary {
+  background-color: #2f2f2f !important;
+  color: #e5e5e5 !important;
+  border-color: #404040 !important;
+}
+
+html.dark .seo-accordion > div,
+.dark .seo-accordion > div {
+  background-color: #262626 !important;
+  border-color: #404040 !important;
+}
+
+/* SEO Accordion inputs - improved border visibility */
+html.dark .seo-accordion input,
+html.dark .seo-accordion textarea,
+html.dark .seo-accordion select,
+.dark .seo-accordion input,
+.dark .seo-accordion textarea,
+.dark .seo-accordion select {
+  background-color: #1f1f1f !important;
+  border-color: #525252 !important;
+  border-width: 1px !important;
+  color: #e5e5e5 !important;
+  outline: none !important;
+}
+
+html.dark .seo-accordion input:focus,
+html.dark .seo-accordion textarea:focus,
+html.dark .seo-accordion select:focus,
+.dark .seo-accordion input:focus,
+.dark .seo-accordion textarea:focus,
+.dark .seo-accordion select:focus {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 1px #3b82f6 !important;
+}
+
+/* Character counter in dark mode */
+html.dark [data-char-counter],
+.dark [data-char-counter] {
+  color: #a3a3a3 !important;
+}
+
+html.dark [data-char-counter].text-red-600,
+.dark [data-char-counter].text-red-600 {
+  color: #ef4444 !important;
+}
+
+/* Empty fieldset should be hidden */
+.dark fieldset:empty,
+html.dark fieldset:empty {
+  display: none !important;
+}
+
+/* REQ-CMS-002: Light Mode Explicit Resets */
+/* REQ-UAT-021: Complete Light Mode Support for Keystatic CMS */
+/* Ensure light mode properly resets all dark mode overrides */
+
+/* ============================================
+   LIGHT MODE: Core Layout Elements
+   ============================================ */
+html:not(.dark) main,
+html:not(.dark) [role="main"] {
+  background-color: white !important;
+  color: #1f2937 !important;
+}
+
+html:not(.dark) nav:not([role="banner"] nav),
+html:not(.dark) aside {
+  background-color: #f9fafb !important;
+  border-color: #e5e7eb !important;
+  color: #1f2937 !important;
+}
+
+html:not(.dark) [data-keystatic-wrapper] {
+  background-color: white !important;
+}
+
+/* ============================================
+   LIGHT MODE: Form Fields
+   ============================================ */
+html:not(.dark) [data-keystatic-field] input,
+html:not(.dark) [data-keystatic-field] textarea,
+html:not(.dark) input[type="text"],
+html:not(.dark) input[type="url"],
+html:not(.dark) input[type="email"],
+html:not(.dark) input[type="number"],
+html:not(.dark) textarea,
+html:not(.dark) select {
+  background-color: white !important;
+  color: #1f2937 !important;
+  border-color: #d1d5db !important;
+}
+
+html:not(.dark) input::placeholder,
+html:not(.dark) textarea::placeholder {
+  color: #9ca3af !important;
+}
+
+/* ============================================
+   LIGHT MODE: Labels and Descriptions
+   ============================================ */
+html:not(.dark) .kui-field-label,
+html:not(.dark) [data-field-label],
+html:not(.dark) label {
+  color: #374151 !important;
+}
+
+html:not(.dark) [data-field-description],
+html:not(.dark) .kui-field-description {
+  color: #6b7280 !important;
+}
+
+/* ============================================
+   LIGHT MODE: SEO Accordion
+   ============================================ */
+html:not(.dark) details summary,
+html:not(.dark) .seo-accordion summary {
+  background-color: #f9fafb !important;
+  color: #374151 !important;
+  border-color: #e5e7eb !important;
+}
+
+html:not(.dark) .seo-accordion > div {
+  background-color: white !important;
+  border-color: #e5e7eb !important;
+}
+
+html:not(.dark) .seo-accordion input,
+html:not(.dark) .seo-accordion textarea,
+html:not(.dark) .seo-accordion select {
+  background-color: white !important;
+  color: #1f2937 !important;
+  border-color: #d1d5db !important;
+}
+
+html:not(.dark) [data-char-counter] {
+  color: #6b7280 !important;
+}
+
+/* ============================================
+   LIGHT MODE: Dialogs, Modals, Popups
+   ============================================ */
+html:not(.dark) [role="dialog"],
+html:not(.dark) [role="dialog"] > div,
+html:not(.dark) [data-radix-portal] > div {
+  background-color: white !important;
+  color: #1f2937 !important;
+  border-color: #e5e7eb !important;
+}
+
+html:not(.dark) [role="menu"],
+html:not(.dark) [role="listbox"] {
+  background-color: white !important;
+  border-color: #e5e7eb !important;
+}
+
+html:not(.dark) [role="menuitem"],
+html:not(.dark) [role="option"] {
+  color: #374151 !important;
+}
+
+html:not(.dark) [role="menuitem"]:hover,
+html:not(.dark) [role="option"]:hover,
+html:not(.dark) [role="option"][data-highlighted] {
+  background-color: #f3f4f6 !important;
+}
+
+/* ============================================
+   LIGHT MODE: Lists and Collection Items
+   ============================================ */
+html:not(.dark) ul[role="list"] li,
+html:not(.dark) [role="listitem"] {
+  background-color: white !important;
+  border-color: #e5e7eb !important;
+  color: #1f2937 !important;
+}
+
+html:not(.dark) ul[role="list"] li:hover,
+html:not(.dark) [role="listitem"]:hover {
+  background-color: #f9fafb !important;
+}
+
+/* ============================================
+   LIGHT MODE: Text and Headings
+   ============================================ */
+html:not(.dark) h1,
+html:not(.dark) h2,
+html:not(.dark) h3,
+html:not(.dark) h4,
+html:not(.dark) h5,
+html:not(.dark) h6 {
+  color: #1f2937 !important;
+}
+
+html:not(.dark) p,
+html:not(.dark) span:not([class*="text-"]) {
+  color: #374151;
+}
+
+/* ============================================
+   LIGHT MODE: Accordions and Collapsibles
+   ============================================ */
+html:not(.dark) [data-state="open"],
+html:not(.dark) [data-state="closed"] {
+  background-color: white;
+  border-color: #e5e7eb;
+}
+
+/* ============================================
+   LIGHT MODE: Fieldsets and Groups
+   ============================================ */
+html:not(.dark) fieldset,
+html:not(.dark) [role="group"] {
+  border-color: #e5e7eb !important;
+}
+
+html:not(.dark) fieldset legend {
+  color: #374151 !important;
+}
+
+/* ============================================
+   LIGHT MODE: Rich Text Editor
+   ============================================ */
+html:not(.dark) [contenteditable="true"],
+html:not(.dark) .ProseMirror {
+  background-color: white !important;
+  color: #1f2937 !important;
+}
+
+/* ============================================
+   LIGHT MODE: Tables
+   ============================================ */
+html:not(.dark) table {
+  border-color: #e5e7eb !important;
+}
+
+html:not(.dark) th,
+html:not(.dark) td {
+  border-color: #e5e7eb !important;
+  color: #374151;
+}
+
+html:not(.dark) tr:nth-child(even) {
+  background-color: #f9fafb;
+}
+
+/* ============================================
+   LIGHT MODE: Code Blocks
+   ============================================ */
+html:not(.dark) code,
+html:not(.dark) pre {
+  background-color: #f3f4f6 !important;
+  color: #1f2937 !important;
+}
+
+/* ============================================
+   LIGHT MODE: Buttons (non-primary)
+   ============================================ */
+html:not(.dark)
+  button:not([class*="bg-purple"]):not([class*="bg-blue"]):not(
+    [class*="bg-green"]
+  ):not([class*="bg-red"]):not([class*="bg-primary"]):not(
+    [class*="bg-secondary"]
+  ) {
+  color: #374151;
+}
+
+/* ============================================
+   LIGHT MODE: Header Banner
+   ============================================ */
+html:not(.dark) header[role="banner"] {
+  background-color: #f9fafb !important;
+  border-color: #e5e7eb !important;
+}
+
+/* ============================================
+   LIGHT MODE: Voussoir/Keystatic Variables
+   ============================================ */
+html:not(.dark),
+:root:not(.dark) {
+  /* Voussoir slate scale for light mode */
+  --kui-color-scale-slate12: #1a202c;
+  --kui-color-scale-slate11: #2d3748;
+  --kui-color-scale-slate10: #4a5568;
+  --kui-color-scale-slate9: #718096;
+  --kui-color-scale-slate8: #a0aec0;
+  --kui-color-scale-slate7: #cbd5e0;
+  --kui-color-scale-slate6: #e2e8f0;
+  --kui-color-scale-slate5: #edf2f7;
+  --kui-color-scale-slate4: #f7fafc;
+  --kui-color-scale-slate3: #f9fafb;
+  --kui-color-scale-slate2: #ffffff;
+  --kui-color-scale-slate1: #ffffff;
+
+  /* Semantic background colors - light mode */
+  --kui-color-background-canvas: #ffffff;
+  --kui-color-background-surface: #f9fafb;
+  --kui-color-background-surface-secondary: #f3f4f6;
+  --kui-color-background-surface-tertiary: #e5e7eb;
+
+  /* Semantic text colors - light mode */
+  --kui-color-foreground-neutral: #1f2937;
+  --kui-color-foreground-neutral-emphasis: #111827;
+  --kui-color-foreground-neutral-secondary: #4b5563;
+  --kui-color-foreground-neutral-tertiary: #6b7280;
+
+  /* Border colors - light mode */
+  --kui-color-border: #e5e7eb;
+  --kui-color-border-emphasis: #d1d5db;
+  --kui-color-border-muted: #f3f4f6;
+}
+
+/* Also apply when Keystatic's own light mode is active */
+.kui-scheme--light {
+  color-scheme: light;
+}
+
+/* ============================================
+   LIGHT MODE: Scrollbar
+   ============================================ */
+html:not(.dark) ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+html:not(.dark) ::-webkit-scrollbar-track {
+  background: #f3f4f6;
+}
+
+html:not(.dark) ::-webkit-scrollbar-thumb {
+  background-color: #d1d5db;
+  border-radius: 4px;
+}
+
+html:not(.dark) ::-webkit-scrollbar-thumb:hover {
+  background-color: #9ca3af;
+}
+
+/* Theme transition helper class */
+.theme-updated {
+  transition: none !important;
+}
+
+/* Tooltip z-index — ensure they render above the sticky header */
+[data-overlay-container] [role="tooltip"],
+[data-overlay-container] [role="dialog"],
+[role="tooltip"] {
+  z-index: 9999 !important;
+}
+
+/* ============================================
+   TOOLTIP DARK MODE CONTRAST FIX
+   White text on dark bg for readability
+   ============================================ */
+.dark [role="tooltip"],
+.dark .kui-tooltip,
+.dark [class*="tooltip"],
+html.dark [role="tooltip"],
+html.dark [class*="tooltip"] {
+  background-color: #1f1f1f !important;
+  color: #f5f5f5 !important;
+  border-color: #525252 !important;
+}
+
+/* Light mode tooltips: dark text on white bg */
+html:not(.dark) [role="tooltip"],
+html:not(.dark) [class*="tooltip"] {
+  background-color: #1f2937 !important;
+  color: #ffffff !important;
+  border-color: #374151 !important;
+}
+
+/* Tooltip arrows/carets inherit parent color */
+.dark [role="tooltip"]::before,
+.dark [role="tooltip"]::after,
+html.dark [role="tooltip"]::before,
+html.dark [role="tooltip"]::after {
+  border-color: #1f1f1f !important;
+}
+
+html:not(.dark) [role="tooltip"]::before,
+html:not(.dark) [role="tooltip"]::after {
+  border-color: #1f2937 !important;
+}

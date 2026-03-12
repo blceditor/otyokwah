@@ -1,0 +1,80 @@
+menuItems:
+  - label: About
+    href: /about
+    children:
+      - label: Core Values
+        href: /about-core-values
+        external: false
+      - label: Doctrinal Statement
+        href: /about-doctrinal-statement
+        external: false
+      - label: Our Team
+        href: /about-our-team
+        external: false
+      - label: Contact Us
+        href: /contact
+        external: false
+  - label: Summer Camp
+    href: /summer-camp
+    children:
+      - label: Camp Sessions
+        href: /summer-camp-sessions
+        external: false
+      - label: What to Bring
+        href: /summer-camp-what-to-bring
+        external: false
+      - label: FAQ
+        href: /summer-camp-faq
+        external: false
+      - label: Parent Info
+        href: /summer-camp-parent-info
+        external: false
+  - label: Work at Camp
+    href: /work-at-camp
+    children:
+      - label: Summer Staff
+        href: /summer-staff
+        external: false
+      - label: Leaders in Training
+        href: /work-at-camp-leaders-in-training
+        external: false
+      - label: Year Round Positions
+        href: /work-at-camp-year-round
+        external: false
+  - label: Retreats
+    href: /retreats
+    children:
+      - label: Defrost
+        href: /retreats-defrost
+        external: false
+      - label: Recharge
+        href: /retreats-recharge
+        external: false
+  - label: Rentals
+    href: /rentals
+    children:
+      - label: Cabins
+        href: /rentals-cabins
+        external: false
+      - label: Dining Hall
+        href: /rentals-dining-hall
+        external: false
+      - label: Chapel
+        href: /rentals-chapel
+        external: false
+      - label: Gym
+        href: /rentals-gym
+        external: false
+      - label: Outdoor Spaces
+        href: /rentals-outdoor-spaces
+        external: false
+      - label: Recreation
+        href: /rentals-recreation
+        external: false
+  - label: Give
+    href: /give
+    children: []
+primaryCTA:
+  label: Register Now
+  href: https://www.ultracamp.com/clientlogin.aspx?idCamp=268&campCode=blc
+  external: true

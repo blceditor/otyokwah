@@ -1,0 +1,147 @@
+{
+  "commitSha": "adfa521",
+  "timestamp": "2026-01-01T08:47:00Z",
+  "status": "PARTIAL_PASS",
+  "summary": "Updates-04 deployment validated - most components working, some issues identified",
+
+  "testResults": {
+    "smoke": {
+      "total": 33,
+      "passed": 33,
+      "failed": 0,
+      "url": "prelaunch.bearlakecamp.com",
+      "logFile": "logs/smoke/smoke-20260101-084537.json"
+    },
+    "playwright_production": {
+      "total": 11,
+      "passed": 10,
+      "failed": 0,
+      "skipped": 1,
+      "duration_ms": 14200,
+      "failedTests": []
+    }
+  },
+
+  "screenshots": [
+    "verification-screenshots/homepage-admin-nav.png",
+    "verification-screenshots/homepage-faith-section.png",
+    "verification-screenshots/homepage-hero-video.png",
+    "verification-screenshots/summer-camp-hero.png",
+    "verification-screenshots/summer-camp-sessions.png",
+    "verification-screenshots/testing-components-overview.png",
+    "verification-screenshots/what-to-bring-hero.png",
+    "verification-screenshots/what-to-bring-full.png"
+  ],
+
+  "requirementsValidation": [
+    {
+      "reqId": "REQ-U04-001",
+      "name": "CampSessionCard, CampSessionCardGrid components",
+      "status": "PASS",
+      "evidence": "summer-camp page shows 4 session cards (Primary Overnight, Junior Camp, Jr. High Camp, Sr. High Camp) with images and bullet features",
+      "screenshot": "summer-camp-sessions.png"
+    },
+    {
+      "reqId": "REQ-U04-002",
+      "name": "WideCard, WorkAtCampSection components",
+      "status": "NEEDS_CONTENT",
+      "evidence": "Components exist but may need content update to display on homepage",
+      "note": "Work at Camp section not visible on homepage in current content"
+    },
+    {
+      "reqId": "REQ-U04-003",
+      "name": "YouTubeHero component",
+      "status": "PASS",
+      "evidence": "YouTube iframe found on /summer-camp page: https://www.youtube-nocookie.com/embed/W26J8moP0Qg",
+      "screenshot": "summer-camp-hero.png"
+    },
+    {
+      "reqId": "REQ-U04-004",
+      "name": "ColorPicker with theme presets",
+      "status": "REQUIRES_CMS_ACCESS",
+      "evidence": "Cannot verify without Keystatic admin authentication",
+      "note": "Manual verification via Chrome extension needed"
+    },
+    {
+      "reqId": "REQ-U04-005",
+      "name": "Container width/height/background options",
+      "status": "REQUIRES_CMS_ACCESS",
+      "evidence": "Cannot verify without Keystatic admin authentication",
+      "note": "Manual verification via Chrome extension needed"
+    },
+    {
+      "reqId": "REQ-U04-006",
+      "name": "Icon size options",
+      "status": "REQUIRES_CMS_ACCESS",
+      "evidence": "19 SVG icons found on testing-components page",
+      "note": "Size options need CMS verification"
+    },
+    {
+      "reqId": "REQ-U04-007",
+      "name": "Hero height options (tall = 576px)",
+      "status": "ISSUE",
+      "evidence": "Hero on /summer-camp-what-to-bring shows 288px height, expected 576px for tall setting",
+      "screenshot": "what-to-bring-hero.png",
+      "note": "Hero may need content update to use tall setting, or CSS not applied"
+    },
+    {
+      "reqId": "REQ-U04-008",
+      "name": "Admin nav visibility",
+      "status": "NEEDS_AUTH_VERIFICATION",
+      "evidence": "Admin nav not visible (expected for unauthenticated users). AdminNavStrip requires /api/auth/check to return isAdmin:true. API responds correctly with isAdmin:false for unauthenticated requests.",
+      "screenshot": "homepage-admin-nav.png",
+      "note": "REQUIRES MANUAL TESTING: User must log into Keystatic/GitHub OAuth to verify admin nav appears. The requirements issue may be related to auth session persistence or cookie handling.",
+      "codeLocation": "components/admin/AdminNavStrip.tsx"
+    },
+    {
+      "reqId": "REQ-U04-009",
+      "name": "Faith section image priority loading",
+      "status": "PARTIAL",
+      "evidence": "mission-background.jpg has fetchPriority='high' but loading not set to eager. Other section images use lazy loading.",
+      "screenshot": "homepage-faith-section.png",
+      "note": "Main mission image has high priority, but may still appear to load late"
+    }
+  ],
+
+  "issuesSummary": [
+    {
+      "severity": "MEDIUM",
+      "issue": "Admin nav not rendering for authenticated users (per requirements issue)",
+      "location": "Homepage and all pages - AdminNavStrip component",
+      "reqId": "REQ-U04-008",
+      "recommendation": "MANUAL TEST REQUIRED: Login to Keystatic, then check if admin nav strip appears. If still missing, investigate isKeystatiAuthenticated() function and cookie handling."
+    },
+    {
+      "severity": "MEDIUM",
+      "issue": "Hero height not 576px on What to Bring page",
+      "location": "/summer-camp-what-to-bring",
+      "reqId": "REQ-U04-007",
+      "recommendation": "Verify heroHeight field is set to 'tall' in CMS content"
+    },
+    {
+      "severity": "LOW",
+      "issue": "CMS features cannot be validated without admin access",
+      "location": "Keystatic admin",
+      "reqId": "REQ-U04-004/005/006",
+      "recommendation": "Manual verification needed via authenticated browser session"
+    }
+  ],
+
+  "workingFeatures": [
+    "All 33 pages return HTTP 200",
+    "Homepage hero video plays (autoplay, muted, loop)",
+    "Summer Camp page has YouTube embed working",
+    "Camp session cards display with 4 sessions",
+    "Testing components page shows 12 component types",
+    "Navigation menu fully functional",
+    "Register Now button visible and linked"
+  ],
+
+  "nextSteps": [
+    "1. MANUAL TEST: Login to Keystatic, verify admin nav appears on main site pages",
+    "2. Update What to Bring page heroHeight to 'tall' in CMS (currently 288px, should be 576px)",
+    "3. Manually verify CMS ColorPicker and container options via authenticated session",
+    "4. Add Work at Camp section content to homepage if desired",
+    "5. Consider adding loading='eager' to Faith section image for faster above-fold rendering"
+  ]
+}

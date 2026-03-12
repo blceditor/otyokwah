@@ -1,0 +1,3 @@
+# Cloudflare Pages redirect rules
+# Serve admin/index.html for all admin routes (SPA routing)
+/admin/* /admin/index.html 200

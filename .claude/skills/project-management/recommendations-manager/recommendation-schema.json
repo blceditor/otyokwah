@@ -1,0 +1,126 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Project Recommendation",
+  "description": "Schema for structured project recommendations",
+  "type": "object",
+  "required": [
+    "recommendation_id",
+    "category",
+    "priority",
+    "status",
+    "title",
+    "description",
+    "source",
+    "created_date"
+  ],
+  "properties": {
+    "recommendation_id": {
+      "type": "string",
+      "pattern": "^REC-\\d{3,}$",
+      "description": "Unique identifier (e.g., REC-001)"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "design",
+        "technical",
+        "content",
+        "business",
+        "ux",
+        "performance",
+        "security"
+      ],
+      "description": "Primary category for the recommendation"
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["P0", "P1", "P2"],
+      "description": "Priority level: P0 (critical), P1 (high), P2 (nice-to-have)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "proposed",
+        "approved",
+        "in-progress",
+        "implemented",
+        "validated",
+        "rejected"
+      ],
+      "description": "Current lifecycle status"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 120,
+      "description": "Short, actionable title (start with verb)"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 20,
+      "description": "Detailed description with rationale"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "research",
+        "user-feedback",
+        "competitive-analysis",
+        "best-practice",
+        "code-review",
+        "stakeholder-meeting",
+        "testing",
+        "analytics"
+      ],
+      "description": "Origin of the recommendation"
+    },
+    "source_document": {
+      "type": "string",
+      "description": "Path to source document or meeting identifier"
+    },
+    "effort_sp": {
+      "type": "number",
+      "minimum": 0.05,
+      "description": "Estimated effort in story points"
+    },
+    "impact": {
+      "type": "string",
+      "enum": ["high", "medium", "low"],
+      "description": "Expected impact if implemented"
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^REC-\\d{3,}$"
+      },
+      "description": "List of recommendation IDs this depends on"
+    },
+    "req_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^REQ-\\d{3,}$"
+      },
+      "description": "List of formal requirement IDs this recommendation relates to"
+    },
+    "created_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date recommendation was created (YYYY-MM-DD)"
+    },
+    "updated_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date recommendation was last updated (YYYY-MM-DD)"
+    },
+    "implemented_in": {
+      "type": "string",
+      "description": "Commit hash or PR number where implemented"
+    },
+    "rejection_rationale": {
+      "type": "string",
+      "description": "Explanation if status is 'rejected'"
+    }
+  }
+}

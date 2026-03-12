@@ -1,0 +1,948 @@
+/*
+=====================================================
+BEAR LAKE CAMP - DESIGN SYSTEM STYLESHEET
+Version: 1.0 (Mockup)
+Based on: FINAL-DESIGN-STYLEGUIDE.md
+Purpose: Visual demonstration of new design direction
+=====================================================
+*/
+
+/*
+=====================================================
+CSS VARIABLES - Design System Tokens
+Implements: Styleguide § Color Palette (pg 118-268)
+=====================================================
+*/
+:root {
+    /* Primary: Water/Sky (Muted Lake Blue) */
+    --color-primary: #4A7A9E;
+    --color-primary-light: #7A9DB8;
+    --color-primary-dark: #2F5A7A;
+
+    /* Secondary: Forest/Moss (Deep Forest Green) */
+    --color-secondary: #2F4F3D;
+    --color-secondary-light: #5A7A65;
+
+    /* Accent: Earth/Clay */
+    --color-accent: #A07856;
+    --color-accent-light: #C4A882;
+
+    /* Neutrals: Natural Tones */
+    --color-cream: #F5F0E8;
+    --color-sand: #D4C5B0;
+    --color-stone: #8A8A7A;
+    --color-bark: #5A4A3A;
+
+    /* Spacing Scale */
+    --spacing-xs: 0.5rem;     /* 8px */
+    --spacing-sm: 1rem;       /* 16px */
+    --spacing-md: 1.5rem;     /* 24px */
+    --spacing-lg: 2rem;       /* 32px */
+    --spacing-xl: 3rem;       /* 48px */
+    --spacing-xxl: 4rem;      /* 64px */
+
+    /* Typography Scale */
+    --font-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    --font-handwritten: 'Caveat', cursive;
+}
+
+/*
+=====================================================
+GLOBAL RESET & BASE STYLES
+=====================================================
+*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-system);
+    font-size: 1.125rem;        /* 18px - better mobile readability */
+    font-weight: 400;
+    line-height: 1.7;
+    color: var(--color-bark);
+    background-color: var(--color-cream);
+}
+
+/*
+=====================================================
+TYPOGRAPHY
+Implements: Styleguide § Typography (pg 283-398)
+=====================================================
+*/
+h1 {
+    font-size: 3rem;            /* 48px desktop */
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--color-bark);
+}
+
+h2 {
+    font-size: 2.25rem;         /* 36px desktop */
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--color-bark);
+}
+
+h3 {
+    font-size: 1.5rem;          /* 24px */
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--color-bark);
+}
+
+/* Handwritten font for accents */
+.handwritten {
+    font-family: var(--font-handwritten);
+    font-weight: 400;
+    color: var(--color-accent);
+}
+
+/* Mobile typography adjustments */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;        /* 32px mobile */
+    }
+
+    h2 {
+        font-size: 1.75rem;     /* 28px mobile */
+    }
+
+    body {
+        font-size: 1rem;        /* 16px mobile */
+    }
+}
+
+/*
+=====================================================
+ACCESSIBILITY - Skip Link
+Implements: Styleguide § ARIA Labels (pg 1540-1589)
+=====================================================
+*/
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--color-secondary);
+    color: var(--color-cream);
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    z-index: 100;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/*
+=====================================================
+CONTAINER & LAYOUT
+Implements: Styleguide § Grid System (pg 520-587)
+=====================================================
+*/
+.container {
+    max-width: 1280px;
+    padding: 0 2rem;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+}
+
+section {
+    padding: var(--spacing-xxl) 0;
+}
+
+@media (max-width: 768px) {
+    section {
+        padding: var(--spacing-xl) 0;
+    }
+}
+
+/*
+=====================================================
+BUTTONS & CTAs
+Implements: Styleguide § Component Specifications
+=====================================================
+*/
+.cta-primary,
+.cta-secondary,
+.cta-tertiary,
+.cta-secondary-outline {
+    display: inline-block;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    cursor: pointer;
+    border: none;
+    min-height: 48px;           /* Thumb-friendly */
+    min-width: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Primary CTA - Forest Green */
+.cta-primary {
+    background: var(--color-secondary);
+    color: var(--color-cream);
+}
+
+.cta-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.cta-primary:active {
+    transform: translateY(0);
+}
+
+/* Secondary CTA - Clay */
+.cta-secondary {
+    background: var(--color-accent);
+    color: var(--color-cream);
+}
+
+.cta-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Secondary Outline - For sticky bar */
+.cta-secondary-outline {
+    background: transparent;
+    color: var(--color-cream);
+    border: 2px solid var(--color-cream);
+}
+
+.cta-secondary-outline:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Tertiary CTA - Text link style */
+.cta-tertiary {
+    background: transparent;
+    color: var(--color-primary);
+    padding: 0.5rem 1rem;
+}
+
+.cta-tertiary:hover {
+    color: var(--color-accent);
+    transform: translateX(5px);
+}
+
+/* Focus states for accessibility */
+a:focus,
+button:focus {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+/*
+=====================================================
+TRUST BAR
+Implements: Styleguide § Trust Bar (pg 719-819)
+Sticky on mobile, builds parent confidence
+=====================================================
+*/
+.trust-bar {
+    background: var(--color-cream);
+    border-bottom: 1px solid var(--color-sand);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.trust-items {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.trust-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.875rem;
+    color: var(--color-bark);
+}
+
+.trust-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-secondary);
+}
+
+.star-rating {
+    color: var(--color-accent);
+    font-weight: 600;
+}
+
+.trust-icon {
+    font-size: 1.25rem;
+    color: var(--color-secondary);
+}
+
+/* Mobile: horizontal scroll if needed */
+@media (max-width: 640px) {
+    .trust-items {
+        justify-content: flex-start;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+    }
+
+    .trust-item {
+        scroll-snap-align: start;
+        flex-shrink: 0;
+        min-width: 100px;
+    }
+}
+
+/*
+=====================================================
+HERO SECTION
+Implements: Styleguide § Hero Section (pg 592-710)
+Video background with text overlay
+=====================================================
+*/
+.hero {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.hero-video-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Using existing chapel image as placeholder for hero video */
+    background-image: url('../chapel-exterior.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+    /* Desaturate -15%, warm tones as per styleguide */
+    filter: saturate(0.85) brightness(1.05);
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.5));
+    z-index: 2;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    color: var(--color-cream);
+    padding: 0 1rem;
+}
+
+.hero-heading {
+    color: var(--color-cream);
+    margin-bottom: 1rem;
+}
+
+.hero-tagline {
+    font-size: 2rem;
+    color: var(--color-accent-light);
+    margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    color: var(--color-cream);
+    opacity: 0.9;
+}
+
+/* Scroll indicator animation */
+.scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    color: var(--color-cream);
+    z-index: 3;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    50% {
+        transform: translateX(-50%) translateY(10px);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        min-height: 500px;
+    }
+
+    .hero-tagline {
+        font-size: 1.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+}
+
+/*
+=====================================================
+MISSION SECTION
+Implements: Styleguide § Photography Style (pg 405-517)
+Background photo with overlay text
+=====================================================
+*/
+.mission-section {
+    position: relative;
+    padding: var(--spacing-xxl) 0;
+    /* Using campfire image as background */
+    background-image: url('../gallery/campfire.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    /* Desaturate for "nature-authentic" feel */
+    filter: saturate(0.85);
+}
+
+.mission-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(47, 79, 61, 0.85);  /* Forest green overlay */
+    z-index: 1;
+}
+
+.mission-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: var(--color-cream);
+    max-width: 800px;
+}
+
+.mission-kicker {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    color: var(--color-accent-light);
+}
+
+.mission-statement {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+}
+
+.mission-description {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    opacity: 0.95;
+}
+
+@media (max-width: 768px) {
+    .mission-section {
+        background-attachment: scroll;
+    }
+}
+
+/*
+=====================================================
+PROGRAM CARDS
+Implements: Styleguide § Program Cards (pg 823-970)
+Interactive cards with hover lift effect
+=====================================================
+*/
+.programs {
+    background: var(--color-sand);
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: var(--color-stone);
+    margin-bottom: 3rem;
+    font-size: 1.125rem;
+}
+
+.program-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.program-card {
+    background: var(--color-cream);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.program-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+.program-image-wrapper {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+}
+
+.program-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Nature-authentic color treatment */
+    filter: saturate(0.85) brightness(1.05);
+    transition: transform 0.3s ease;
+}
+
+.program-card:hover .program-image {
+    transform: scale(1.05);
+}
+
+.program-content {
+    padding: 2rem;
+}
+
+.program-ages {
+    color: var(--color-stone);
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+}
+
+.program-features {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0;
+}
+
+.program-features li {
+    padding-left: 1.5rem;
+    position: relative;
+    margin-bottom: 0.75rem;
+    color: var(--color-bark);
+}
+
+.program-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--color-secondary);
+    font-weight: 700;
+}
+
+/*
+=====================================================
+VIDEO TESTIMONIALS
+Implements: Styleguide § Video Testimonials (pg 974-1139)
+Placeholder for lite-youtube-embed
+=====================================================
+*/
+.testimonials {
+    background: var(--color-cream);
+}
+
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.testimonial-video {
+    position: relative;
+}
+
+.video-placeholder {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--color-sand);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.video-play-button {
+    width: 68px;
+    height: 68px;
+    background: var(--color-secondary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-cream);
+    font-size: 1.5rem;
+    opacity: 0.9;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.video-placeholder:hover .video-play-button {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.testimonial-caption {
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: var(--color-bark);
+}
+
+.testimonial-duration {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--color-stone);
+}
+
+/*
+=====================================================
+GALLERY SECTION
+Implements: Styleguide § Photography Style (pg 405-517)
+Photo grid with real camp imagery
+=====================================================
+*/
+.gallery-section {
+    background: var(--color-sand);
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.gallery-item {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: scale(1.05);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Nature-authentic color grading */
+    filter: saturate(0.9) brightness(1.05);
+}
+
+/*
+=====================================================
+INSTAGRAM FEED
+Implements: Styleguide § Instagram Feed (pg 1143-1264)
+Placeholder for API integration
+=====================================================
+*/
+.instagram-feed {
+    background: var(--color-cream);
+}
+
+.instagram-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.instagram-post {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.instagram-post:hover {
+    transform: scale(1.05);
+}
+
+.instagram-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--color-sand);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+}
+
+.instagram-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(47, 79, 61, 0.8);
+    color: var(--color-cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.instagram-post:hover .instagram-overlay {
+    opacity: 1;
+}
+
+/*
+=====================================================
+CONTACT SECTION
+=====================================================
+*/
+.contact-section {
+    background: var(--color-cream);
+    text-align: center;
+}
+
+.contact-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/*
+=====================================================
+MOBILE STICKY CTA
+Implements: Styleguide § Mobile Sticky CTA (pg 1268-1379)
+Only visible on mobile/tablet
+=====================================================
+*/
+.sticky-cta-mobile {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(47, 79, 61, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 1rem;
+    display: none;
+    justify-content: space-around;
+    align-items: center;
+    gap: 1rem;
+    z-index: 1000;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.1);
+    opacity: 0;
+    transform: translateY(100%);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.sticky-cta-mobile.visible {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hide on desktop */
+@media (min-width: 1024px) {
+    .sticky-cta-mobile {
+        display: none !important;
+    }
+}
+
+.sticky-cta-button {
+    flex: 1;
+    max-width: 200px;
+}
+
+/*
+=====================================================
+FOOTER
+=====================================================
+*/
+.footer {
+    background: var(--color-primary-dark);
+    color: var(--color-cream);
+    padding: 3rem 0 1.5rem;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-column h3 {
+    color: var(--color-cream);
+    margin-bottom: 1rem;
+}
+
+.footer-column p {
+    color: rgba(245, 240, 232, 0.8);
+    line-height: 1.6;
+}
+
+.footer-column ul {
+    list-style: none;
+}
+
+.footer-column ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-column a {
+    color: rgba(245, 240, 232, 0.8);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-column a:hover {
+    color: var(--color-cream);
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.social-links a {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+}
+
+.social-links a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1.5rem;
+    text-align: center;
+    color: rgba(245, 240, 232, 0.6);
+}
+
+/*
+=====================================================
+SCROLL-TRIGGERED ANIMATIONS
+Implements: Styleguide § Gen Z Engagement (pg 1694-1748)
+Fade-in sections as user scrolls
+=====================================================
+*/
+.fade-trigger {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-trigger.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    .fade-trigger {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    .scroll-indicator {
+        animation: none;
+    }
+
+    .sticky-cta-mobile {
+        transition: none;
+    }
+}
+
+/*
+=====================================================
+RESPONSIVE BREAKPOINTS
+Implements: Styleguide § Responsive Breakpoints (pg 561-587)
+Mobile-first approach
+=====================================================
+*/
+
+/* Small tablets */
+@media (min-width: 640px) {
+    .gallery-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Tablets */
+@media (min-width: 768px) {
+    .program-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Small desktops */
+@media (min-width: 1024px) {
+    .instagram-grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+/* Large desktops */
+@media (min-width: 1280px) {
+    .gallery-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}

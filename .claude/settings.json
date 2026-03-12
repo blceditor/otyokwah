@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "executionMode": {
+    "default": "autonomous",
+    "description": "autonomous = QRUNFREE workflow (no pauses, recursive fixing). interactive = checkpoint-based (ask before each phase)",
+    "pauseOnBlockers": true,
+    "blockerThreshold": 5,
+    "maxRecursiveIterations": 4,
+    "prioritySystem": "team-debate",
+    "fixAllPreExisting": true,
+    "tokenBudget": "unlimited"
+  },
+  "postCommitHooks": {
+    "onPush": ["production-validation"],
+    "productionValidation": {
+      "enabled": true,
+      "script": "./scripts/post-commit-validate.sh",
+      "deployWaitMs": 120000,
+      "maxWaitMs": 300000,
+      "productionDomain": "www.bearlakecamp.com"
+    }
+  },
+  "autofix": {
+    "enabled": true,
+    "maxAttempts": 3,
+    "cooldownMs": 600000,
+    "safePatterns": [
+      "css-class-add",
+      "import-add",
+      "height-width-fix",
+      "attribute-add"
+    ],
+    "unsafePatterns": [
+      "schema-change",
+      "api-contract-change",
+      "multi-file-refactor",
+      "delete-code"
+    ]
+  }
+}

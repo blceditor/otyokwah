@@ -1,0 +1,8 @@
+**/*.spec.ts
+**/*.spec.tsx
+**/__tests__/**
+**/__mocks__/**
+vitest.config.ts
+vitest.setup.ts
+.next/
+node_modules/

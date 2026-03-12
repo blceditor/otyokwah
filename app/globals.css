@@ -1,0 +1,205 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #4a7a9e;
+  --color-primary-light: #7a9db8;
+  --color-primary-dark: #2f5a7a;
+  --color-secondary: #2f4f3d;
+  --color-secondary-light: #5a7a65;
+  --color-secondary-dark: #0C3F23;  /* REQ-F001: Dark green for distressed text */
+  --color-accent: #a07856;
+  --color-accent-light: #c4a882;
+  --color-cream: #f5f0e8;
+  --color-sand: #d4c5b0;
+  --color-stone: #8a8a7a;
+  --color-bark: #5a4a3a;
+}
+
+@layer utilities {
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .not-sr-only {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+
+  /* REQ-TEXT-002: Textured Font Effect */
+  /* Matches original WordPress styling - solid color, no mask effects */
+  /* The TradesmithStamp font has built-in distressed letterforms */
+  .text-textured {
+    color: var(--color-secondary-dark);
+  }
+
+  /* REQ-TEXT-004: Hero text for dark backgrounds */
+  /* Matches original WordPress styling - solid color with drop shadow */
+  .text-textured-hero {
+    color: var(--color-cream);
+    filter: drop-shadow(2px 2px 6px rgba(0, 0, 0, 0.7));
+  }
+
+  /* REQ-STAFF-001: Staff Photo Grid with Rounded Images */
+  .staff-photo-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+
+  @media (min-width: 768px) {
+    .staff-photo-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .staff-photo-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .staff-photo-grid p {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+  }
+
+  .staff-photo-grid img {
+    width: 8rem;
+    height: 8rem;
+    border-radius: 9999px;
+    object-fit: cover;
+    background-color: #d6d3d1;
+  }
+
+  @media (min-width: 768px) {
+    .staff-photo-grid img {
+      width: 10rem;
+      height: 10rem;
+    }
+  }
+
+  /* REQ-BG-003: Background Texture for Light Sections */
+  .bg-textured {
+    position: relative;
+  }
+
+  .bg-textured::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* Subtle grunge/paper texture using SVG noise pattern - REQ-FIX-003: Increased opacity for visibility */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.15'/%3E%3C/svg%3E");
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Ensure content stays above texture */
+  .bg-textured > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* REQ-Q2-007: Scroll Animations */
+  .fade-trigger {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 400ms ease-out,
+      transform 400ms ease-out;
+  }
+
+  .fade-trigger.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Respect user's motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .fade-trigger {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+}
+
+@layer base {
+  /* REQ-WEB-005: Tradesmith font for all headings */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-tradesmith), sans-serif;
+  }
+
+  /* Skip link accessibility */
+  .skip-link {
+    @apply absolute -top-10 left-0 bg-secondary text-cream px-4 py-2 z-skip-link;
+  }
+
+  .skip-link:focus {
+    @apply top-0;
+  }
+}
+
+@layer components {
+  /* REQ-CENTER-001: Center headings in prose content for visual hierarchy */
+  /* Direct prose children only - components inside manage their own alignment */
+  .prose > h2,
+  .prose > h3,
+  .prose > article > h2,
+  .prose > article > h3 {
+    @apply text-center;
+  }
+
+  /* REQ-CENTER-002: Center CTA buttons in content */
+  /* Exclude elements with inline-flex (like DonateButton) which manage their own layout */
+  .prose a[class*="bg-secondary"]:not([class*="inline-flex"]),
+  .prose a[class*="bg-accent"]:not([class*="inline-flex"]) {
+    @apply block mx-auto text-center w-fit;
+  }
+
+  /* REQ-DESIGN-002: Accessible Link Color System */
+  /* Prose links (markdown content) - excludes buttons with bg-secondary */
+  .prose a:not([class*="bg-secondary"]):not([class*="bg-accent"]):not([class*="bg-white"]) {
+    @apply text-link font-medium no-underline;
+    @apply hover:text-link-light hover:underline;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-link focus-visible:ring-offset-2;
+    @apply visited:text-link-dark;
+    @apply transition-colors duration-200;
+  }
+
+  /* REQ-CONTRAST-001: Force white text on dark button backgrounds */
+  .prose a[class*="bg-secondary"] {
+    color: white !important;
+  }
+  .prose a[class*="bg-accent"] {
+    color: white !important;
+  }
+  /* REQ-UAT-007: Wide Card CTA button needs white text */
+  .prose a[class*="bg-emerald"] {
+    color: white !important;
+  }
+}

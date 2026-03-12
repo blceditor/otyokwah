@@ -1,0 +1,73 @@
+name: Content Validation
+
+# Triggers on direct pushes to main that touch content files
+# (i.e., Keystatic CMS edits). PRs are covered by the full validate.yml workflow.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'content/**'
+
+jobs:
+  validate-content:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Get changed content files
+        id: changed
+        run: |
+          git diff --name-only HEAD~1 HEAD -- 'content/**' > /tmp/changed-content-files.txt
+          echo "count=$(wc -l < /tmp/changed-content-files.txt | tr -d ' ')" >> "$GITHUB_OUTPUT"
+          cat /tmp/changed-content-files.txt
+
+      - name: Validate changed content
+        run: |
+          ARGS=$(cat /tmp/changed-content-files.txt | tr '\n' ' ')
+          npx tsx scripts/validate-content.ts --changed-only $ARGS
+
+      - name: Notify on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const sha = context.sha;
+            const commit = await github.rest.repos.getCommit({ owner, repo, ref: sha });
+            const author = commit.data.author?.login || commit.data.commit.author?.name || 'unknown';
+            const message = commit.data.commit.message;
+            const runUrl = `https://github.com/${owner}/${repo}/actions/runs/${context.runId}`;
+
+            await github.rest.issues.create({
+              owner,
+              repo,
+              title: `Content validation failed on ${sha.substring(0, 7)}`,
+              body: [
+                `## Content Validation Failed`,
+                ``,
+                `**Commit:** \`${sha}\``,
+                `**Author:** @${author}`,
+                `**Message:** ${message}`,
+                `**Action Run:** [View logs](${runUrl})`,
+                ``,
+                `A content file pushed to \`main\` failed validation.`,
+                `Please check the action logs and fix the content.`,
+              ].join('\n'),
+              labels: ['content-error'],
+              assignees: ['blceditor'],
+            });

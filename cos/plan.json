@@ -1,0 +1,121 @@
+{
+  "deliverableType": "homepage-visual-fixes",
+  "requestSummary": "Fix 4 critical homepage visual issues: carousel not displaying, textured headings not visible, background texture missing, gallery needs expansion. Plus Keystatic Git state sync issue.",
+  "specialists": [
+    {
+      "role": "pm",
+      "tasks": [
+        "Analyze previous implementation failure (app/page.tsx vs app/[slug]/page.tsx routing issue)",
+        "Validate that all required images exist in public/images/summer-program-and-general/",
+        "Confirm visual design intent from bearlakecamp.com reference",
+        "Define success metrics for deployment verification"
+      ],
+      "output": "Position memo on customer impact and implementation priority"
+    },
+    {
+      "role": "ux-designer",
+      "tasks": [
+        "Review bearlakecamp.com reference site for textured heading effect",
+        "Define opacity levels for bg-textured that balance visibility with readability",
+        "Specify carousel height constraints for optimal hero section",
+        "Validate gallery layout (6+ images) responsiveness"
+      ],
+      "output": "Position memo on visual design requirements and accessibility"
+    },
+    {
+      "role": "pe-designer",
+      "tasks": [
+        "Architect solution for app/page.tsx component integration",
+        "Validate HeroCarousel height constraint approach (explicit height vs flex)",
+        "Review CSS .text-textured gradient for browser compatibility",
+        "Assess Keystatic Git state sync issue (REQ-FIX-004)"
+      ],
+      "output": "Position memo on technical approach and architecture"
+    },
+    {
+      "role": "test-writer",
+      "tasks": [
+        "Write failing tests for app/page.tsx HeroCarousel rendering",
+        "Write failing tests for TexturedHeading component usage",
+        "Write failing tests for bg-textured class application",
+        "Extend smoke-test.sh with visual element assertions (REQ-FIX-005)"
+      ],
+      "output": "Test suite with 100% failures (TDD discipline)"
+    },
+    {
+      "role": "sde-iii",
+      "tasks": [
+        "Implement HeroCarousel in app/page.tsx",
+        "Implement TexturedHeading usage in app/page.tsx",
+        "Add bg-textured classes to gallery and CTA sections",
+        "Update index.mdoc with heroImages array and expanded galleryImages",
+        "Adjust CSS opacity for .bg-textured visibility"
+      ],
+      "output": "Implementation that passes all tests"
+    },
+    {
+      "role": "code-quality-auditor",
+      "tasks": [
+        "Review app/page.tsx for React best practices",
+        "Validate CSS changes don't introduce accessibility issues",
+        "Check index.mdoc YAML structure correctness",
+        "Verify no regressions in existing homepage functionality"
+      ],
+      "output": "Quality review with P0/P1/P2 recommendations"
+    }
+  ],
+  "phases": [
+    {
+      "phase": "1-analysis",
+      "description": "PM, UX, and PE analyze root causes and define approach",
+      "specialists": ["pm", "ux-designer", "pe-designer"],
+      "estimatedSP": 0.5
+    },
+    {
+      "phase": "2-tests",
+      "description": "Test-writer creates failing tests for all 5 REQ-FIX items",
+      "specialists": ["test-writer"],
+      "estimatedSP": 1.0
+    },
+    {
+      "phase": "3-implementation",
+      "description": "SDE-III implements fixes to pass tests",
+      "specialists": ["sde-iii"],
+      "estimatedSP": 2.0
+    },
+    {
+      "phase": "4-review",
+      "description": "Code quality auditor reviews implementation",
+      "specialists": ["code-quality-auditor"],
+      "estimatedSP": 0.5
+    },
+    {
+      "phase": "5-deployment",
+      "description": "Release manager commits, monitors Vercel deployment, runs smoke tests",
+      "specialists": ["release-manager"],
+      "estimatedSP": 0.8
+    }
+  ],
+  "totalEstimatedSP": 4.8,
+  "targetCycleTime": "8 minutes",
+  "deliverables": [
+    "app/page.tsx (updated with HeroCarousel, TexturedHeading, bg-textured)",
+    "content/pages/index.mdoc (heroImages array + expanded galleryImages)",
+    "app/globals.css (bg-textured opacity adjustment)",
+    "scripts/smoke-test.sh (visual element assertions)",
+    "app/page.spec.tsx (new integration tests)",
+    "Vercel deployment verification"
+  ],
+  "successCriteria": {
+    "visualComponents": "HeroCarousel displays 5 images, TexturedHeading shows gradient, bg-textured visible",
+    "smokeTests": "All smoke tests pass on prelaunch.bearlakecamp.com",
+    "keystatic": "index.mdoc saves without Git errors",
+    "noRegressions": "Existing homepage sections (Mission, Programs) unchanged"
+  },
+  "constraints": {
+    "maxPages": 26,
+    "existingComponents": "Do NOT modify HeroCarousel, TexturedHeading, Gallery components",
+    "cssOnly": "Texture effects use CSS only (no images)",
+    "deployment": "Vercel auto-deploys on push to main"
+  }
+}

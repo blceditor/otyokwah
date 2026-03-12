@@ -1,0 +1,230 @@
+{
+  "task_id": "vercel-speed-insights",
+  "task_type": "feature",
+  "priority": "P0",
+  "description": "Add Vercel Speed Insights to fix deployment failure and enable Web Vitals monitoring",
+  "req_ids": [
+    "REQ-SI-001",
+    "REQ-SI-002",
+    "REQ-SI-003",
+    "REQ-SI-004"
+  ],
+  "plan_steps": [
+    "Phase 1: Install @vercel/speed-insights package via npm",
+    "Phase 2: Import SpeedInsights component in app/layout.tsx",
+    "Phase 2: Add <SpeedInsights /> component to body (after Analytics, before ScrollAnimationsInit)",
+    "Phase 3: Enable skipped tests in app/layout.spec.tsx (remove .skip from lines 70 and 83)",
+    "Phase 4: Run quality gates (typecheck, lint, test, build, local verification)"
+  ],
+  "test_plan": [
+    {
+      "req": "REQ-SI-001",
+      "cases": [
+        "Verify package appears in package.json dependencies",
+        "Verify no dependency conflicts with @vercel/analytics",
+        "Verify TypeScript types available"
+      ]
+    },
+    {
+      "req": "REQ-SI-002",
+      "cases": [
+        "Test: SpeedInsights component is imported for Web Vitals (app/layout.spec.tsx:70)",
+        "Test: SpeedInsights component is rendered in layout (app/layout.spec.tsx:83)",
+        "Verify no TypeScript errors",
+        "Verify no runtime console errors"
+      ]
+    },
+    {
+      "req": "REQ-SI-003",
+      "cases": [
+        "Both previously-skipped tests now pass",
+        "All existing analytics tests continue passing",
+        "Total test count increases by 2"
+      ]
+    },
+    {
+      "req": "REQ-SI-004",
+      "cases": [
+        "npm run typecheck passes with zero errors",
+        "npm run lint passes with zero errors",
+        "npm run test shows all tests passing",
+        "npm run build succeeds",
+        "Local dev server runs without console errors",
+        "SpeedInsights script visible in Network tab"
+      ]
+    }
+  ],
+  "sp_total": 3,
+  "sp_breakdown": [
+    {
+      "phase": "Phase 1: Installation",
+      "sp": 1,
+      "tasks": ["Install package", "Verify installation"]
+    },
+    {
+      "phase": "Phase 2: Integration",
+      "sp": 1,
+      "tasks": ["Add import", "Add component to body", "Verify TypeScript"]
+    },
+    {
+      "phase": "Phase 3: Testing",
+      "sp": 0.5,
+      "tasks": ["Enable 2 skipped tests", "Run test suite"]
+    },
+    {
+      "phase": "Phase 4: Validation",
+      "sp": 0.5,
+      "tasks": ["Run quality gates", "Local dev verification"]
+    }
+  ],
+  "qshortcuts_sequence": [
+    "QPLAN (complete - this document)",
+    "QCODE (install + integrate + enable tests)",
+    "QCHECK (PE-Reviewer quick review - low complexity)",
+    "QGIT (commit, push, verify deployment)"
+  ],
+  "artifacts": [
+    "/Users/travis/Library/CloudStorage/Dropbox/dev/bearlakecamp/requirements/vercel-speed-insights.md",
+    "/Users/travis/Library/CloudStorage/Dropbox/dev/bearlakecamp/requirements/vercel-speed-insights.lock.md",
+    "/Users/travis/Library/CloudStorage/Dropbox/dev/bearlakecamp/docs/tasks/vercel-speed-insights-implementation-plan.md",
+    "/Users/travis/Library/CloudStorage/Dropbox/dev/bearlakecamp/docs/tasks/vercel-speed-insights-plan-bundle.json"
+  ],
+  "files_modified": [
+    "/Users/travis/Library/CloudStorage/Dropbox/dev/bearlakecamp/package.json",
+    "/Users/travis/Library/CloudStorage/Dropbox/dev/bearlakecamp/package-lock.json",
+    "/Users/travis/Library/CloudStorage/Dropbox/dev/bearlakecamp/app/layout.tsx",
+    "/Users/travis/Library/CloudStorage/Dropbox/dev/bearlakecamp/app/layout.spec.tsx"
+  ],
+  "files_created": [],
+  "code_changes_summary": {
+    "app/layout.tsx": {
+      "imports_added": 1,
+      "components_added": 1,
+      "lines_changed": 2
+    },
+    "app/layout.spec.tsx": {
+      "tests_enabled": 2,
+      "lines_changed": 2
+    },
+    "package.json": {
+      "dependencies_added": 1
+    }
+  },
+  "risk_assessment": {
+    "overall_risk": "Low",
+    "confidence": "High",
+    "key_risks": [
+      {
+        "risk": "TypeScript compilation errors",
+        "likelihood": "Low",
+        "mitigation": "Use exact import path /next for App Router"
+      },
+      {
+        "risk": "Version conflict with @vercel/analytics",
+        "likelihood": "Low",
+        "mitigation": "Packages designed to work together by Vercel"
+      },
+      {
+        "risk": "Build failures",
+        "likelihood": "Low",
+        "mitigation": "Pre-deployment build test (Gate 4.4)"
+      },
+      {
+        "risk": "Runtime errors in production",
+        "likelihood": "Low",
+        "mitigation": "Local dev verification (Gate 4.5)"
+      }
+    ]
+  },
+  "rollback_plan": {
+    "cost_sp": 0.5,
+    "estimated_time": "< 10 minutes",
+    "steps": [
+      "Revert component integration (remove import and component from layout.tsx)",
+      "Revert test changes (re-add .skip to tests)",
+      "Uninstall package: npm uninstall @vercel/speed-insights",
+      "Verify clean state: npm run typecheck && npm run test",
+      "Commit and deploy rollback"
+    ]
+  },
+  "quality_gates": {
+    "pre_deployment": [
+      "npm run typecheck (TypeScript compilation)",
+      "npm run lint (ESLint)",
+      "npm run test (All tests pass)",
+      "npm run build (Production build)",
+      "Local dev verification (http://localhost:3000 - no console errors)"
+    ],
+    "post_deployment": [
+      "Production site loads without errors",
+      "SpeedInsights script loads successfully",
+      "Web Vitals data appears in Vercel dashboard (within 24 hours)"
+    ]
+  },
+  "deployment_verification": {
+    "immediate_checks": [
+      "Visit https://prelaunch.bearlakecamp.com",
+      "Open DevTools Console - verify zero errors",
+      "Open DevTools Network - filter 'speed-insights' - verify script loaded",
+      "Check /_vercel/speed-insights/vitals returns 200 status"
+    ],
+    "24_hour_checks": [
+      "Login to Vercel Dashboard",
+      "Navigate to Project → Analytics → Speed Insights",
+      "Verify Web Vitals data present (LCP, FID, CLS, TTFB, FCP)"
+    ]
+  },
+  "success_criteria": {
+    "technical": [
+      "Package installed and visible in npm list",
+      "TypeScript compiles with zero errors",
+      "All tests pass (including 2 newly enabled tests)",
+      "Production build succeeds",
+      "No console errors in local dev"
+    ],
+    "deployment": [
+      "Deployment completes without errors",
+      "Production site loads without console errors",
+      "SpeedInsights script loaded (visible in Network tab)",
+      "Web Vitals data appears in Vercel dashboard"
+    ],
+    "definition_of_done": [
+      "All technical success criteria met",
+      "All deployment success criteria met",
+      "Deployment unblocked",
+      "Performance monitoring active"
+    ]
+  },
+  "execution_owner": "sde-iii",
+  "review_requirements": {
+    "pe_reviewer": "Quick review (low complexity, standard integration)",
+    "code_quality_auditor": "Optional (minimal code changes)",
+    "security_reviewer": "Not required (read-only monitoring script)"
+  },
+  "estimated_time_ranges": {
+    "installation": "5-10 minutes",
+    "integration": "5-10 minutes",
+    "testing": "5 minutes",
+    "validation": "10-15 minutes",
+    "total": "25-40 minutes"
+  },
+  "dependencies_required": {
+    "next_js": "^14.2.0 (current)",
+    "react": "^18.3.0 (current)",
+    "vercel_analytics": "^1.5.0 (already installed)",
+    "vercel_speed_insights": "^1.x.x (to be installed)"
+  },
+  "references": {
+    "vercel_docs": "https://vercel.com/docs/speed-insights",
+    "next_js_integration": "https://vercel.com/docs/speed-insights/quickstart#next.js",
+    "web_vitals": "https://web.dev/vitals/"
+  },
+  "notes": [
+    "This is a P0 deployment blocker - prioritize execution",
+    "Tests already exist (just need to be enabled)",
+    "Integration follows existing Analytics pattern",
+    "Component is async and non-blocking",
+    "Package maintained by Vercel (official, well-tested)",
+    "Simple rollback available if issues arise"
+  ]
+}

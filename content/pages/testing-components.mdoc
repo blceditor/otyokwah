@@ -1,0 +1,163 @@
+---
+title: Component Test Page
+hero:
+  heroImage: summer-program-and-general/cross-with-lake-in-background.jpg
+  heroTagline: Testing All Components
+  heroHeight: standard
+templateFields:
+  discriminant: standard
+seo:
+  metaTitle: Component Tests - Bear Lake Camp
+  metaDescription: Internal testing page for validating all Keystatic components.
+  twitterCard: summary_large_image
+  noIndex: true
+---
+{% contentCard
+   icon="Award"
+   iconSize="md"
+   headingLevel="3"
+   width="auto"
+   height="auto"
+   backgroundColor="" %}
+Test 1 2 3 4
+{% /contentCard %}
+
+# Component Test Page
+
+This page is for internal testing of all Keystatic components. It is not linked in navigation and is hidden from search engines.
+
+Testing
+
+Testing2
+
+## 1. Call to Action Button
+
+{% ctaButton
+   label="Test CTA Button"
+   href="/contact"
+   variant="primary"
+   size="lg"
+   align="left"
+   textColor="" /%}
+
+## 2. Feature Grid
+
+Testing feature grid with 3 features:
+
+- **Feature One** - This is the first test feature
+- **Feature Two** - This is the second test feature
+- **Feature Three** - This is the third test feature
+
+## 3. Content Card
+
+{% contentCard
+   icon="Check"
+   iconSize="md"
+   title="Test Content Card"
+   headingLevel="3"
+   width="auto"
+   height="auto"
+   backgroundColor="" %}
+This is the content inside a content card component. It should have a visible border and icon.
+{% /contentCard %}
+
+## 4. Stats & Metrics
+
+**Test Statistics:**
+
+{% table %}
+- Metric
+- Value
+---
+- Years of Ministry
+- 75+
+---
+- Campers Annually
+- 500+
+---
+- Focus on Christ
+- 100%
+{% /table %}
+
+## 5. Colored Section
+
+This content would be inside a colored section with green background and centered text.
+
+## 6. Content Box
+
+This content would be inside a bordered content box with medium padding.
+
+## 7. FAQ Accordion
+
+{% faqAccordion title="Test FAQ" titleAlign="left" allowMultiple=false %}
+{% faqItem question="Is this accordion working?" %}
+Yes, if you can click to expand this, the accordion component works correctly.
+{% /faqItem %}
+
+{% faqItem question="What should I test?" %}
+Click each accordion item to verify expand/collapse functionality works.
+{% /faqItem %}
+
+{% faqItem question="Are multiple items supported?" %}
+Yes, accordions support multiple items. This is the third one.
+{% /faqItem %}
+{% /faqAccordion %}
+
+## 8. YouTube Video
+
+{% youtube #dQw4w9WgXcQ maxWidth="md" /%}
+
+## 9. Testimonial
+
+> "This is a test testimonial quote. It should render with proper styling and attribution."
+> 
+> — **Test Author**, Test Role
+
+## 10. Two Column Layout
+
+**Left Column Content**
+
+This is the left column of the two-column layout. It should appear side-by-side with the right column on desktop.
+
+**Right Column Content**
+
+This is the right column. On mobile, this should stack below the left column.
+
+## 11. Donate Button
+
+{% donateButton
+   label="Test Donate Button"
+   icon="Heart"
+   iconSize="md"
+   variant="primary"
+   href="https://donorbox.org/donate-to-blc"
+   external=true /%}
+
+## 12. Image Section
+
+{% imageSection
+   alt="Test image section"
+   overlayText="Image Section Works!"
+   overlayPosition="center"
+   height="md" /%}
+
+---
+
+## Verification Checklist
+
+After deployment, verify each component renders correctly:
+
+1. CTA Button - displays with proper styling
+1. Feature Grid - shows 3 features in columns
+1. Content Card - has border, icon, and title
+1. Stats - shows numbers prominently
+1. Colored Section - has green background
+1. Content Box - has visible border
+1. FAQ Accordion - items expand/collapse
+1. YouTube - video embed loads
+1. Testimonial - quote and attribution styled
+1. Two Columns - side-by-side on desktop
+1. Donate Button - styled with icon
+1. Image Section - image with overlay visible
+
+Testing

@@ -1,0 +1,45 @@
+---
+title: Form Components Test
+hero:
+  heroImage: summer-program-and-general/cross-with-lake-in-background.jpg
+  heroTagline: Testing Form Components
+  heroHeight: standard
+templateFields:
+  discriminant: standard
+seo:
+  metaTitle: Form Tests - Bear Lake Camp
+  metaDescription: >-
+    Internal testing page for validating form components including Contact Form
+    with Turnstile.
+  twitterCard: summary_large_image
+  noIndex: true
+---
+# Form Components Test
+
+This page tests form-related components.
+
+Testing
+
+## Contact Form
+
+The contact form should appear below with:
+
+- Name field (required)
+- Email field (required)
+- Message field (required)
+- Invisible Turnstile captcha (no visible widget)
+- Submit button
+
+{% ContactForm /%}
+
+---
+
+## Form Verification Checklist
+
+1. Form renders with all fields
+1. Labels are visible and associated with inputs
+1. Required fields have proper validation
+1. Submit button is visible
+1. Turnstile container is attached (invisible mode)
+1. Form is accessible (aria-label present)
+1. Mobile responsive layout works

@@ -1,0 +1,105 @@
+name: Validation
+
+on:
+  push:
+    branches: [main, staging]
+    paths-ignore:
+      - 'content/**'
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Node dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Python dependencies
+        run: pip install pytest
+
+      - name: TypeScript check
+        run: pnpm typecheck
+
+      - name: ESLint
+        run: pnpm lint
+
+      - name: Build
+        run: pnpm build
+
+      - name: Run Python validators
+        run: |
+          python3 scripts/validation/validator_runner.py . --json > validation-results.json
+        continue-on-error: true
+
+      - name: Generate validation report
+        run: |
+          python3 scripts/validation/report_aggregator.py validation-results.json \
+            --format github
+
+      - name: Upload validation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-report
+          path: validation-results.json
+
+      - name: Run unit tests
+        run: pnpm test
+
+      - name: Run Python tests
+        run: python3 -m pytest scripts/implementation/*_spec.py scripts/validation/*_spec.py -v
+
+  security-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run security validators
+        run: |
+          python3 scripts/validation/validator_runner.py . \
+            --category security \
+            --json > security-results.json
+
+      - name: Check for critical issues
+        run: |
+          python3 -c "
+          import json
+          import sys
+          with open('security-results.json') as f:
+              results = json.load(f)
+          if results.get('failed', 0) > 0:
+              print('Security validation failed!')
+              sys.exit(1)
+          print('Security validation passed')
+          "
+
+      - name: Upload security report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-report
+          path: security-results.json

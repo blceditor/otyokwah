@@ -1,0 +1,16 @@
+{
+  "project_id": "001-remove-live-preview",
+  "project_path": "/Users/travis/SGDrive/dev/bearlakecamp/.qralph/projects/001-remove-live-preview",
+  "request": "1. REMOVE Live Preview feature completely - strip out all preview components and functionality from the Keystatic editor. 2. REVERT homepage hero back to video (not image) - undo the content change that switched from heroVideo to heroImage. 3. DELETE all smoke tests and stop doing smoke testing entirely - remove scripts/smoke-test.sh and all related smoke test infrastructure",
+  "mode": "coding",
+  "phase": "INIT",
+  "created_at": "2026-02-05T10:14:23.778437",
+  "agents": [],
+  "findings": [],
+  "heal_attempts": 0,
+  "circuit_breakers": {
+    "total_tokens": 0,
+    "total_cost_usd": 0.0,
+    "error_counts": {}
+  }
+}

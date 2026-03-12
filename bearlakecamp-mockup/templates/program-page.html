@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Jr. High Week at Bear Lake Camp - Grades 6-8 Christian summer camp focused on identity formation in Christ and peer community.">
+    <title>Jr. High Week | Bear Lake Camp</title>
+
+    <!-- Google Fonts: Caveat for handwritten accents -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400&display=swap&text=KeyFeaturesSummerDatesWhattoBringReadytoRegister" rel="stylesheet">
+
+    <style>
+        /*
+        =====================================================
+        KEYSTATIC FIELD MAPPING GUIDE
+        =====================================================
+        This template uses the following Keystatic collections:
+
+        1. programs.title → h1.hero-heading
+        2. programs.ageRange → p.program-ages
+        3. programs.heroImage → section.hero background-image
+        4. programs.shortDescription → p.overview-short
+        5. programs.longDescription → div.overview-long (rich text)
+        6. programs.features[] → div.features-grid
+           - features[].title → h3
+           - features[].description → p
+        7. programs.dates[] → table.dates-table
+           - dates[].sessionName → td
+           - dates[].startDate/endDate → td
+           - dates[].pricing → td
+           - dates[].status → span.badge
+        8. programs.packingList[] → div.packing-accordion
+           - packingList[].category → h4
+           - packingList[].items[] → ul > li
+        9. programs.gallery[] → div.photo-grid
+           - gallery[].image → img.src
+           - gallery[].alt → img.alt
+           - gallery[].caption → p.caption
+        10. programs.faqs[] → div.faq-accordion
+            - faqs[].question → h4
+            - faqs[].answer → div (rich text)
+        11. programs.registrationUrl → a.cta-primary.href
+
+        =====================================================
+        */
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #F5F0E8; /* Cream */
+            color: #5A4A3A; /* Bark */
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #F5F0E8; /* Cream text on dark hero */
+            line-height: 1.1;
+        }
+
+        h2 {
+            font-size: 2.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #5A4A3A; /* Bark */
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: #2F4F3D; /* Forest Green */
+        }
+
+        h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #5A4A3A; /* Bark */
+        }
+
+        .handwritten {
+            font-family: 'Caveat', cursive;
+            color: #A07856; /* Clay */
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Hero Section - Keystatic: programs.heroImage, programs.title, programs.ageRange */
+        .hero {
+            position: relative;
+            height: 60vh;
+            min-height: 400px;
+            background: linear-gradient(rgba(47, 79, 61, 0.4), rgba(47, 79, 61, 0.6)),
+                        url('../../public/images/summer-program-and-general/lawn-games.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-content {
+            z-index: 10;
+        }
+
+        .program-ages {
+            color: #F5F0E8;
+            font-size: 1.25rem;
+            margin-top: 0.5rem;
+            opacity: 0.95;
+        }
+
+        .hero .cta-primary {
+            margin-top: 1.5rem;
+        }
+
+        /* Buttons */
+        .cta-primary {
+            display: inline-block;
+            background: #2F4F3D; /* Forest Green */
+            color: #F5F0E8; /* Cream */
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-primary:hover {
+            background: #1F3F2D;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(47, 79, 61, 0.3);
+        }
+
+        .cta-secondary {
+            display: inline-block;
+            background: #A07856; /* Clay */
+            color: #F5F0E8;
+            padding: 0.875rem 1.75rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cta-secondary:hover {
+            background: #8F6846;
+            transform: translateY(-2px);
+        }
+
+        .cta-tertiary {
+            display: inline-block;
+            background: transparent;
+            color: #4A7A9E; /* Lake Blue */
+            padding: 0.875rem 1.75rem;
+            border: 2px solid #4A7A9E;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cta-tertiary:hover {
+            background: #4A7A9E;
+            color: #F5F0E8;
+        }
+
+        /* Overview Section - Keystatic: programs.shortDescription, programs.longDescription */
+        .overview-section {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .overview-short {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #2F4F3D; /* Forest Green */
+        }
+
+        .overview-long {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .overview-ctas {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Features Grid - Keystatic: programs.features[] */
+        .features-section {
+            padding: 4rem 0;
+            background: #F5F0E8; /* Cream */
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #2F4F3D; /* Forest Green */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* Dates & Pricing Section - Keystatic: programs.dates[] */
+        .dates-section {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .dates-table-wrapper {
+            overflow-x: auto;
+            margin-top: 2rem;
+        }
+
+        .dates-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .dates-table thead {
+            background: #2F4F3D; /* Forest Green */
+            color: #F5F0E8; /* Cream */
+        }
+
+        .dates-table th,
+        .dates-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .dates-table tbody tr:hover {
+            background: #F5F0E8; /* Cream */
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .badge-open {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .badge-limited {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .badge-waitlist {
+            background: #FED7AA;
+            color: #9A3412;
+        }
+
+        .badge-closed {
+            background: #E5E7EB;
+            color: #6B7280;
+        }
+
+        /* Photo Gallery - Keystatic: programs.gallery[] */
+        .gallery-section {
+            padding: 4rem 0;
+            background: #F5F0E8; /* Cream */
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .photo-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            aspect-ratio: 4/3;
+            background: #D4C5B0; /* Sand */
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .photo-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: white;
+            padding: 2rem 1rem 1rem;
+            font-size: 0.875rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .photo-item:hover .photo-caption {
+            opacity: 1;
+        }
+
+        /* Packing List - Keystatic: programs.packingList[] */
+        .packing-section {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .packing-accordion {
+            margin-top: 2rem;
+        }
+
+        .accordion-item {
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            background: #F5F0E8; /* Cream */
+            padding: 1.25rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background: #D4C5B0; /* Sand */
+        }
+
+        .accordion-header h4 {
+            margin: 0;
+        }
+
+        .accordion-icon {
+            font-size: 1.25rem;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 1000px;
+        }
+
+        .accordion-content ul {
+            padding: 1.5rem 1.25rem;
+            list-style: none;
+        }
+
+        .accordion-content li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .accordion-content li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #2F4F3D; /* Forest Green */
+            font-weight: 600;
+        }
+
+        /* FAQ Section - Keystatic: programs.faqs[] */
+        .faq-section {
+            padding: 4rem 0;
+            background: #F5F0E8; /* Cream */
+        }
+
+        .faq-accordion {
+            margin-top: 2rem;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            border: 1px solid #E5E7EB;
+        }
+
+        .faq-question {
+            padding: 1.25rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: #F5F0E8; /* Cream */
+        }
+
+        .faq-question h4 {
+            margin: 0;
+            font-size: 1.125rem;
+        }
+
+        .faq-icon {
+            font-size: 1.25rem;
+            transition: transform 0.3s ease;
+            color: #4A7A9E; /* Lake Blue */
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 1000px;
+        }
+
+        .faq-answer-content {
+            padding: 0 1.25rem 1.25rem;
+            line-height: 1.7;
+        }
+
+        /* Final CTA Section */
+        .final-cta-section {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, #2F4F3D 0%, #1F3F2D 100%);
+            text-align: center;
+            color: #F5F0E8; /* Cream */
+        }
+
+        .final-cta-section h2 {
+            color: #F5F0E8; /* Cream */
+            margin-bottom: 1rem;
+        }
+
+        .final-cta-section p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .final-cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .final-cta-buttons .cta-primary {
+            background: #F5F0E8; /* Cream */
+            color: #2F4F3D; /* Forest Green */
+        }
+
+        .final-cta-buttons .cta-primary:hover {
+            background: #E5D0C8;
+        }
+
+        .final-cta-buttons .cta-tertiary {
+            border-color: #F5F0E8;
+            color: #F5F0E8;
+        }
+
+        .final-cta-buttons .cta-tertiary:hover {
+            background: rgba(245, 240, 232, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .photo-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .dates-table {
+                font-size: 0.875rem;
+            }
+
+            .dates-table th,
+            .dates-table td {
+                padding: 0.75rem 0.5rem;
+            }
+
+            .overview-ctas,
+            .final-cta-buttons {
+                flex-direction: column;
+            }
+
+            .cta-primary,
+            .cta-secondary,
+            .cta-tertiary {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .photo-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Skip Link for Accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #2F4F3D;
+            color: white;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            z-index: 100;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!--
+    =====================================================
+    HERO SECTION
+    Keystatic Fields:
+    - programs.heroImage → background-image
+    - programs.title → h1.hero-heading
+    - programs.ageRange → p.program-ages
+    - programs.registrationUrl → a.cta-primary href
+    =====================================================
+    -->
+    <section class="hero" role="banner">
+        <div class="hero-content">
+            <h1 class="hero-heading">Jr. High Week</h1>
+            <p class="program-ages">Grades 6-8 (Ages 11-14)</p>
+            <a href="https://www.ultracamp.com/clientlogin.aspx?idCamp=268"
+               class="cta-primary"
+               target="_blank"
+               rel="noopener noreferrer">
+                Register Now
+            </a>
+        </div>
+    </section>
+
+    <main id="main-content">
+        <!--
+        =====================================================
+        OVERVIEW SECTION
+        Keystatic Fields:
+        - programs.shortDescription → p.overview-short
+        - programs.longDescription → div.overview-long
+        =====================================================
+        -->
+        <section class="overview-section">
+            <div class="container">
+                <p class="handwritten">About This Program</p>
+                <h2>Discover Who You Are in Christ</h2>
+
+                <p class="overview-short">
+                    Jr. High Week is designed for students navigating the critical transition from childhood to adolescence,
+                    where questions of identity, belonging, and faith become central to their development.
+                </p>
+
+                <div class="overview-long">
+                    <p>
+                        At Bear Lake Camp, we create a safe, Christ-centered environment where 6th-8th graders can explore
+                        their identity in Christ through engaging Bible teaching, authentic worship, and meaningful relationships.
+                        Our experienced counselors and speakers understand the unique challenges of early adolescence and help
+                        campers build a foundation of faith that will sustain them through high school and beyond.
+                    </p>
+                    <p>
+                        Each day includes interactive Bible studies, outdoor adventures, camp-wide games, and evening worship
+                        gatherings designed to challenge students spiritually while giving them space to have fun and build
+                        lifelong friendships.
+                    </p>
+                </div>
+
+                <div class="overview-ctas">
+                    <a href="#dates" class="cta-secondary">See Dates & Pricing</a>
+                    <a href="#packing" class="cta-tertiary">What to Bring</a>
+                </div>
+            </div>
+        </section>
+
+        <!--
+        =====================================================
+        KEY FEATURES GRID
+        Keystatic Fields:
+        - programs.features[] → div.features-grid
+        - features[].title → h3
+        - features[].description → p
+        - features[].icon → span.feature-icon (optional)
+        =====================================================
+        -->
+        <section class="features-section">
+            <div class="container">
+                <p class="handwritten">Key Features</p>
+                <h2>What Makes Jr. High Week Special</h2>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <span class="feature-icon">✝️</span>
+                        <h3>Identity Formation in Christ</h3>
+                        <p>
+                            Age-appropriate Bible teaching that helps students understand who they are in Christ,
+                            addressing questions of self-worth, purpose, and God's design for their lives.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <span class="feature-icon">🤝</span>
+                        <h3>Peer Community & Belonging</h3>
+                        <p>
+                            Small group discussions and cabin times create safe spaces for students to share honestly,
+                            ask hard questions, and discover they're not alone in their faith journey.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <span class="feature-icon">🧭</span>
+                        <h3>Foundational Faith Exploration</h3>
+                        <p>
+                            Interactive workshops covering prayer, Bible study methods, and spiritual disciplines
+                            designed for young teens beginning to own their faith.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <span class="feature-icon">🏕️</span>
+                        <h3>Adventure & Fun</h3>
+                        <p>
+                            Lake activities, high ropes course, campfires, and all-camp games that build confidence,
+                            teamwork, and create unforgettable memories.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <span class="feature-icon">👥</span>
+                        <h3>Trained Counselors</h3>
+                        <p>
+                            Our staff are carefully selected for their heart for students, spiritual maturity,
+                            and ability to mentor young teens through this pivotal stage of life.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <span class="feature-icon">🎵</span>
+                        <h3>Engaging Worship</h3>
+                        <p>
+                            Modern worship music and interactive teaching that connects with jr. high students'
+                            energy and enthusiasm while pointing them to Jesus.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--
+        =====================================================
+        DATES & PRICING SECTION
+        Keystatic Fields:
+        - programs.dates[] → table.dates-table
+        - dates[].sessionName → td
+        - dates[].startDate → td (format: June 14-20, 2026)
+        - dates[].pricing → td (format: $425)
+        - dates[].depositAmount → td (format: $125)
+        - dates[].status → span.badge (values: open, limited, waitlist, closed)
+        =====================================================
+        -->
+        <section class="dates-section" id="dates">
+            <div class="container">
+                <p class="handwritten">Summer Dates</p>
+                <h2>2026 Jr. High Weeks</h2>
+
+                <div class="dates-table-wrapper">
+                    <table class="dates-table">
+                        <thead>
+                            <tr>
+                                <th>Session</th>
+                                <th>Dates</th>
+                                <th>Price</th>
+                                <th>Deposit</th>
+                                <th>Status</th>
+                                <th>Register</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Week 1</strong></td>
+                                <td>June 14-20, 2026</td>
+                                <td>$425</td>
+                                <td>$125</td>
+                                <td><span class="badge badge-open">Open</span></td>
+                                <td>
+                                    <a href="https://www.ultracamp.com/clientlogin.aspx?idCamp=268"
+                                       class="cta-secondary"
+                                       style="padding: 0.5rem 1rem; font-size: 0.875rem;"
+                                       target="_blank"
+                                       rel="noopener noreferrer">
+                                        Register
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Week 2</strong></td>
+                                <td>June 21-27, 2026</td>
+                                <td>$425</td>
+                                <td>$125</td>
+                                <td><span class="badge badge-limited">Limited Spots</span></td>
+                                <td>
+                                    <a href="https://www.ultracamp.com/clientlogin.aspx?idCamp=268"
+                                       class="cta-secondary"
+                                       style="padding: 0.5rem 1rem; font-size: 0.875rem;"
+                                       target="_blank"
+                                       rel="noopener noreferrer">
+                                        Register
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Week 3</strong></td>
+                                <td>July 5-11, 2026</td>
+                                <td>$425</td>
+                                <td>$125</td>
+                                <td><span class="badge badge-open">Open</span></td>
+                                <td>
+                                    <a href="https://www.ultracamp.com/clientlogin.aspx?idCamp=268"
+                                       class="cta-secondary"
+                                       style="padding: 0.5rem 1rem; font-size: 0.875rem;"
+                                       target="_blank"
+                                       rel="noopener noreferrer">
+                                        Register
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p style="margin-top: 1.5rem; color: #8A8A7A; font-size: 0.875rem;">
+                    <strong>Note:</strong> Full payment is due 30 days before your session start date.
+                    Cancellations made more than 30 days before camp are eligible for a full refund minus a $50 processing fee.
+                    Financial assistance is available—please contact us at
+                    <a href="mailto:ben@bearlakecamp.com" style="color: #4A7A9E;">ben@bearlakecamp.com</a>.
+                </p>
+            </div>
+        </section>
+
+        <!--
+        =====================================================
+        PHOTO GALLERY SECTION
+        Keystatic Fields:
+        - programs.gallery[] → div.photo-grid
+        - gallery[].image → img.src
+        - gallery[].alt → img.alt
+        - gallery[].caption → p.photo-caption
+        =====================================================
+        -->
+        <section class="gallery-section">
+            <div class="container">
+                <p class="handwritten">Life at Jr. High Camp</p>
+                <h2>See What Camp Is Like</h2>
+
+                <div class="photo-grid">
+                    <div class="photo-item">
+                        <img src="../../public/images/summer-program-and-general/jr-high-Bible-study-9-scaled.jpg"
+                             alt="Jr. High students in small group Bible study"
+                             loading="lazy">
+                        <p class="photo-caption">Small group Bible study times create safe spaces for honest questions</p>
+                    </div>
+
+                    <div class="photo-item">
+                        <img src="../../public/images/summer-program-and-general/jr-high-girls-jumping-in-lake.jpg"
+                             alt="Jr. High campers jumping off dock into lake"
+                             loading="lazy">
+                        <p class="photo-caption">Lake activities and swimming are daily highlights</p>
+                    </div>
+
+                    <div class="photo-item">
+                        <img src="../../public/images/summer-program-and-general/campfire.jpg"
+                             alt="Jr. High students gathered around campfire"
+                             loading="lazy">
+                        <p class="photo-caption">Evening worship gatherings connect students to God's presence</p>
+                    </div>
+
+                    <div class="photo-item">
+                        <img src="../../public/images/summer-program-and-general/jr-high-boys-giant-water-slide.jpg"
+                             alt="Jr. High campers on giant water slide"
+                             loading="lazy">
+                        <p class="photo-caption">Water activities and giant slides bring excitement and adventure</p>
+                    </div>
+
+                    <div class="photo-item">
+                        <img src="../../public/images/summer-program-and-general/volleyball.jpg"
+                             alt="Students playing volleyball outdoors"
+                             loading="lazy">
+                        <p class="photo-caption">Sports and games build teamwork and friendly competition</p>
+                    </div>
+
+                    <div class="photo-item">
+                        <img src="../../public/images/summer-program-and-general/cheering-in-gym.jpg"
+                             alt="Jr. High campers cheering during all-camp game"
+                             loading="lazy">
+                        <p class="photo-caption">All-camp games bring energy, competition, and lots of laughs</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--
+        =====================================================
+        PACKING LIST SECTION
+        Keystatic Fields:
+        - programs.packingList[] → div.packing-accordion
+        - packingList[].category → h4 (accordion header)
+        - packingList[].items[] → ul > li
+        =====================================================
+        -->
+        <section class="packing-section" id="packing">
+            <div class="container">
+                <p class="handwritten">What to Bring</p>
+                <h2>Jr. High Packing List</h2>
+
+                <div class="packing-accordion">
+                    <div class="accordion-item active">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h4>Clothing</h4>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <ul>
+                                <li>6-7 t-shirts (camp gets messy!)</li>
+                                <li>2-3 pairs of shorts</li>
+                                <li>1 pair of long pants (for cooler evenings)</li>
+                                <li>1 sweatshirt or jacket</li>
+                                <li>Underwear and socks for each day</li>
+                                <li>Modest swimsuit (one-piece or tankini for girls)</li>
+                                <li>Pajamas</li>
+                                <li>Comfortable walking shoes/sneakers</li>
+                                <li>Flip-flops or sandals for shower</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h4>Bedding & Toiletries</h4>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <ul>
+                                <li>Sleeping bag or twin sheets and blanket</li>
+                                <li>Pillow</li>
+                                <li>Towel and washcloth</li>
+                                <li>Toothbrush and toothpaste</li>
+                                <li>Shampoo and soap</li>
+                                <li>Deodorant</li>
+                                <li>Sunscreen (SPF 30+ recommended)</li>
+                                <li>Bug spray</li>
+                                <li>Any prescription medications (give to nurse on arrival)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h4>Other Essentials</h4>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <ul>
+                                <li>Bible, notebook, and pen</li>
+                                <li>Water bottle (refill stations throughout camp)</li>
+                                <li>Flashlight or headlamp</li>
+                                <li>Backpack or day bag</li>
+                                <li>Sunglasses and hat</li>
+                                <li>Laundry bag for dirty clothes</li>
+                                <li>Rain jacket (weather can be unpredictable)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h4>Optional Items</h4>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <ul>
+                                <li>Camera (disposable or waterproof)</li>
+                                <li>Book for free time</li>
+                                <li>Modest costume/outfit for theme night</li>
+                                <li>Stamps and stationery (for parent letters)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <h4>Please DO NOT Bring</h4>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <ul>
+                                <li>Cell phones, tablets, gaming devices (we provide a phone for emergencies)</li>
+                                <li>Expensive jewelry or electronics</li>
+                                <li>Fireworks, lighters, or matches</li>
+                                <li>Weapons of any kind (including pocket knives)</li>
+                                <li>Inappropriate clothing (see dress code in FAQ)</li>
+                                <li>Pets</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <p style="margin-top: 2rem; padding: 1.5rem; background: #FEF3C7; border-left: 4px solid #F59E0B; border-radius: 4px;">
+                    <strong>Lost & Found:</strong> We do our best to return lost items, but please label everything with your camper's name.
+                    Unclaimed items are donated 30 days after camp ends.
+                </p>
+            </div>
+        </section>
+
+        <!--
+        =====================================================
+        FAQ SECTION
+        Keystatic Fields:
+        - programs.faqs[] → div.faq-accordion
+        - faqs[].question → h4
+        - faqs[].answer → div.faq-answer-content (supports rich text/HTML)
+        =====================================================
+        -->
+        <section class="faq-section">
+            <div class="container">
+                <p class="handwritten">Common Questions</p>
+                <h2>Frequently Asked Questions</h2>
+
+                <div class="faq-accordion">
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h4>What if my child has dietary restrictions or food allergies?</h4>
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>
+                                    We accommodate most dietary needs including vegetarian, vegan, gluten-free, and dairy-free diets.
+                                    During registration, you'll indicate any allergies or restrictions, and our kitchen staff will
+                                    prepare alternative meals as needed. For severe allergies (e.g., nut allergies), our camp nurse
+                                    will review your camper's emergency action plan upon arrival.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h4>Is there cell phone access? Can my child call home?</h4>
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>
+                                    We are a "device-free" camp to help students fully engage with their peers and God without distractions.
+                                    Cell phones are collected on arrival and returned at pickup. If your camper needs to contact you
+                                    (or vice versa), our office phone is available during designated times. In case of emergency,
+                                    our staff will contact you immediately.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h4>What is the counselor-to-camper ratio?</h4>
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>
+                                    For Jr. High Week, we maintain a 1:6 counselor-to-camper ratio. Each cabin has 2 counselors
+                                    for approximately 12 campers, ensuring personalized attention and safety. All counselors are
+                                    background-checked, trained in first aid/CPR, and selected for their spiritual maturity and
+                                    heart for students.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h4>What does a typical day look like at Jr. High camp?</h4>
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p><strong>Sample Daily Schedule:</strong></p>
+                                <ul style="list-style: none; padding-left: 0;">
+                                    <li><strong>7:30 AM</strong> - Wake up and cabin cleanup</li>
+                                    <li><strong>8:00 AM</strong> - Breakfast</li>
+                                    <li><strong>9:00 AM</strong> - Morning worship and teaching</li>
+                                    <li><strong>10:30 AM</strong> - Small group discussion</li>
+                                    <li><strong>12:00 PM</strong> - Lunch</li>
+                                    <li><strong>1:00 PM</strong> - Free time (lake, gym, games)</li>
+                                    <li><strong>3:00 PM</strong> - Afternoon activities (high ropes, crafts, sports)</li>
+                                    <li><strong>5:30 PM</strong> - Dinner</li>
+                                    <li><strong>7:00 PM</strong> - Evening worship and testimony time</li>
+                                    <li><strong>9:00 PM</strong> - Cabin time (games, devotions, prayer)</li>
+                                    <li><strong>10:30 PM</strong> - Lights out</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h4>What is your dress code policy?</h4>
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>
+                                    We ask campers to dress modestly out of respect for themselves and others. Guidelines include:
+                                </p>
+                                <ul>
+                                    <li>Shorts and skirts should be fingertip length or longer</li>
+                                    <li>Tank tops should have 2-inch wide straps (no spaghetti straps)</li>
+                                    <li>Shirts should cover midriff when arms are raised</li>
+                                    <li>Swimsuits: one-piece or modest tankini for girls; board shorts for guys</li>
+                                    <li>No clothing with inappropriate language, images, or references to drugs/alcohol</li>
+                                </ul>
+                                <p>
+                                    If a camper brings clothing that doesn't meet these guidelines, we'll ask them to change
+                                    or provide camp-appropriate alternatives.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFAQ(this)">
+                            <h4>What if my child has never been to camp before or struggles with homesickness?</h4>
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-content">
+                                <p>
+                                    Homesickness is completely normal, especially for first-time campers! Our counselors are trained
+                                    to recognize and address homesickness with compassion. Strategies include:
+                                </p>
+                                <ul>
+                                    <li>Keeping campers engaged in activities</li>
+                                    <li>Buddy system to build quick friendships</li>
+                                    <li>One-on-one check-ins from counselors</li>
+                                    <li>Encouragement to focus on the present moment rather than counting down days</li>
+                                </ul>
+                                <p>
+                                    If homesickness persists and impacts your child's ability to participate, we'll contact you
+                                    to discuss next steps. However, most campers overcome homesickness within the first 24-48 hours!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p style="margin-top: 2rem; text-align: center; color: #8A8A7A;">
+                    Still have questions? <a href="mailto:ben@bearlakecamp.com" style="color: #4A7A9E; font-weight: 600;">Contact us at ben@bearlakecamp.com</a>
+                </p>
+            </div>
+        </section>
+
+        <!--
+        =====================================================
+        FINAL CTA SECTION
+        Keystatic Fields:
+        - programs.registrationUrl → a.cta-primary href
+        =====================================================
+        -->
+        <section class="final-cta-section">
+            <div class="container">
+                <p class="handwritten" style="color: #F5F0E8;">Ready to Register?</p>
+                <h2>Give Your Student a Summer They'll Never Forget</h2>
+                <p>
+                    Spaces fill quickly for Jr. High Week. Reserve your camper's spot today and
+                    lock in your preferred session dates.
+                </p>
+
+                <div class="final-cta-buttons">
+                    <a href="https://www.ultracamp.com/clientlogin.aspx?idCamp=268"
+                       class="cta-primary"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        Register Now
+                    </a>
+                    <a href="mailto:ben@bearlakecamp.com" class="cta-tertiary">
+                        Have Questions? Email Us
+                    </a>
+                </div>
+
+                <p style="margin-top: 2rem; font-size: 0.875rem; opacity: 0.9;">
+                    Questions about payment plans or financial assistance? We're here to help make camp accessible for your family.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <!--
+    =====================================================
+    JAVASCRIPT FOR ACCORDION FUNCTIONALITY
+    =====================================================
+    -->
+    <script>
+        // Toggle packing list accordion
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const allItems = document.querySelectorAll('.accordion-item');
+
+            // Close all other items
+            allItems.forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.classList.remove('active');
+                }
+            });
+
+            // Toggle current item
+            item.classList.toggle('active');
+        }
+
+        // Toggle FAQ accordion
+        function toggleFAQ(question) {
+            const item = question.parentElement;
+            const allItems = document.querySelectorAll('.faq-item');
+
+            // Close all other items
+            allItems.forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.classList.remove('active');
+                }
+            });
+
+            // Toggle current item
+            item.classList.toggle('active');
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

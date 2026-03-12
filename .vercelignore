@@ -1,0 +1,48 @@
+# Exclude from Vercel deployment
+
+# Original site backup (108MB)
+bearlakecamp-original
+
+# Development/build artifacts
+.next
+*.tsbuildinfo
+
+# Documentation and analysis
+docs/analysis
+docs/tasks
+cos
+bearlakecamp-mockup
+
+# Logs
+logs
+*.log
+logs_result.csv
+
+# Test files
+**/*.spec.ts
+**/*.spec.tsx
+**/*.test.ts
+**/*.test.tsx
+__tests__
+__mocks__
+tests
+coverage
+
+# Requirements tracking (dev only)
+requirements
+
+# Scripts (dev only, except build helpers needed by Vercel)
+scripts/**
+!scripts/ignore-build.sh
+
+# Git
+.git
+
+# Editor
+.vscode
+.idea
+
+# Misc
+*.md
+!README.md
+RECOVERY-STATUS.md

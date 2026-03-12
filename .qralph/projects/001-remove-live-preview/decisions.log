@@ -1,0 +1,7 @@
+[10:14:23] Project initialized: 001-remove-live-preview
+[10:14:23] Request: 1. REMOVE Live Preview feature completely - strip out all preview components and functionality from the Keystatic editor. 2. REVERT homepage hero back to video (not image) - undo the content change that switched from heroVideo to heroImage. 3. DELETE all smoke tests and stop doing smoke testing entirely - remove scripts/smoke-test.sh and all related smoke test infrastructure
+[10:14:23] Mode: coding
+[10:25:01] PAUSE command detected - waiting for user
+[10:25:06] PAUSE command detected - waiting for user
+[10:25:17] Selected agents: security-reviewer, code-quality-auditor, architecture-advisor, requirements-analyst, pe-reviewer
+[10:29:00] Synthesis complete: 36 P0, 53 P1, 42 P2

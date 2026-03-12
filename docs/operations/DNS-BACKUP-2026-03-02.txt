@@ -1,0 +1,61 @@
+;;
+;; Domain:     bearlakecamp.com.
+;; Exported:   2026-03-02 07:19:08
+;;
+;; This file is intended for use for informational and archival
+;; purposes ONLY and MUST be edited before use on a production
+;; DNS server.  In particular, you must:
+;;   -- update the SOA record with the correct authoritative name server
+;;   -- update the SOA record with the contact e-mail address information
+;;   -- update the NS record(s) with the authoritative name servers for this domain.
+;;
+;; For further information, please consult the BIND documentation
+;; located on the following website:
+;;
+;; http://www.isc.org/
+;;
+;; And RFC 1035:
+;;
+;; http://www.ietf.org/rfc/rfc1035.txt
+;;
+;; Please note that we do NOT offer technical support for any use
+;; of this zone data, the BIND name server, or any other third-party
+;; DNS software.
+;;
+;; Use at your own risk.
+;; SOA Record
+bearlakecamp.com	3600	IN	SOA	brad.ns.cloudflare.com. dns.cloudflare.com. 2052410254 10000 2400 604800 3600
+
+;; NS Records
+bearlakecamp.com.	86400	IN	NS	brad.ns.cloudflare.com.
+bearlakecamp.com.	86400	IN	NS	brynne.ns.cloudflare.com.
+
+;; A Records
+bearlakecamp.com.	1	IN	A	173.236.245.156 ; cf_tags=cf-proxied:true
+ftp.bearlakecamp.com.	1	IN	A	173.236.245.156 ; cf_tags=cf-proxied:true
+mysql.bearlakecamp.com.	1	IN	A	208.113.244.50 ; cf_tags=cf-proxied:true
+ssh.bearlakecamp.com.	1	IN	A	173.236.245.156 ; cf_tags=cf-proxied:true
+www.bearlakecamp.com.	1	IN	A	173.236.245.156 ; cf_tags=cf-proxied:true
+
+;; CNAME Records
+autodiscover.bearlakecamp.com.	1	IN	CNAME	autodiscover.outlook.com. ; cf_tags=cf-proxied:true
+_domainconnect.bearlakecamp.com.	1	IN	CNAME	_domainconnect.gd.domaincontrol.com. ; cf_tags=cf-proxied:true
+k2._domainkey.bearlakecamp.com.	1	IN	CNAME	dkim2.mcsv.net. ; cf_tags=cf-proxied:false
+k3._domainkey.bearlakecamp.com.	1	IN	CNAME	dkim3.mcsv.net. ; cf_tags=cf-proxied:false
+pay.bearlakecamp.com.	1	IN	CNAME	paylinks.commerce.godaddy.com. ; cf_tags=cf-proxied:true
+prelaunch.bearlakecamp.com.	600	IN	CNAME	0ead492d2d5ee1bf.vercel-dns-017.com. ; cf_tags=cf-proxied:false
+staging.bearlakecamp.com.	1	IN	CNAME	bearlakecamp.pages.dev. ; cf_tags=cf-proxied:true
+
+;; MX Records
+bearlakecamp.com.	1	IN	MX	0 bearlakecamp-com.mail.protection.outlook.com.
+www.bearlakecamp.com.	1	IN	MX	0 www-bearlakecamp-com.mail.protection.outlook.com.
+
+;; NS Records
+bearlakecamp.com.	1	IN	NS	ns76.domaincontrol.com.
+bearlakecamp.com.	1	IN	NS	ns75.domaincontrol.com.
+
+;; TXT Records
+bearlakecamp.com.	1	IN	TXT	"v=spf1 include:spf.protection.outlook.com -all"
+_dmarc.bearlakecamp.com.	1	IN	TXT	"v=DMARC1; p=none;"
+_vercel.bearlakecamp.com.	600	IN	TXT	"vc-domain-verify=prelaunch.bearlakecamp.com,894ff36d7f69264f9091,dc"
+www.bearlakecamp.com.	1	IN	TXT	"v=spf1 include:spf.protection.outlook.com -all"

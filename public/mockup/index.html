@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bear Lake Camp - Where Faith Grows Wild. Christian summer camp for Jr. High and High School students.">
+    <title>Bear Lake Camp - Where Faith Grows Wild</title>
+
+    <!-- Google Fonts: Caveat for handwritten accents -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400&display=swap&text=WhereFaithGrowsWildOurMissionJrHighSchool" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!--
+    =====================================================
+    TRUST BAR - Sticky on mobile, builds parent confidence
+    Implements: Styleguide § Trust Bar (pg 719-819)
+    =====================================================
+    -->
+    <section class="trust-bar" role="complementary" aria-label="Trust signals">
+        <div class="container">
+            <div class="trust-items">
+                <div class="trust-item">
+                    <span class="trust-icon" aria-hidden="true">✓</span>
+                    <span>ACA Accredited</span>
+                </div>
+                <div class="trust-item">
+                    <span class="trust-number">500+</span>
+                    <span>Families Trust Us</span>
+                </div>
+                <div class="trust-item">
+                    <span>Since 1948</span>
+                </div>
+                <div class="trust-item">
+                    <span class="star-rating">⭐ 4.9/5</span>
+                    <span>(137 Reviews)</span>
+                </div>
+                <div class="trust-item">
+                    <span class="trust-number">80%</span>
+                    <span>Return Rate</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--
+    =====================================================
+    HERO SECTION - Video background with overlay text
+    Implements: Styleguide § Hero Section (pg 592-710)
+    Note: Using placeholder image for mockup; video would be added in production
+    =====================================================
+    -->
+    <section class="hero" role="banner">
+        <!-- Video placeholder - in production, this would be a 15-30 sec loop -->
+        <div class="hero-video-placeholder">
+            <!-- Simulates video with background image from existing assets -->
+            <div class="hero-overlay"></div>
+        </div>
+
+        <div class="hero-content">
+            <h1 class="hero-heading">Bear Lake Camp</h1>
+            <p class="hero-tagline handwritten">Where Faith Grows Wild</p>
+            <p class="hero-subtitle">Jr. High (Grades 6-8) | High School (Grades 9-12)</p>
+            <a href="#programs" class="cta-primary">Find Your Week ↓</a>
+        </div>
+
+        <!-- Animated scroll indicator -->
+        <div class="scroll-indicator" aria-hidden="true">↓</div>
+    </section>
+
+    <main id="main-content">
+        <!--
+        =====================================================
+        MISSION SECTION - Background photo with text overlay
+        Implements: Styleguide § Photography Style (pg 405-517)
+        =====================================================
+        -->
+        <section class="mission-section">
+            <div class="mission-overlay"></div>
+            <div class="container mission-content">
+                <h2 class="handwritten mission-kicker">Our Mission</h2>
+                <p class="mission-statement">
+                    <strong>Faith. Adventure. Transformation.</strong>
+                </p>
+                <p class="mission-description">
+                    Bear Lake Camp exists to be a Christian Ministry Center which challenges individuals
+                    toward maturity in Christ and to provide a positive environment through services and facilities.
+                </p>
+            </div>
+        </section>
+
+        <!--
+        =====================================================
+        PROGRAM CARDS - Jr. High & High School
+        Implements: Styleguide § Program Cards (pg 823-970)
+        Uses existing program imagery with new design treatment
+        =====================================================
+        -->
+        <section class="programs" id="programs">
+            <div class="container">
+                <h2 class="section-heading">Which Camp Week Is Right for You?</h2>
+
+                <div class="program-grid">
+                    <!-- Jr. High Card -->
+                    <div class="program-card">
+                        <div class="program-image-wrapper">
+                            <img src="../programs/jr-high-group.jpg"
+                                 alt="Jr. High campers laughing during low ropes course activities"
+                                 class="program-image"
+                                 loading="lazy">
+                        </div>
+                        <div class="program-content">
+                            <h3>Jr. High Week</h3>
+                            <p class="program-ages">Grades 6-8 (Ages 11-14)</p>
+                            <ul class="program-features">
+                                <li>Identity formation in Christ</li>
+                                <li>Peer community & belonging</li>
+                                <li>Foundational faith exploration</li>
+                            </ul>
+                            <a href="#contact" class="cta-secondary">See Dates & Pricing</a>
+                        </div>
+                    </div>
+
+                    <!-- High School Card -->
+                    <div class="program-card">
+                        <div class="program-image-wrapper">
+                            <img src="../programs/high-school-activity.jpg"
+                                 alt="High school campers in deep conversation during outdoor activity"
+                                 class="program-image"
+                                 loading="lazy">
+                        </div>
+                        <div class="program-content">
+                            <h3>High School Week</h3>
+                            <p class="program-ages">Grades 9-12 (Ages 15-18)</p>
+                            <ul class="program-features">
+                                <li>Leadership development</li>
+                                <li>Christian worldview formation</li>
+                                <li>Vocation & calling discernment</li>
+                            </ul>
+                            <a href="#contact" class="cta-secondary">See Dates & Pricing</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--
+        =====================================================
+        VIDEO TESTIMONIALS - Placeholder for lite-youtube-embed
+        Implements: Styleguide § Video Testimonials (pg 974-1139)
+        =====================================================
+        -->
+        <section class="testimonials">
+            <div class="container">
+                <h2 class="section-heading">Hear From Families</h2>
+
+                <div class="testimonial-grid">
+                    <!-- Parent Testimonial -->
+                    <div class="testimonial-video">
+                        <div class="video-placeholder">
+                            <div class="video-play-button" aria-label="Play parent testimonial">▶</div>
+                        </div>
+                        <p class="testimonial-caption">Parent: "Our son came home with a deeper faith"</p>
+                        <span class="testimonial-duration">▶ Play (0:45)</span>
+                    </div>
+
+                    <!-- Camper Testimonial -->
+                    <div class="testimonial-video">
+                        <div class="video-placeholder">
+                            <div class="video-play-button" aria-label="Play camper testimonial">▶</div>
+                        </div>
+                        <p class="testimonial-caption">Camper: "I made friends who challenge me to grow"</p>
+                        <span class="testimonial-duration">▶ Play (0:30)</span>
+                    </div>
+                </div>
+
+                <a href="#contact" class="cta-tertiary">See More Stories →</a>
+            </div>
+        </section>
+
+        <!--
+        =====================================================
+        GALLERY - Photo grid using existing camp images
+        Implements: Styleguide § Photography Style (pg 405-517)
+        Shows real camp life with natural, candid photography
+        =====================================================
+        -->
+        <section class="gallery-section">
+            <div class="container">
+                <h2 class="section-heading handwritten">Life at Camp</h2>
+
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="../gallery/backflip-water.jpg"
+                             alt="Camper doing backflip into lake water"
+                             loading="lazy">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../gallery/campfire.jpg"
+                             alt="Evening campfire worship gathering"
+                             loading="lazy">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../gallery/bible-study.jpg"
+                             alt="Small group Bible study session"
+                             loading="lazy">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../gallery/volleyball.jpg"
+                             alt="Campers playing volleyball"
+                             loading="lazy">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../gallery/cross-lake.jpg"
+                             alt="Cross visible across Bear Lake at sunset"
+                             loading="lazy">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="../gallery/lawn-games.jpg"
+                             alt="Campers playing lawn games outdoors"
+                             loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--
+        =====================================================
+        INSTAGRAM FEED - Placeholder for API integration
+        Implements: Styleguide § Instagram Feed (pg 1143-1264)
+        =====================================================
+        -->
+        <section class="instagram-feed">
+            <div class="container">
+                <h2 class="section-heading handwritten">#FaithGrowsWild</h2>
+                <p class="section-subtitle">See what campers and families are sharing</p>
+
+                <div class="instagram-grid">
+                    <!-- Placeholder Instagram posts -->
+                    <div class="instagram-post">
+                        <div class="instagram-placeholder">
+                            <span class="instagram-icon" aria-hidden="true">📷</span>
+                        </div>
+                        <div class="instagram-overlay">👁️ View on Instagram</div>
+                    </div>
+                    <div class="instagram-post">
+                        <div class="instagram-placeholder">
+                            <span class="instagram-icon" aria-hidden="true">📷</span>
+                        </div>
+                        <div class="instagram-overlay">👁️ View on Instagram</div>
+                    </div>
+                    <div class="instagram-post">
+                        <div class="instagram-placeholder">
+                            <span class="instagram-icon" aria-hidden="true">📷</span>
+                        </div>
+                        <div class="instagram-overlay">👁️ View on Instagram</div>
+                    </div>
+                    <div class="instagram-post">
+                        <div class="instagram-placeholder">
+                            <span class="instagram-icon" aria-hidden="true">📷</span>
+                        </div>
+                        <div class="instagram-overlay">👁️ View on Instagram</div>
+                    </div>
+                    <div class="instagram-post">
+                        <div class="instagram-placeholder">
+                            <span class="instagram-icon" aria-hidden="true">📷</span>
+                        </div>
+                        <div class="instagram-overlay">👁️ View on Instagram</div>
+                    </div>
+                    <div class="instagram-post">
+                        <div class="instagram-placeholder">
+                            <span class="instagram-icon" aria-hidden="true">📷</span>
+                        </div>
+                        <div class="instagram-overlay">👁️ View on Instagram</div>
+                    </div>
+                </div>
+
+                <a href="https://instagram.com/bearlakecamp" class="cta-tertiary" target="_blank" rel="noopener">
+                    Follow Us on Instagram →
+                </a>
+            </div>
+        </section>
+
+        <!--
+        =====================================================
+        CONTACT SECTION
+        =====================================================
+        -->
+        <section class="contact-section" id="contact">
+            <div class="container">
+                <h2 class="section-heading">Get In Touch</h2>
+                <p class="section-subtitle">Have questions about camp? We'd love to hear from you!</p>
+
+                <div class="contact-buttons">
+                    <a href="mailto:ben@bearlakecamp.com" class="cta-primary">Email Us</a>
+                    <a href="#programs" class="cta-secondary">View Programs</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!--
+    =====================================================
+    MOBILE STICKY CTA - Shows after scrolling past hero
+    Implements: Styleguide § Mobile Sticky CTA (pg 1268-1379)
+    Only visible on mobile/tablet (< 1024px)
+    =====================================================
+    -->
+    <div class="sticky-cta-mobile" id="sticky-cta">
+        <a href="https://www.ultracamp.com/clientlogin.aspx?idCamp=268"
+           class="sticky-cta-button cta-primary"
+           target="_blank"
+           rel="noopener noreferrer">
+            Register Now
+        </a>
+        <a href="#programs" class="sticky-cta-button cta-secondary-outline">
+            Find Your Week
+        </a>
+    </div>
+
+    <!--
+    =====================================================
+    FOOTER
+    =====================================================
+    -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>Bear Lake Camp</h3>
+                    <p>To Know Christ - Phil. 3:10</p>
+                    <p>A Christian Ministry Center challenging individuals toward maturity in Christ.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#main-content">Home</a></li>
+                        <li><a href="#programs">Programs</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="https://www.ultracamp.com/clientlogin.aspx?idCamp=268" target="_blank" rel="noopener noreferrer">Register</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect With Us</h3>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/blc.bear.lake.camp/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">FB</a>
+                        <a href="https://www.instagram.com/bearlakecamp/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">IG</a>
+                        <a href="https://www.youtube.com/channel/UCiw_MKtM5hN83IghEjydmGw" target="_blank" rel="noopener noreferrer" aria-label="YouTube">YT</a>
+                    </div>
+                    <p><a href="mailto:ben@bearlakecamp.com">ben@bearlakecamp.com</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Bear Lake Camp. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!--
+    =====================================================
+    SCROLL BEHAVIOR SCRIPT
+    Implements: Styleguide § Mobile Sticky CTA (pg 1346-1359)
+    and § Scroll-Triggered Animations (pg 1694-1748)
+    =====================================================
+    -->
+    <script>
+        // Show sticky CTA after scrolling past hero
+        const stickyCTA = document.getElementById('sticky-cta');
+        const heroHeight = window.innerHeight; // 100vh hero height
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > heroHeight * 0.5) {
+                stickyCTA.classList.add('visible');
+            } else {
+                stickyCTA.classList.remove('visible');
+            }
+        });
+
+        // Fade-in sections on scroll using Intersection Observer
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all major sections
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('fade-trigger');
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

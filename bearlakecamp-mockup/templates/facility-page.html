@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The Chapel at Bear Lake Camp - A peaceful worship space seating 150, perfect for church retreats and camp gatherings.">
+    <title>Chapel | Bear Lake Camp Facilities</title>
+
+    <style>
+        /*
+        =====================================================
+        KEYSTATIC FIELD MAPPING GUIDE - FACILITY PAGE
+        =====================================================
+
+        Keystatic Collections:
+        - facilities.title → h1.hero-heading
+        - facilities.heroImage → section.hero background-image
+        - facilities.description → div.description-content (rich text)
+        - facilities.specifications[] → div.specs-grid
+          - specifications[].label → dt
+          - specifications[].value → dd
+        - facilities.amenities[] → ul.amenities-list > li
+        - facilities.gallery[] → div.facility-gallery
+          - gallery[].image → img.src
+          - gallery[].alt → img.alt
+          - gallery[].caption → p.caption
+        - facilities.relatedPages[] → div.related-links
+
+        =====================================================
+        */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #F5F0E8; /* Cream */
+            color: #5A4A3A; /* Bark */
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #F5F0E8; /* Cream on dark hero */
+        }
+
+        h2 {
+            font-size: 2.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #2F4F3D; /* Forest Green */
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #5A4A3A; /* Bark */
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 50vh;
+            min-height: 400px;
+            background: linear-gradient(rgba(47, 79, 61, 0.3), rgba(47, 79, 61, 0.5)),
+                        url('https://placehold.co/1920x1080/2F4F3D/F5F0E8?text=Chapel+Interior');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-heading {
+            text-align: center;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        /* Description Section */
+        .description-section {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .description-content {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            max-width: 800px;
+        }
+
+        .description-content p {
+            margin-bottom: 1.25rem;
+        }
+
+        /* Specifications Section */
+        .specs-section {
+            padding: 4rem 0;
+            background: #F5F0E8; /* Cream */
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .spec-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #4A7A9E; /* Lake Blue */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .spec-label {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #8A8A7A; /* Stone */
+            margin-bottom: 0.5rem;
+        }
+
+        .spec-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2F4F3D; /* Forest Green */
+        }
+
+        /* Amenities Section */
+        .amenities-section {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .amenities-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .amenities-list li {
+            padding: 1rem 1rem 1rem 3rem;
+            background: #F5F0E8; /* Cream */
+            border-radius: 8px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .amenities-list li:hover {
+            background: #E5D0C8;
+            transform: translateX(4px);
+        }
+
+        .amenities-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #2F4F3D; /* Forest Green */
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            padding: 4rem 0;
+            background: #F5F0E8; /* Cream */
+        }
+
+        .facility-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            padding: 2rem 1rem 1rem;
+            font-size: 0.875rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-caption {
+            opacity: 1;
+        }
+
+        /* Related Links Section */
+        .related-section {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #2F4F3D 0%, #1F3F2D 100%);
+            text-align: center;
+            color: #F5F0E8; /* Cream */
+        }
+
+        .related-section h2 {
+            color: #F5F0E8; /* Cream */
+        }
+
+        .related-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-primary {
+            display: inline-block;
+            background: #F5F0E8; /* Cream */
+            color: #2F4F3D; /* Forest Green */
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cta-primary:hover {
+            background: #E5D0C8;
+            transform: translateY(-2px);
+        }
+
+        .cta-secondary {
+            display: inline-block;
+            background: transparent;
+            color: #F5F0E8;
+            padding: 1rem 2rem;
+            border: 2px solid #F5F0E8;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cta-secondary:hover {
+            background: rgba(245, 240, 232, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+
+            .specs-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .facility-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .related-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-primary,
+            .cta-secondary {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!--
+    =====================================================
+    HERO SECTION
+    Keystatic: facilities.heroImage, facilities.title
+    =====================================================
+    -->
+    <section class="hero" role="banner">
+        <h1 class="hero-heading">The Chapel</h1>
+    </section>
+
+    <main>
+        <!--
+        =====================================================
+        DESCRIPTION SECTION
+        Keystatic: facilities.description (rich text)
+        =====================================================
+        -->
+        <section class="description-section">
+            <div class="container">
+                <h2>A Sacred Space for Worship</h2>
+
+                <div class="description-content">
+                    <p>
+                        The Chapel at Bear Lake Camp is the spiritual heart of our ministry. This beautifully
+                        renovated worship space seats 150 people and features natural wood beams, large windows
+                        overlooking the forest, and a welcoming atmosphere that draws campers and retreat guests
+                        into God's presence.
+                    </p>
+
+                    <p>
+                        Built in 1952 and fully renovated in 2018, the Chapel blends rustic camp charm with
+                        modern amenities. The sanctuary features a stage for speakers and worship bands,
+                        state-of-the-art sound and lighting systems, and flexible seating that can be
+                        reconfigured for different group sizes and worship styles.
+                    </p>
+
+                    <p>
+                        Whether you're hosting a weekend retreat, summer camp worship gathering, or intimate
+                        prayer meeting, the Chapel provides a distraction-free environment where hearts are
+                        open to hear from God.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!--
+        =====================================================
+        SPECIFICATIONS SECTION
+        Keystatic: facilities.specifications[]
+        =====================================================
+        -->
+        <section class="specs-section">
+            <div class="container">
+                <h2>Chapel Specifications</h2>
+
+                <div class="specs-grid">
+                    <div class="spec-card">
+                        <div class="spec-label">Seating Capacity</div>
+                        <div class="spec-value">150 People</div>
+                    </div>
+
+                    <div class="spec-card">
+                        <div class="spec-label">Square Footage</div>
+                        <div class="spec-value">2,400 sq ft</div>
+                    </div>
+
+                    <div class="spec-card">
+                        <div class="spec-label">Stage Size</div>
+                        <div class="spec-value">20' x 12'</div>
+                    </div>
+
+                    <div class="spec-card">
+                        <div class="spec-label">Year Built/Renovated</div>
+                        <div class="spec-value">1952 / 2018</div>
+                    </div>
+
+                    <div class="spec-card">
+                        <div class="spec-label">Accessibility</div>
+                        <div class="spec-value">ADA Compliant</div>
+                    </div>
+
+                    <div class="spec-card">
+                        <div class="spec-label">Climate Control</div>
+                        <div class="spec-value">Heat & A/C</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--
+        =====================================================
+        AMENITIES SECTION
+        Keystatic: facilities.amenities[] (array of strings)
+        =====================================================
+        -->
+        <section class="amenities-section">
+            <div class="container">
+                <h2>Features & Amenities</h2>
+
+                <ul class="amenities-list">
+                    <li>Professional sound system with wireless microphones</li>
+                    <li>LED stage lighting with programmatic control</li>
+                    <li>Projection screen and HD projector (1920x1080)</li>
+                    <li>Multimedia booth with HDMI, USB, and audio inputs</li>
+                    <li>Acoustic paneling for optimal sound quality</li>
+                    <li>Natural lighting through floor-to-ceiling windows</li>
+                    <li>Padded chairs with cup holders</li>
+                    <li>ADA-accessible ramp and seating area</li>
+                    <li>Backstage prep room for speakers/worship teams</li>
+                    <li>Grand piano (Yamaha C3)</li>
+                    <li>Wi-Fi access for streaming or presentations</li>
+                    <li>Climate control (heating and air conditioning)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!--
+        =====================================================
+        PHOTO GALLERY SECTION
+        Keystatic: facilities.gallery[]
+        =====================================================
+        -->
+        <section class="gallery-section">
+            <div class="container">
+                <h2>Chapel Photos</h2>
+
+                <div class="facility-gallery">
+                    <div class="gallery-item">
+                        <img src="https://placehold.co/600x450/2F4F3D/F5F0E8?text=Chapel+Interior"
+                             alt="Chapel interior with seating facing stage"
+                             loading="lazy">
+                        <p class="gallery-caption">Main sanctuary with seating for 150</p>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="https://placehold.co/600x450/4A7A9E/F5F0E8?text=Stage+View"
+                             alt="View of chapel stage with lighting"
+                             loading="lazy">
+                        <p class="gallery-caption">Stage with professional lighting and sound</p>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="https://placehold.co/600x450/A07856/F5F0E8?text=Worship+Night"
+                             alt="Worship band leading evening service"
+                             loading="lazy">
+                        <p class="gallery-caption">Evening worship gathering with full band</p>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="https://placehold.co/600x450/5A7A65/F5F0E8?text=Natural+Light"
+                             alt="Sunlight streaming through chapel windows"
+                             loading="lazy">
+                        <p class="gallery-caption">Natural light creates a peaceful atmosphere</p>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="https://placehold.co/600x450/2F4F3D/F5F0E8?text=Seating+Area"
+                             alt="Comfortable padded seating in chapel"
+                             loading="lazy">
+                        <p class="gallery-caption">Comfortable seating with flexible configurations</p>
+                    </div>
+
+                    <div class="gallery-item">
+                        <img src="https://placehold.co/600x450/4A7A9E/F5F0E8?text=Exterior+View"
+                             alt="Chapel exterior surrounded by pine trees"
+                             loading="lazy">
+                        <p class="gallery-caption">Chapel nestled in the forest</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--
+        =====================================================
+        RELATED LINKS SECTION
+        Keystatic: facilities.relatedPages[] (relationships)
+        =====================================================
+        -->
+        <section class="related-section">
+            <div class="container">
+                <h2>Plan Your Retreat at Bear Lake Camp</h2>
+                <p style="margin-bottom: 2rem; font-size: 1.125rem; opacity: 0.95;">
+                    The Chapel is available for rent as part of our retreat packages. Explore our other facilities
+                    or contact us to customize a retreat for your church or organization.
+                </p>
+
+                <div class="related-links">
+                    <a href="/rentals" class="cta-primary">View Retreat Packages</a>
+                    <a href="/facilities/dining-hall" class="cta-secondary">Explore Dining Hall</a>
+                    <a href="/facilities/cabins" class="cta-secondary">View Cabins</a>
+                    <a href="/contact" class="cta-secondary">Contact Us</a>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
