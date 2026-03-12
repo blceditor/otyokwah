@@ -12,7 +12,7 @@ import {
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Session Availability (v2 Design Mock) - Bear Lake Camp",
+  title: "Session Availability (v2 Design Mock) - Camp Otyokwah",
   robots: { index: false },
 };
 
@@ -242,7 +242,7 @@ export default async function CapacityDemoCards() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/summer-sessions/jr-high-camp.jpg"
-            alt="Jr. High campers at Bear Lake Camp"
+            alt="Jr. High campers at Camp Otyokwah"
             className="w-full h-full object-cover"
           />
         </div>

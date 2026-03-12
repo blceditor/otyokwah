@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
 
   // Get parameters from URL
-  const title = searchParams.get('title') || 'Bear Lake Camp';
+  const title = searchParams.get('title') || 'Camp Otyokwah';
   const subtitle = searchParams.get('subtitle') || '';
   const type = searchParams.get('type') || 'default';
   const rawImageUrl = searchParams.get('image') || '';
@@ -52,7 +52,7 @@ export async function GET(request: NextRequest) {
               color: '#1e40af',
             }}
           >
-            Bear Lake Camp
+            Camp Otyokwah
           </div>
         </div>
 

@@ -81,7 +81,7 @@ describe('Header Component', () => {
   describe('REQ-302: Hanging Logo Design', () => {
     it('renders the logo with correct src', () => {
       render(<Header />);
-      const logo = screen.getByAltText('Bear Lake Camp');
+      const logo = screen.getByAltText('Camp Otyokwah');
       expect(logo).toBeInTheDocument();
       expect(logo).toHaveAttribute('src', defaultNavigation.logo.src);
     });

@@ -3,7 +3,7 @@ import { AdminNav } from "@/components/admin/AdminNav";
 import { ThemeProvider } from "@/components/keystatic/ThemeProvider";
 
 export const metadata = {
-  title: "Admin Dashboard - Bear Lake Camp",
+  title: "Admin Dashboard - Camp Otyokwah",
 };
 
 export default function AdminLayout({ children }: { children: ReactNode }) {

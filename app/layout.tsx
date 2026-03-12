@@ -30,12 +30,12 @@ const tradesmith = localFont({
 export async function generateMetadata(): Promise<Metadata> {
   const config = await getSiteConfig();
   return {
-    title: `${config.siteName} - Where Faith Grows Wild`,
+    title: `${config.siteName} - To Know Christ`,
     description:
-      "Christian summer camp for Jr. High and High School students. Faith. Adventure. Transformation.",
+      "Christian summer camp challenging individuals to know and mature in Christ. Summer camps for 2nd grade through graduation.",
     openGraph: {
       title: config.siteName,
-      description: "Where Faith Grows Wild",
+      description: "To Know Christ",
       images: ["/og-image.jpg"],
     },
   };

@@ -9,4 +9,4 @@
  * use `SITE` from `@/lib/config/site` instead.
  */
 export const SITE_URL: string =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://www.bearlakecamp.com";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://otyokwah.vercel.app";

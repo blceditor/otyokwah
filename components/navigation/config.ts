@@ -8,7 +8,7 @@ import { FOOTER_CONFIG } from '@/lib/config/footer';
 
 export const defaultNavigation: NavigationConfig = {
   logo: {
-    src: '/images/logo/BLC-Logo-compass-whiteletters-no-background-small.png',
+    src: '/images/logo/otyokwah-black-logo-forthekingdom.png',
     alt: FOOTER_CONFIG.siteName,
     href: '/',
   },

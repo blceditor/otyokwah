@@ -10,7 +10,7 @@ import {
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Session Availability (Badge Demo) - Bear Lake Camp",
+  title: "Session Availability (Badge Demo) - Camp Otyokwah",
   robots: { index: false },
 };
 
@@ -205,7 +205,7 @@ export default async function CapacityDemoBadges() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/summer-sessions/jr-high-camp.jpg"
-            alt="Jr. High campers at Bear Lake Camp"
+            alt="Jr. High campers at Camp Otyokwah"
             className="w-full h-full object-cover"
           />
         </div>

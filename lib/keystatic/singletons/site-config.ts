@@ -11,33 +11,33 @@ export const siteConfig = singleton({
     siteName: fields.text({
       label: "Site Name",
       description: "The name of the camp shown in the browser tab and metadata",
-      defaultValue: "Bear Lake Camp",
+      defaultValue: "Camp Otyokwah",
     }),
     logoPath: fields.text({
       label: "Logo Path",
       description: "Path to the logo image (relative to /public)",
       defaultValue:
-        "/images/logo/BLC-Logo-compass-whiteletters-no-background-small.png",
+        "/images/logo/otyokwah-black-logo-forthekingdom.png",
     }),
     logoAlt: fields.text({
       label: "Logo Alt Text",
       description: "Accessible alt text for the logo image",
-      defaultValue: "Bear Lake Camp",
+      defaultValue: "Camp Otyokwah",
     }),
     contactEmail: fields.text({
       label: "Contact Email",
       description: "Primary contact email address",
-      defaultValue: "info@bearlakecamp.org",
+      defaultValue: "info@otyokwah.org",
     }),
     contactPhone: fields.text({
       label: "Contact Phone",
       description: "Primary contact phone number",
-      defaultValue: "(260) 799 5988",
+      defaultValue: "(419) 883-3854",
     }),
     contactAddress: fields.text({
       label: "Contact Address",
       description: "Physical mailing address",
-      defaultValue: "1805 S 16th St, Albion, IN 46701",
+      defaultValue: "3380 Tugend Rd, Butler, OH 44822",
     }),
     registrationUrl: fields.text({
       label: "Registration URL",
@@ -50,7 +50,7 @@ export const siteConfig = singleton({
     emailFromName: fields.text({
       label: "Email From Name",
       description: "Display name used in outgoing emails",
-      defaultValue: "Bear Lake Camp Website",
+      defaultValue: "Camp Otyokwah Website",
     }),
     facebookUrl: fields.text({
       label: "Facebook URL",

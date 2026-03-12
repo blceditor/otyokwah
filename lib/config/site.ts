@@ -19,7 +19,7 @@
 export const SITE = {
   /** Production domain (without protocol) */
   productionDomain:
-    process.env.PRODUCTION_DOMAIN ?? "www.bearlakecamp.com",
+    process.env.PRODUCTION_DOMAIN ?? "otyokwah.vercel.app",
 
   /** Production URL (with protocol) */
   get productionUrl(): string {
@@ -37,10 +37,10 @@ export const SITE = {
 } as const;
 
 /** Default production domain (for fallbacks) */
-export const DEFAULT_PRODUCTION_DOMAIN = "www.bearlakecamp.com";
+export const DEFAULT_PRODUCTION_DOMAIN = "otyokwah.vercel.app";
 
 /** Default production URL (for fallbacks) */
-export const DEFAULT_PRODUCTION_URL = "https://www.bearlakecamp.com";
+export const DEFAULT_PRODUCTION_URL = "https://otyokwah.vercel.app";
 
 /** Default Keystatic URL */
-export const DEFAULT_KEYSTATIC_URL = "https://www.bearlakecamp.com/keystatic";
+export const DEFAULT_KEYSTATIC_URL = "https://otyokwah.vercel.app/keystatic";

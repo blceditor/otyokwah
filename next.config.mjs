@@ -32,7 +32,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "www.bearlakecamp.com",
+        hostname: "otyokwah.org",
       },
       {
         protocol: "https",
@@ -75,9 +75,9 @@ const nextConfig = {
               "default-src 'self'",
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com https://www.googletagmanager.com https://www.google-analytics.com https://ssl.google-analytics.com",
               "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' data: blob: https://*.vercel.app https://ik.imagekit.io https://i.ytimg.com https://www.bearlakecamp.com https://avatars.githubusercontent.com",
+              "img-src 'self' data: blob: https://*.vercel.app https://ik.imagekit.io https://i.ytimg.com https://otyokwah.org https://avatars.githubusercontent.com",
               "font-src 'self' data:",
-              "connect-src 'self' https://*.vercel.app https://www.bearlakecamp.com https://api.github.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com",
+              "connect-src 'self' https://*.vercel.app https://otyokwah.org https://api.github.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com",
               "media-src 'self'",
               "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com",
               "object-src 'none'",

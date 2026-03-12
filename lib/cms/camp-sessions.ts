@@ -46,12 +46,12 @@ const defaultCampSettings: CampSettings = {
   heroSubtitle: 'Find your week at Bear Lake Camp',
   heroVideo: '/videos/hero-camp-sessions.mp4',
   heroPoster: '/images/summer-program-and-general/jr-high-kids-with-banner.jpg',
-  registrationUrl: 'https://www.ultracamp.com/clientlogin.aspx?idCamp=268&campCode=blc',
+  registrationUrl: 'https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campcode=OTY',
   scholarshipFormUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSeS0Bck8_J7hPzgF46f6W_Y3SBADHPnH6rCTP-U1Cht2QHw0w/viewform',
   earlyBirdDeadline: 'April 14, 2026',
   earlyBirdNote: 'Primary Overnight: $100 | All Other Sessions: $390 through 4/14, $440 after 4/14',
-  contactEmail: 'registrar@bearlakecamp.com',
-  contactPhone: '260-799-5988',
+  contactEmail: 'info@otyokwah.org',
+  contactPhone: '419-883-3854',
   scholarshipInfo: 'We want everyone who desires to attend camp to have the opportunity. Please contact your local church for financial assistance.',
 };
 

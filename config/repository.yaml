@@ -16,46 +16,46 @@ github:
   # Repository owner (GitHub username or organization)
   owner: blceditor
   # Repository name
-  repo: bearlakecamp
+  repo: otyokwah
   # Full repository path (owner/repo)
-  full: blceditor/bearlakecamp
+  full: blceditor/otyokwah
   # GitHub App slug for Keystatic CMS
-  app_slug: bearlakecamp-cms
+  app_slug: otyokwah-keystatic
   # GitHub repository URL
-  url: https://github.com/blceditor/bearlakecamp
+  url: https://github.com/blceditor/otyokwah
 
 # Site/Domain Configuration
 site:
   # Production domain (without protocol)
-  production_domain: www.bearlakecamp.com
+  production_domain: otyokwah.vercel.app
   # Production URL (with protocol)
-  production_url: https://www.bearlakecamp.com
+  production_url: https://otyokwah.vercel.app
   # Keystatic CMS URL
-  keystatic_url: https://www.bearlakecamp.com/keystatic
+  keystatic_url: https://otyokwah.vercel.app/keystatic
 
 # Contact Email Configuration
 email:
   # General contact email
-  contact: info@bearlakecamp.org
+  contact: info@otyokwah.org
   # Camp registrar email
-  registrar: registrar@bearlakecamp.com
+  registrar: info@otyokwah.org
   # Default contact (used in CMS defaults)
-  default: ben@bearlakecamp.com
+  default: info@otyokwah.org
 
 # Analytics Configuration
 analytics:
-  # Google Analytics 4 measurement ID
-  ga4_measurement_id: "G-QF89BLRP5F"
+  # Google Analytics 4 measurement ID (TBD - set up later)
+  ga4_measurement_id: ""
 
 # Branding Colors
 branding:
   colors:
-    # Brand blue
-    primary: "#4A7A9E"
-    # Forest green
-    secondary: "#2F4F3D"
-    # Warm brown
-    accent: "#A07856"
+    # Deep forest green
+    primary: "#2D5A27"
+    # Dark charcoal
+    secondary: "#333333"
+    # Gold accent
+    accent: "#C4A84B"
     # Off-white background
     cream: "#F5F0E8"
     # Sandy tan

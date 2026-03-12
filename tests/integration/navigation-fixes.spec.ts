@@ -215,7 +215,7 @@ describe('REQ-NAV-006 — Navigation Integration Test Suite', () => {
 
     expect(navigation.logo).toBeDefined();
     expect(navigation.logo.href).toBe('/');
-    expect(navigation.logo.alt).toBe('Bear Lake Camp');
+    expect(navigation.logo.alt).toBe('Camp Otyokwah');
   });
 
   test('no navigation links are 404 (all pages exist)', async () => {

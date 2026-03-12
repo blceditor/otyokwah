@@ -19,9 +19,9 @@ function getHandler() {
 }
 
 const ALLOWED_HOSTS = [
-  'prelaunch.bearlakecamp.com',
-  'www.bearlakecamp.com',
-  'bearlakecamp.com',
+  'prelaunch.otyokwah.org',
+  'www.otyokwah.org',
+  'otyokwah.org',
   'localhost',
 ];
 
