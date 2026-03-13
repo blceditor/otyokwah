@@ -46,24 +46,29 @@ function rewriteUrl(request: Request) {
   return request;
 }
 
-// REQ-CMS-AUTH: Add login hint to GitHub OAuth redirects so GitHub
-// pre-selects the correct account (blceditor) instead of whichever
-// account happens to be active in the browser session.
-function addLoginHint(response: Response): Response {
+// Enhance GitHub OAuth redirects:
+// 1. Add login hint so GitHub pre-selects the correct account (blceditor)
+// 2. Add repo scope — Keystatic omits this because it's designed for GitHub
+//    Apps (which get permissions from installation). Classic OAuth Apps need
+//    explicit scope=repo for content read/write access.
+function enhanceOAuthRedirect(response: Response): Response {
   if (response.status >= 300 && response.status < 400) {
     const location = response.headers.get('location');
     if (location?.includes('github.com/login/oauth/authorize')) {
       const url = new URL(location);
       if (!url.searchParams.has('login')) {
         url.searchParams.set('login', DEFAULT_GITHUB_OWNER);
-        const newHeaders = new Headers(response.headers);
-        newHeaders.set('location', url.toString());
-        return new Response(response.body, {
-          status: response.status,
-          statusText: response.statusText,
-          headers: newHeaders,
-        });
       }
+      if (!url.searchParams.has('scope')) {
+        url.searchParams.set('scope', 'repo');
+      }
+      const newHeaders = new Headers(response.headers);
+      newHeaders.set('location', url.toString());
+      return new Response(response.body, {
+        status: response.status,
+        statusText: response.statusText,
+        headers: newHeaders,
+      });
     }
   }
   return response;
@@ -115,11 +120,11 @@ export async function GET(request: Request) {
 
   const { GET: _GET } = getHandler();
   const response = await _GET(rewriteUrl(request));
-  return addLoginHint(response);
+  return enhanceOAuthRedirect(response);
 }
 
 export async function POST(request: Request) {
   const { POST: _POST } = getHandler();
   const response = await _POST(rewriteUrl(request));
-  return addLoginHint(response);
+  return enhanceOAuthRedirect(response);
 }
