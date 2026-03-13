@@ -70,51 +70,8 @@ function addLoginHint(response: Response): Response {
 }
 
 export async function GET(request: Request) {
-  const url = new URL(request.url);
-  const params = url.pathname.replace(/^\/api\/keystatic\/?/, '').split('/').filter(Boolean);
-
-  // Temporary debug: log OAuth callback details
-  if (params.join('/') === 'github/oauth/callback') {
-    const code = url.searchParams.get('code');
-    const clientId = process.env.KEYSTATIC_GITHUB_CLIENT_ID;
-    const clientSecret = process.env.KEYSTATIC_GITHUB_CLIENT_SECRET;
-    console.log('[keystatic-debug] OAuth callback hit', {
-      hasCode: !!code,
-      clientIdPrefix: clientId?.slice(0, 8),
-      hasSecret: !!clientSecret,
-      secretLength: clientSecret?.length,
-    });
-
-    // Test the token exchange directly
-    if (code && clientId && clientSecret) {
-      const tokenUrl = new URL('https://github.com/login/oauth/access_token');
-      tokenUrl.searchParams.set('client_id', clientId);
-      tokenUrl.searchParams.set('client_secret', clientSecret);
-      tokenUrl.searchParams.set('code', code);
-      const testRes = await fetch(tokenUrl, {
-        method: 'POST',
-        headers: { Accept: 'application/json' },
-      });
-      const testBody = await testRes.json();
-      console.log('[keystatic-debug] Token exchange result', {
-        ok: testRes.ok,
-        status: testRes.status,
-        hasAccessToken: !!testBody.access_token,
-        error: testBody.error,
-        errorDesc: testBody.error_description,
-        keys: Object.keys(testBody),
-      });
-    }
-  }
-
   const { GET: _GET } = getHandler();
   const response = await _GET(rewriteUrl(request));
-
-  // Log the response status for OAuth callback
-  if (params.join('/') === 'github/oauth/callback') {
-    console.log('[keystatic-debug] Keystatic response status:', response.status);
-  }
-
   return addLoginHint(response);
 }
 
