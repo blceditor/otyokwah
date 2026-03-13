@@ -73,8 +73,8 @@ export async function GET(request: Request) {
   const url = new URL(request.url);
   const isCallback = url.pathname.endsWith('/oauth/callback');
 
-  // TEMPORARY: Intercept OAuth callback to see raw GitHub response
-  if (isCallback && url.searchParams.get('debug') === '1') {
+  // TEMPORARY: Intercept ALL OAuth callbacks to diagnose token exchange
+  if (isCallback && url.searchParams.has('code')) {
     const code = url.searchParams.get('code');
     const clientId = process.env.KEYSTATIC_GITHUB_CLIENT_ID;
     const clientSecret = process.env.KEYSTATIC_GITHUB_CLIENT_SECRET;
@@ -88,11 +88,14 @@ export async function GET(request: Request) {
         headers: { Accept: 'application/json' },
       });
       const body = await res.json();
-      // Redact actual tokens but show structure
       const safeBody = { ...body };
       if (safeBody.access_token) safeBody.access_token = safeBody.access_token.slice(0, 8) + '...';
       if (safeBody.refresh_token) safeBody.refresh_token = safeBody.refresh_token.slice(0, 8) + '...';
-      return new Response(JSON.stringify({ httpStatus: res.status, body: safeBody }, null, 2), {
+      return new Response(JSON.stringify({
+        note: 'TEMPORARY DEBUG - intercepted before Keystatic. Remove after diagnosis.',
+        httpStatus: res.status,
+        body: safeBody,
+      }, null, 2), {
         headers: { 'Content-Type': 'application/json' },
       });
     }
