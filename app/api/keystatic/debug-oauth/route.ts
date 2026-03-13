@@ -5,10 +5,23 @@ export const dynamic = 'force-dynamic';
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const code = url.searchParams.get('code');
+  const action = url.searchParams.get('action');
 
   const clientId = process.env.KEYSTATIC_GITHUB_CLIENT_ID;
   const clientSecret = process.env.KEYSTATIC_GITHUB_CLIENT_SECRET;
   const secret = process.env.KEYSTATIC_SECRET;
+
+  // action=login: Start OAuth flow but redirect back to this debug endpoint
+  if (action === 'login') {
+    const authUrl = new URL('https://github.com/login/oauth/authorize');
+    authUrl.searchParams.set('client_id', clientId || '');
+    authUrl.searchParams.set(
+      'redirect_uri',
+      `${url.origin}/api/keystatic/debug-oauth`
+    );
+    authUrl.searchParams.set('state', 'debug');
+    return NextResponse.redirect(authUrl.toString());
+  }
 
   const info: Record<string, unknown> = {
     hasClientId: !!clientId,
@@ -43,8 +56,9 @@ export async function GET(request: Request) {
       hasRefreshToken: 'refresh_token' in body,
     };
   } else {
-    info.note = 'Add ?code=YOUR_CODE to test token exchange. Get code from a failed callback URL.';
+    info.howToUse =
+      'Visit /api/keystatic/debug-oauth?action=login to start OAuth flow through this debug endpoint (bypasses Keystatic)';
   }
 
-  return NextResponse.json(info);
+  return NextResponse.json(info, { headers: { 'Cache-Control': 'no-store' } });
 }
