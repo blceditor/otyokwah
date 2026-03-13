@@ -70,6 +70,34 @@ function addLoginHint(response: Response): Response {
 }
 
 export async function GET(request: Request) {
+  const url = new URL(request.url);
+  const isCallback = url.pathname.endsWith('/oauth/callback');
+
+  // TEMPORARY: Intercept OAuth callback to see raw GitHub response
+  if (isCallback && url.searchParams.get('debug') === '1') {
+    const code = url.searchParams.get('code');
+    const clientId = process.env.KEYSTATIC_GITHUB_CLIENT_ID;
+    const clientSecret = process.env.KEYSTATIC_GITHUB_CLIENT_SECRET;
+    if (code && clientId && clientSecret) {
+      const tokenUrl = new URL('https://github.com/login/oauth/access_token');
+      tokenUrl.searchParams.set('client_id', clientId);
+      tokenUrl.searchParams.set('client_secret', clientSecret);
+      tokenUrl.searchParams.set('code', code);
+      const res = await fetch(tokenUrl, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+      });
+      const body = await res.json();
+      // Redact actual tokens but show structure
+      const safeBody = { ...body };
+      if (safeBody.access_token) safeBody.access_token = safeBody.access_token.slice(0, 8) + '...';
+      if (safeBody.refresh_token) safeBody.refresh_token = safeBody.refresh_token.slice(0, 8) + '...';
+      return new Response(JSON.stringify({ httpStatus: res.status, body: safeBody }, null, 2), {
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+  }
+
   const { GET: _GET } = getHandler();
   const response = await _GET(rewriteUrl(request));
   return addLoginHint(response);
