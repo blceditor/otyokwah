@@ -77,7 +77,7 @@ const nextConfig = {
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: blob: https://*.vercel.app https://ik.imagekit.io https://i.ytimg.com https://otyokwah.org https://avatars.githubusercontent.com",
               "font-src 'self' data:",
-              "connect-src 'self' https://*.vercel.app https://otyokwah.org https://api.github.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com",
+              "connect-src 'self' https://*.vercel.app https://otyokwah.org https://api.github.com https://raw.githubusercontent.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com",
               "media-src 'self'",
               "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com",
               "object-src 'none'",
