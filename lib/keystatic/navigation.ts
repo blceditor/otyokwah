@@ -103,7 +103,7 @@ export function initializeNavigation(): void {
     href: /give
 primaryCTA:
   label: Register Now
-  href: https://www.ultracamp.com/clientlogin.aspx?idCamp=268
+  href: https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campcode=OTY
   external: true
 `;
 

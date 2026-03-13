@@ -23,7 +23,7 @@ export function SessionCard({
   grades,
   pricing,
   earlyBird,
-  registrationLink = 'https://www.ultracamp.com/clientlogin.aspx?idCamp=268&campCode=blc',
+  registrationLink = 'https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campcode=OTY',
 }: SessionCardProps): JSX.Element {
   return (
     <article className="bg-cream rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow border-l-4 border-secondary">

@@ -43,7 +43,7 @@ export interface SessionsByType {
 // Default camp settings for fallback
 const defaultCampSettings: CampSettings = {
   heroTitle: 'Summer Camp Sessions 2026',
-  heroSubtitle: 'Find your week at Bear Lake Camp',
+  heroSubtitle: 'Find your week at Camp Otyokwah',
   heroVideo: '/videos/hero-camp-sessions.mp4',
   heroPoster: '/images/summer-program-and-general/jr-high-kids-with-banner.jpg',
   registrationUrl: 'https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campcode=OTY',
