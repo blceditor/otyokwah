@@ -73,9 +73,15 @@ export async function GET(request: Request) {
   const url = new URL(request.url);
   const isCallback = url.pathname.endsWith('/oauth/callback');
 
-  // TEMPORARY: Intercept ALL OAuth callbacks to diagnose token exchange
+  // Handle OAuth callback for classic OAuth Apps (no expiring tokens).
+  // Keystatic's built-in handler expects GitHub App token responses with
+  // expires_in/refresh_token fields. Classic OAuth Apps return only
+  // access_token/token_type/scope, causing Keystatic's schema validation
+  // to throw "Authorization failed". We handle the exchange ourselves
+  // and set the cookie Keystatic expects.
   if (isCallback && url.searchParams.has('code')) {
     const code = url.searchParams.get('code');
+    const state = url.searchParams.get('state');
     const clientId = process.env.KEYSTATIC_GITHUB_CLIENT_ID;
     const clientSecret = process.env.KEYSTATIC_GITHUB_CLIENT_SECRET;
     if (code && clientId && clientSecret) {
@@ -88,16 +94,23 @@ export async function GET(request: Request) {
         headers: { Accept: 'application/json' },
       });
       const body = await res.json();
-      const safeBody = { ...body };
-      if (safeBody.access_token) safeBody.access_token = safeBody.access_token.slice(0, 8) + '...';
-      if (safeBody.refresh_token) safeBody.refresh_token = safeBody.refresh_token.slice(0, 8) + '...';
-      return new Response(JSON.stringify({
-        note: 'TEMPORARY DEBUG - intercepted before Keystatic. Remove after diagnosis.',
-        httpStatus: res.status,
-        body: safeBody,
-      }, null, 2), {
-        headers: { 'Content-Type': 'application/json' },
-      });
+
+      if (body.access_token && !body.expires_in) {
+        // Classic OAuth App response — set cookie and redirect to Keystatic
+        const cookieValue = `keystatic-gh-access-token=${body.access_token}; Path=/; SameSite=Lax${process.env.NODE_ENV === 'production' ? '; Secure' : ''}`;
+        const headers = new Headers();
+        headers.append('Set-Cookie', cookieValue);
+        headers.set('Location', '/keystatic');
+        return new Response(null, { status: 302, headers });
+      }
+
+      // If response has expires_in (GitHub App), fall through to Keystatic's handler
+      // by NOT returning here — but the code is consumed, so we need to handle errors
+      if (body.error) {
+        return new Response(`GitHub OAuth error: ${body.error_description || body.error}`, {
+          status: 400,
+        });
+      }
     }
   }
 
