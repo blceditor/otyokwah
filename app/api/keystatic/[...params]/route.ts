@@ -81,7 +81,6 @@ export async function GET(request: Request) {
   // and set the cookie Keystatic expects.
   if (isCallback && url.searchParams.has('code')) {
     const code = url.searchParams.get('code');
-    const state = url.searchParams.get('state');
     const clientId = process.env.KEYSTATIC_GITHUB_CLIENT_ID;
     const clientSecret = process.env.KEYSTATIC_GITHUB_CLIENT_SECRET;
     if (code && clientId && clientSecret) {
