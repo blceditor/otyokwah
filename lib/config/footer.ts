@@ -56,7 +56,7 @@ export const FOOTER_CONFIG = {
   /** Google Maps link to camp location */
   mapsUrl:
     process.env.NEXT_PUBLIC_MAPS_URL ??
-    "https://maps.app.goo.gl/otyokwah",
+    "https://www.google.com/maps/search/?api=1&query=Camp+Otyokwah+3380+Tugend+Rd+Butler+OH+44822",
 
   /** UltraCamp registration page URL */
   registrationUrl:

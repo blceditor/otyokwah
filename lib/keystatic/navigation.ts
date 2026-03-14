@@ -39,9 +39,6 @@ export function initializeNavigation(): void {
       - label: Our Team
         href: /about-our-team
         external: false
-      - label: Contact Us
-        href: /contact
-        external: false
   - label: Summer Camp
     href: /summer-camp
     children:
@@ -51,13 +48,13 @@ export function initializeNavigation(): void {
       - label: What to Bring
         href: /summer-camp-what-to-bring
         external: false
-      - label: FAQ
-        href: /summer-camp-faq
-        external: false
       - label: Parent Info
         href: /summer-camp-parent-info
         external: false
-  - label: Work at Camp
+      - label: FAQ
+        href: /summer-camp-faq
+        external: false
+  - label: Join Our Team
     href: /work-at-camp
     children:
       - label: Summer Staff
@@ -66,41 +63,27 @@ export function initializeNavigation(): void {
       - label: Leaders in Training
         href: /work-at-camp-leaders-in-training
         external: false
-      - label: Year Round Positions
-        href: /work-at-camp-year-round
-        external: false
-  - label: Retreats
-    href: /retreats
-    children:
-      - label: Defrost
-        href: /retreats-defrost
-        external: false
-      - label: Recharge
-        href: /retreats-recharge
-        external: false
+  - label: Ignite Retreat
+    href: /retreats-ignite
+    children: []
   - label: Rentals
     href: /rentals
     children:
-      - label: Cabins
+      - label: Cabins & Lodging
         href: /rentals-cabins
         external: false
       - label: Dining Hall
         href: /rentals-dining-hall
         external: false
-      - label: Chapel
-        href: /rentals-chapel
-        external: false
-      - label: Gym
-        href: /rentals-gym
-        external: false
       - label: Outdoor Spaces
         href: /rentals-outdoor-spaces
         external: false
-      - label: Recreation
-        href: /rentals-recreation
-        external: false
   - label: Give
     href: /give
+    children: []
+  - label: Contact
+    href: /contact
+    children: []
 primaryCTA:
   label: Register Now
   href: https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campcode=OTY

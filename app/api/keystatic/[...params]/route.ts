@@ -47,7 +47,7 @@ function rewriteUrl(request: Request) {
 }
 
 // Enhance GitHub OAuth redirects:
-// 1. Add login hint so GitHub pre-selects the correct account (blceditor)
+// 1. Add login hint so GitHub pre-selects the correct account
 // 2. Add repo scope — Keystatic omits this because it's designed for GitHub
 //    Apps (which get permissions from installation). Classic OAuth Apps need
 //    explicit scope=repo for content read/write access.
@@ -101,7 +101,7 @@ export async function GET(request: Request) {
 
       if (body.access_token && !body.expires_in) {
         // Classic OAuth App response — set cookie and redirect to Keystatic
-        const cookieValue = `keystatic-gh-access-token=${body.access_token}; Path=/; SameSite=Lax${process.env.NODE_ENV === 'production' ? '; Secure' : ''}`;
+        const cookieValue = `keystatic-gh-access-token=${body.access_token}; Path=/; HttpOnly; SameSite=Lax${process.env.NODE_ENV === 'production' ? '; Secure' : ''}`;
         const headers = new Headers();
         headers.append('Set-Cookie', cookieValue);
         headers.set('Location', '/keystatic');
