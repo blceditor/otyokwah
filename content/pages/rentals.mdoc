@@ -51,13 +51,27 @@ templateFields:
 Comfortable accommodations for groups of all sizes. From large lodge facilities to classic camp cabins, we have the right fit for your retreat.
 
 - **Delaware Lodge**: 82 guests across 6 dorm rooms, full kitchen & dining
-- **Mingo Lodge**: 11 guests, kitchen, beautiful lake view
-- **3-Season Cabins**: 4 cabins, up to 20 guests each
+- **Mingo Cabin**: 11 guests, small kitchen, beautiful lake view
+- **3-Season Cabins**: 4 cabins, up to 20 guests each (May–Nov)
 - **Summer Cabins**: 7 cabins, 10–12 guests each
 
 {% ctaButton
-   label="View Lodging"
+   label="Delaware Lodge"
    href="/rentals-cabins"
+   variant="inverse"
+   size="lg"
+   textColor="primary" /%}
+
+{% ctaButton
+   label="Mingo Cabin"
+   href="/rentals-mingo"
+   variant="inverse"
+   size="lg"
+   textColor="primary" /%}
+
+{% ctaButton
+   label="Seasonal Cabins"
+   href="/rentals-seasonal-cabins"
    variant="inverse"
    size="lg"
    textColor="primary" /%}
@@ -88,15 +102,15 @@ From worship gatherings to team planning sessions, our meeting spaces accommodat
 **Pavilion** — Open-air 40×80 covered pavilion for up to 100 guests.
 
 {% ctaButton
-   label="View Meeting Spaces"
-   href="/rentals-chapel"
+   label="View Hopewell Hall"
+   href="/rentals-dining-hall"
    variant="inverse"
    size="lg"
    textColor="secondary" /%}
 
 {% ctaButton
-   label="View Hopewell Hall"
-   href="/rentals-dining-hall"
+   label="All Meeting Spaces"
+   href="/rentals-chapel"
    variant="inverse"
    size="lg"
    textColor="secondary" /%}
@@ -148,7 +162,7 @@ Keep your group active and engaged with our adventure facilities and beautiful o
 
 {% ctaButton
    label="View Activities"
-   href="/rentals-gym"
+   href="/rentals-recreation"
    variant="inverse"
    size="lg"
    textColor="accent" /%}
@@ -168,6 +182,27 @@ Keep your group active and engaged with our adventure facilities and beautiful o
    width="auto"
    height="auto"
    backgroundColor="" %}
+{% gridSquare
+   contentType="color"
+   backgroundColor="#2F4F3D"
+   textColor="light"
+   aspectRatio="square"
+   width="auto"
+   height="auto" %}
+## Maps & Directions
+
+Plan your arrival with confidence.
+
+Camp Otyokwah is located at **3380 Tugend Rd, Butler, OH 44822** in Richland County, Ohio. Contact us for a detailed property map and directions.
+
+{% ctaButton
+   label="View Maps & Directions"
+   href="/rentals-maps"
+   variant="inverse"
+   size="lg"
+   textColor="secondary" /%}
+{% /gridSquare %}
+
 {% gridSquare
    contentType="color"
    backgroundColor="#2F5A7A"
@@ -191,11 +226,28 @@ Keep your group active and engaged with our adventure facilities and beautiful o
    size="lg"
    textColor="primary" /%}
 {% /gridSquare %}
+{% /squareGrid %}
 
+{% squareGrid
+   columns="2"
+   gap="none"
+   width="auto"
+   height="auto"
+   backgroundColor="" %}
 {% gridSquare
    contentType="image"
    image="/images/facilities/facility-dining-hall-winter-snow.jpg"
    imageAlt="Camp Otyokwah in winter"
+   backgroundColor="#f5f0e8"
+   textColor="dark"
+   aspectRatio="square"
+   width="auto"
+   height="auto" /%}
+
+{% gridSquare
+   contentType="image"
+   image="/images/facilities/facility-multi-activity-center-MAC-outside-os6f0egsn6hkj9yarq3qdmbtgdhy6puu33l3yofza0.jpg"
+   imageAlt="Recreation activities at Camp Otyokwah"
    backgroundColor="#f5f0e8"
    textColor="dark"
    aspectRatio="square"

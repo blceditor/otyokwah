@@ -37,7 +37,7 @@ test.describe("Site Navigation", () => {
     test("logo/site title is present", async ({ page }) => {
       // Check for logo image or site title link
       const logoOrTitle = page.locator(
-        'header a[href="/"], header img[alt*="Bear Lake"], header a:has-text("Bear Lake")',
+        'header a[href="/"], header img[alt*="Otyokwah"], header a:has-text("Otyokwah")',
       );
       await expect(logoOrTitle.first()).toBeVisible();
     });
@@ -80,7 +80,7 @@ test.describe("Site Navigation", () => {
 
       // Should have address or phone info
       const hasContact =
-        footerContent?.includes("Bear Lake") ||
+        footerContent?.includes("Otyokwah") ||
         footerContent?.includes("Indiana") ||
         footerContent?.includes("260");
 

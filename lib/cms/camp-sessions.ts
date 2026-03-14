@@ -46,7 +46,7 @@ const defaultCampSettings: CampSettings = {
   heroSubtitle: 'Find your week at Camp Otyokwah',
   heroVideo: '/videos/hero-camp-sessions.mp4',
   heroPoster: '/images/summer-program-and-general/jr-high-kids-with-banner.jpg',
-  registrationUrl: 'https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campcode=OTY',
+  registrationUrl: 'https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY',
   scholarshipFormUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSeS0Bck8_J7hPzgF46f6W_Y3SBADHPnH6rCTP-U1Cht2QHw0w/viewform',
   earlyBirdDeadline: 'April 14, 2026',
   earlyBirdNote: 'Primary Overnight: $100 | All Other Sessions: $390 through 4/14, $440 after 4/14',

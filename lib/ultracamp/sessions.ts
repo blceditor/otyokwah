@@ -40,7 +40,7 @@ const MOCK_SESSIONS: UltraCampSession[] = [
     totalWaitListCount: 0,
     open: true,
     registrationLink:
-      "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campcode=OTY",
+      "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY",
     category: "Summer Camp",
     subCategory1: "Primary",
   },
@@ -61,7 +61,7 @@ const MOCK_SESSIONS: UltraCampSession[] = [
     totalWaitListCount: 0,
     open: true,
     registrationLink:
-      "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campcode=OTY",
+      "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY",
     category: "Summer Camp",
     subCategory1: "Junior",
   },
@@ -82,7 +82,7 @@ const MOCK_SESSIONS: UltraCampSession[] = [
     totalWaitListCount: 3,
     open: true,
     registrationLink:
-      "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campcode=OTY",
+      "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY",
     category: "Summer Camp",
     subCategory1: "Junior",
   },
@@ -103,7 +103,7 @@ const MOCK_SESSIONS: UltraCampSession[] = [
     totalWaitListCount: 0,
     open: true,
     registrationLink:
-      "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campcode=OTY",
+      "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY",
     category: "Summer Camp",
     subCategory1: "Junior",
   },
@@ -124,7 +124,7 @@ const MOCK_SESSIONS: UltraCampSession[] = [
     totalWaitListCount: 2,
     open: true,
     registrationLink:
-      "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campcode=OTY",
+      "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY",
     category: "Summer Camp",
     subCategory1: "Jr. High",
   },
@@ -145,7 +145,7 @@ const MOCK_SESSIONS: UltraCampSession[] = [
     totalWaitListCount: 0,
     open: true,
     registrationLink:
-      "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campcode=OTY",
+      "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY",
     category: "Summer Camp",
     subCategory1: "Jr. High",
   },
@@ -166,7 +166,7 @@ const MOCK_SESSIONS: UltraCampSession[] = [
     totalWaitListCount: 0,
     open: true,
     registrationLink:
-      "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campcode=OTY",
+      "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY",
     category: "Summer Camp",
     subCategory1: "Jr. High",
   },
@@ -187,7 +187,7 @@ const MOCK_SESSIONS: UltraCampSession[] = [
     totalWaitListCount: 0,
     open: true,
     registrationLink:
-      "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campcode=OTY",
+      "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY",
     category: "Summer Camp",
     subCategory1: "Sr. High",
   },

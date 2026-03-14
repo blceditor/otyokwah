@@ -255,11 +255,11 @@ describe('Navigation Config', () => {
     expect(summerCamp.children?.[1].label).toBe('What to Bring');
   });
 
-  it('Rentals has 6 children', () => {
+  it('Rentals has 7 children', () => {
     const rentals = defaultNavigation.menuItems[4];
     expect(rentals.children).toBeDefined();
-    expect(rentals.children?.length).toBe(6);
-    expect(rentals.children?.[0].label).toBe('Cabins');
+    expect(rentals.children?.length).toBe(7);
+    expect(rentals.children?.[0].label).toBe('Hopewell Hall');
   });
 
   it('Give has no children (direct link)', () => {

@@ -20,6 +20,7 @@ export const defaultNavigation: NavigationConfig = {
         { label: 'Core Values', href: '/about-core-values' },
         { label: 'Doctrinal Statement', href: '/about-doctrinal-statement' },
         { label: 'Our Team', href: '/about-our-team' },
+        { label: 'Contact Us', href: '/contact' },
       ],
     },
     {
@@ -28,38 +29,42 @@ export const defaultNavigation: NavigationConfig = {
       children: [
         { label: 'Camp Sessions', href: '/summer-camp-sessions' },
         { label: 'What to Bring', href: '/summer-camp-what-to-bring' },
-        { label: 'Parent Info', href: '/summer-camp-parent-info' },
         { label: 'FAQ', href: '/summer-camp-faq' },
+        { label: 'Parent Info', href: '/summer-camp-parent-info' },
       ],
     },
     {
-      label: 'Join Our Team',
+      label: 'Work at Camp',
       href: '/work-at-camp',
       children: [
         { label: 'Summer Staff', href: '/summer-staff' },
         { label: 'Leaders in Training', href: '/work-at-camp-leaders-in-training' },
+        { label: 'Year Round Positions', href: '/work-at-camp-year-round' },
       ],
     },
     {
-      label: 'Ignite Retreat',
-      href: '/retreats-ignite',
+      label: 'Retreats',
+      href: '/retreats',
+      children: [
+        { label: 'Ignite', href: '/retreats-ignite' },
+      ],
     },
     {
       label: 'Rentals',
       href: '/rentals',
       children: [
-        { label: 'Cabins & Lodging', href: '/rentals-cabins' },
-        { label: 'Dining Hall', href: '/rentals-dining-hall' },
+        { label: 'Hopewell Hall', href: '/rentals-dining-hall' },
+        { label: 'Delaware Lodge', href: '/rentals-cabins' },
+        { label: 'Mingo Cabin', href: '/rentals-mingo' },
+        { label: 'Seasonal Cabins', href: '/rentals-seasonal-cabins' },
         { label: 'Outdoor Spaces', href: '/rentals-outdoor-spaces' },
+        { label: 'Recreation', href: '/rentals-recreation' },
+        { label: 'Maps', href: '/rentals-maps' },
       ],
     },
     {
       label: 'Give',
       href: '/give',
-    },
-    {
-      label: 'Contact',
-      href: '/contact',
     },
   ],
   primaryCTA: {

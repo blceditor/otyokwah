@@ -20,7 +20,7 @@ export const FOOTER_CONFIG = {
   /** Facebook page URL */
   facebookUrl:
     process.env.NEXT_PUBLIC_FACEBOOK_URL ??
-    "https://www.facebook.com/CampOtyokwah",
+    "https://www.facebook.com/campoty",
 
   /** Instagram profile URL */
   instagramUrl:
@@ -30,7 +30,7 @@ export const FOOTER_CONFIG = {
   /** YouTube channel URL */
   youtubeUrl:
     process.env.NEXT_PUBLIC_YOUTUBE_URL ??
-    "https://www.youtube.com/@CampOtyokwah",
+    "https://www.youtube.com/user/CampOtyokwah",
 
   /** Spotify playlist URL */
   spotifyUrl: process.env.NEXT_PUBLIC_SPOTIFY_URL ?? "",
@@ -38,7 +38,7 @@ export const FOOTER_CONFIG = {
   /** UltraCamp donation page URL */
   donationUrl:
     process.env.NEXT_PUBLIC_DONATION_URL ??
-    "https://www.ultracamp.com/donations/donationintention.aspx?idCamp=1342&campcode=OTY",
+    "https://www.ultracamp.com/donations/donationintention.aspx?idCamp=1342&campCode=OTY",
 
   /** Physical address for display */
   contactAddress:
@@ -61,7 +61,7 @@ export const FOOTER_CONFIG = {
   /** UltraCamp registration page URL */
   registrationUrl:
     process.env.NEXT_PUBLIC_REGISTRATION_URL ??
-    "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campcode=OTY",
+    "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY",
 
   /** Production URL used in copyright/metadata */
   siteUrl: SITE.productionUrl,

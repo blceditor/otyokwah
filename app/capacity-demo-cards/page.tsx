@@ -184,7 +184,7 @@ export default async function CapacityDemoCards() {
               A fun first taste of overnight camp just for our youngest campers!
             </p>
             <a
-              href="https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campcode=OTY"
+              href="https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block mt-4 px-6 py-3 bg-white text-primary font-semibold rounded-lg hover:bg-white/90 transition-colors no-underline"
@@ -225,7 +225,7 @@ export default async function CapacityDemoCards() {
               Full-week adventure for elementary students!
             </p>
             <a
-              href="https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campcode=OTY"
+              href="https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block mt-4 px-6 py-3 bg-white text-accent font-semibold rounded-lg hover:bg-white/90 transition-colors no-underline"
@@ -266,7 +266,7 @@ export default async function CapacityDemoCards() {
               A week of growth and exploration for middle school students!
             </p>
             <a
-              href="https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campcode=OTY"
+              href="https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block mt-4 px-6 py-3 bg-white text-secondary font-semibold rounded-lg hover:bg-white/90 transition-colors no-underline"
@@ -307,7 +307,7 @@ export default async function CapacityDemoCards() {
               Our summer session for high school students!
             </p>
             <a
-              href="https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campcode=OTY"
+              href="https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block mt-4 px-6 py-3 bg-white text-primary font-semibold rounded-lg hover:bg-white/90 transition-colors no-underline"

@@ -9,7 +9,7 @@ import type { ReactNode } from "react";
 import { trackEvent } from "@/lib/analytics/gtag";
 
 const DEFAULT_REGISTRATION_URL =
-  "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campcode=OTY";
+  "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY";
 
 export interface CTAButtonProps {
   children: ReactNode;
