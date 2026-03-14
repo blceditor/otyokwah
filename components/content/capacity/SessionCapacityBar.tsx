@@ -19,23 +19,22 @@ function getOverallStatusPill(session: UltraCampSession) {
   const spotsLeft = session.maxTotal - session.totalEnrollment;
   const hasWaitlist = session.totalWaitListCount > 0;
 
-  // Full: both genders at capacity or has waitlist with no spots
-  if ((boysPct >= 100 && girlsPct >= 100) || (hasWaitlist && spotsLeft <= 0)) {
-    return (
-      <span className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-bold uppercase bg-red-500/30 text-red-200">
-        <span className="h-1.5 w-1.5 rounded-full bg-red-300 animate-pulse" />
-        Waitlist
-      </span>
-    );
-  }
+  // Full: both genders at capacity, or open beds are reserved for waitlisted families
+  const isEffectivelyFull =
+    (boysPct >= 100 && girlsPct >= 100) ||
+    (hasWaitlist && spotsLeft <= session.totalWaitListCount);
 
-  // Use the worst of overall, boys, or girls percentage to determine tier
+  // Use the worst of overall, boys, or girls percentage to determine tier;
+  // also escalate if there's a waitlist (people are already being turned away)
   const worstPct = Math.max(overallPct, boysPct, girlsPct);
-  // Also escalate if there's a waitlist (people are already being turned away)
   const tier = hasWaitlist ? "critical" : getCapacityTier(worstPct);
 
-  if (tier === "critical") {
-    const label = spotsLeft <= 5 ? `Only ${spotsLeft} left!` : "Almost Full!";
+  if (isEffectivelyFull || tier === "critical") {
+    const label = isEffectivelyFull
+      ? "Waitlist"
+      : spotsLeft <= 5
+        ? `Only ${spotsLeft} left!`
+        : "Almost Full!";
     return (
       <span className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-bold uppercase bg-red-500/30 text-red-200">
         <span className="h-1.5 w-1.5 rounded-full bg-red-300 animate-pulse" />

@@ -5,6 +5,7 @@ import {
   formatDateRange,
   getCapacityTier,
   getCapacityPct,
+  CAPACITY_THRESHOLDS,
   type CapacityTier,
 } from "@/lib/ultracamp/format";
 
@@ -32,6 +33,13 @@ const STATUS_MAP: Record<
   },
 };
 
+const WAITLIST_STATUS = {
+  label: "Waitlist",
+  color: "text-red-700",
+  barColor: "bg-red-500",
+  bgColor: "bg-red-50",
+};
+
 export function SessionCapacityCard({
   session,
 }: {
@@ -39,7 +47,10 @@ export function SessionCapacityCard({
 }) {
   const pct = getCapacityPct(session.totalEnrollment, session.maxTotal);
   const spotsLeft = session.maxTotal - session.totalEnrollment;
-  const status = STATUS_MAP[getCapacityTier(pct)];
+  const isWaitlisted =
+    session.totalWaitListCount > 0 &&
+    spotsLeft <= session.totalWaitListCount;
+  const status = isWaitlisted ? WAITLIST_STATUS : STATUS_MAP[getCapacityTier(pct)];
 
   return (
     <div className="rounded-xl border border-stone-200 bg-white shadow-sm hover:shadow-md transition-shadow overflow-hidden">
@@ -72,7 +83,7 @@ export function SessionCapacityCard({
 
         <div className="flex items-center justify-end text-sm">
           <span className={`font-semibold ${status.color}`}>
-            {spotsLeft > 0 ? `${spotsLeft} spots left` : "Full"}
+            {isWaitlisted ? "Waitlist" : spotsLeft > 0 ? `${spotsLeft} spots left` : "Full"}
           </span>
         </div>
       </div>
@@ -83,12 +94,12 @@ export function SessionCapacityCard({
           target="_blank"
           rel="noopener noreferrer"
           className={`block w-full text-center py-2.5 px-4 rounded-lg font-semibold text-white transition-colors ${
-            pct >= 85
+            isWaitlisted || pct >= CAPACITY_THRESHOLDS.CRITICAL
               ? "bg-red-600 hover:bg-red-700"
               : "bg-secondary hover:bg-secondary/90"
           }`}
         >
-          Register Now
+          {isWaitlisted ? "Join Waitlist" : "Register Now"}
         </a>
       </div>
     </div>
