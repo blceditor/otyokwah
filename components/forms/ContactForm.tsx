@@ -48,6 +48,8 @@ export function ContactForm({ onSubmit }: ContactFormProps = {}): JSX.Element {
   const turnstileContainerRef = useRef<HTMLDivElement>(null);
   const turnstileWidgetId = useRef<string | null>(null);
   const turnstileTokenRef = useRef<string>("");
+  // Timing guard: record when form first rendered
+  const formLoadTime = useRef<number>(Date.now());
 
   // Load Cloudflare Turnstile script
   useEffect(() => {
@@ -118,6 +120,9 @@ export function ContactForm({ onSubmit }: ContactFormProps = {}): JSX.Element {
     const sanitizedEmail = email.replace(/[\0\r\n]/g, "").trim();
     const sanitizedMessage = message.replace(/\0/g, "").trim();
 
+    // Timing guard: how long since form was rendered
+    const timing = Date.now() - formLoadTime.current;
+
     try {
       const formData = new FormData();
       formData.append("name", sanitizedName);
@@ -136,6 +141,10 @@ export function ContactForm({ onSubmit }: ContactFormProps = {}): JSX.Element {
         params.append("email", sanitizedEmail);
         params.append("message", sanitizedMessage);
         params.append("turnstile-response", currentToken);
+        // Honeypot field (left empty by real users, filled by bots)
+        params.append("website", "");
+        // Timing field
+        params.append("_timing", String(timing));
 
         const response = await fetch("/api/contact", {
           method: "POST",
@@ -173,6 +182,17 @@ export function ContactForm({ onSubmit }: ContactFormProps = {}): JSX.Element {
       className="max-w-2xl mx-auto space-y-6"
       noValidate
     >
+      {/* Honeypot — hidden from real users, bots fill it in */}
+      <input
+        type="text"
+        name="website"
+        defaultValue=""
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        style={{ display: "none" }}
+      />
+
       {/* Name Field */}
       <div>
         <label

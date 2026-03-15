@@ -1,55 +1,30 @@
 /**
- * In-memory Web Vitals store.
+ * Web Vitals store.
  *
- * LIMITATION: This store lives in the serverless function's memory.
- * On Vercel, each function instance has its own copy — data from one
- * instance is not visible to others, and all data is lost on cold
- * starts and new deployments. This is acceptable for a lightweight
- * admin dashboard that shows "recent" vitals for quick diagnostics.
- * For persistent vitals tracking, use the GA4 integration instead.
+ * Uses Vercel KV (Upstash Redis) when configured for persistent storage.
+ * Falls back to in-memory when KV is not available.
  */
 
-import { readFileSync, writeFileSync } from "fs";
-import { join } from "path";
-import { tmpdir } from "os";
+import { kvLpush, kvLrange, kvLtrim, kvLlen } from "@/lib/kv";
 
 interface VitalSample {
   value: number;
   timestamp: number;
 }
 
-interface VitalsStore {
-  [metric: string]: VitalSample[];
-}
-
 const MAX_SAMPLES = 1000;
-const STORE_PATH = join(tmpdir(), "blc-vitals.json");
 
-function loadStore(): VitalsStore {
-  try {
-    const data = readFileSync(STORE_PATH, "utf-8");
-    return JSON.parse(data) as VitalsStore;
-  } catch {
-    return {};
-  }
+function kvKey(metric: string): string {
+  return `vitals:${metric}`;
 }
 
-function saveStore(store: VitalsStore): void {
-  try {
-    writeFileSync(STORE_PATH, JSON.stringify(store));
-  } catch {
-    // Best-effort persistence to /tmp
+export async function recordVital(name: string, value: number): Promise<void> {
+  const sample: VitalSample = { value, timestamp: Date.now() };
+  await kvLpush(kvKey(name), sample);
+  const len = await kvLlen(kvKey(name));
+  if (len > MAX_SAMPLES) {
+    await kvLtrim(kvKey(name), 0, MAX_SAMPLES - 1);
   }
-}
-
-export function recordVital(name: string, value: number): void {
-  const store = loadStore();
-  store[name] ??= [];
-  store[name].push({ value, timestamp: Date.now() });
-  if (store[name].length > MAX_SAMPLES) {
-    store[name] = store[name].slice(-MAX_SAMPLES);
-  }
-  saveStore(store);
 }
 
 function percentile(arr: number[], p: number): number {
@@ -62,6 +37,7 @@ function percentile(arr: number[], p: number): number {
 export interface VitalsSummary {
   name: string;
   p75: number;
+  p90: number;
   median: number;
   count: number;
   recent: Array<{ value: number; timestamp: number }>;
@@ -70,19 +46,24 @@ export interface VitalsSummary {
 export const VITAL_METRICS = ["LCP", "FCP", "CLS", "INP", "TTFB"] as const;
 export type VitalName = (typeof VITAL_METRICS)[number];
 
-export function getVitalsSummary(since?: number): VitalsSummary[] {
-  const store = loadStore();
+export async function getVitalsSummary(
+  since?: number,
+): Promise<VitalsSummary[]> {
   const cutoff = since ?? Date.now() - 24 * 60 * 60 * 1000;
 
-  return VITAL_METRICS.map((name) => {
-    const samples = (store[name] ?? []).filter((s) => s.timestamp >= cutoff);
+  const results: VitalsSummary[] = [];
+  for (const name of VITAL_METRICS) {
+    const allSamples = await kvLrange<VitalSample>(kvKey(name), 0, -1);
+    const samples = allSamples.filter((s) => s.timestamp >= cutoff);
     const values = samples.map((s) => s.value);
-    return {
+    results.push({
       name,
       p75: percentile(values, 75),
+      p90: percentile(values, 90),
       median: percentile(values, 50),
       count: values.length,
       recent: samples.slice(-50),
-    };
-  });
+    });
+  }
+  return results;
 }
