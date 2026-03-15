@@ -110,32 +110,32 @@ describe('REQ-NAV-002 — Fix Summer Camp Navigation', () => {
 });
 
 describe('REQ-NAV-003 — Fix Retreats Navigation', () => {
-  test('Retreats dropdown includes Defrost link', async () => {
+  test('Retreats dropdown includes Ignite link', async () => {
     const navigation = await getNavigation();
     const retreatsMenu = navigation.menuItems.find((item) => item.label === 'Retreats');
 
     expect(retreatsMenu).toBeDefined();
     expect(retreatsMenu?.children).toBeDefined();
 
-    const defrostLink = retreatsMenu?.children?.find((child) => child.label === 'Defrost');
+    const igniteLink = retreatsMenu?.children?.find((child) => child.label === 'Ignite');
 
-    expect(defrostLink).toBeDefined();
-    expect(defrostLink?.href).toBe('/retreats-defrost');
+    expect(igniteLink).toBeDefined();
+    expect(igniteLink?.href).toBe('/retreats-ignite');
   });
 
-  test('Defrost page file exists', () => {
-    const pagePath = path.join(process.cwd(), 'content', 'pages', 'retreats-defrost.mdoc');
+  test('Ignite page file exists', () => {
+    const pagePath = path.join(process.cwd(), 'content', 'pages', 'retreats-ignite.mdoc');
     expect(fs.existsSync(pagePath)).toBe(true);
   });
 
-  test('Retreats has two expected links', async () => {
+  test('Retreats has one expected link', async () => {
     const navigation = await getNavigation();
     const retreatsMenu = navigation.menuItems.find((item) => item.label === 'Retreats');
 
-    expect(retreatsMenu?.children).toHaveLength(2);
+    expect(retreatsMenu?.children).toHaveLength(1);
 
     const childLabels = retreatsMenu?.children?.map((child) => child.label);
-    expect(childLabels).toEqual(['Defrost', 'Recharge']);
+    expect(childLabels).toEqual(['Ignite']);
   });
 });
 
@@ -215,7 +215,7 @@ describe('REQ-NAV-006 — Navigation Integration Test Suite', () => {
 
     expect(navigation.logo).toBeDefined();
     expect(navigation.logo.href).toBe('/');
-    expect(navigation.logo.alt).toBe('Bear Lake Camp');
+    expect(navigation.logo.alt).toBe('Camp Otyokwah');
   });
 
   test('no navigation links are 404 (all pages exist)', async () => {

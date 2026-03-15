@@ -7,7 +7,7 @@ import { CTAButton } from "./CTAButton";
 
 describe("REQ-F006 — CTA Button Component", () => {
   const DEFAULT_REGISTRATION_URL =
-    "https://www.ultracamp.com/clientlogin.aspx?idCamp=268&campCode=blc";
+    "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY";
 
   describe("Component Rendering", () => {
     test("renders as link when href is provided", () => {

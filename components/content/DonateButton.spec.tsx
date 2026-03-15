@@ -6,7 +6,7 @@ import { DonateButton } from './DonateButton';
 
 describe('REQ-CONTENT-007 — DonateButton Component', () => {
   const ULTRACAMP_DONATION_URL =
-    'https://www.ultracamp.com/donation.aspx?idCamp=268&campCode=blc';
+    'https://www.ultracamp.com/donation.aspx?idCamp=1342&campCode=OTY';
 
   const defaultProps = {
     label: 'Donate Now',

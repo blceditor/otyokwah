@@ -18,8 +18,7 @@ describe("REQ-EMAIL-001: Contact email config", () => {
     process.env = { ...originalEnv };
     delete process.env.CONTACT_FORM_TO;
     delete process.env.CONTACT_FORM_FROM;
-    delete process.env.SMTP_USER;
-    delete process.env.SMTP_PASS;
+    delete process.env.RESEND_API_KEY;
   });
 
   afterEach(() => {
@@ -38,7 +37,7 @@ describe("REQ-EMAIL-001: Contact email config", () => {
     expect(DEFAULT_CONTACT_EMAIL).not.toContain(" ");
   });
 
-  it("sendContactEmail returns error when SMTP not configured", async () => {
+  it("sendContactEmail returns error when Resend not configured", async () => {
     const { sendContactEmail } = await import("./send-contact-email");
     const result = await sendContactEmail({
       name: "Test User",

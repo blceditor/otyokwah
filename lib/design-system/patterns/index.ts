@@ -2,7 +2,7 @@
  * Design Pattern Library
  * REQ-PROC-005: Core design patterns
  *
- * Single source of truth for design patterns used across the Bear Lake Camp website.
+ * Single source of truth for design patterns used across the Camp Otyokwah website.
  * Each pattern exports:
  * - Tailwind class strings
  * - Validation rules (required/forbidden classes)
@@ -39,7 +39,7 @@ export const PatternLibrary = {
   ],
   createdDate: '2025-12-23',
   updatedDate: '2025-12-23',
-  description: 'Core design patterns for Bear Lake Camp website',
+  description: 'Core design patterns for Camp Otyokwah website',
 } as const;
 
 /**

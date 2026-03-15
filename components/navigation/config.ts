@@ -8,7 +8,7 @@ import { FOOTER_CONFIG } from '@/lib/config/footer';
 
 export const defaultNavigation: NavigationConfig = {
   logo: {
-    src: '/images/logo/BLC-Logo-compass-whiteletters-no-background-small.png',
+    src: '/images/logo/otyokwah-black-logo-forthekingdom.png',
     alt: FOOTER_CONFIG.siteName,
     href: '/',
   },
@@ -46,20 +46,20 @@ export const defaultNavigation: NavigationConfig = {
       label: 'Retreats',
       href: '/retreats',
       children: [
-        { label: 'Defrost', href: '/retreats-defrost' },
-        { label: 'Recharge', href: '/retreats-recharge' },
+        { label: 'Ignite', href: '/retreats-ignite' },
       ],
     },
     {
       label: 'Rentals',
       href: '/rentals',
       children: [
-        { label: 'Cabins', href: '/rentals-cabins' },
-        { label: 'Dining Hall', href: '/rentals-dining-hall' },
-        { label: 'Chapel', href: '/rentals-chapel' },
-        { label: 'Gym', href: '/rentals-gym' },
+        { label: 'Hopewell Hall', href: '/rentals-dining-hall' },
+        { label: 'Delaware Lodge', href: '/rentals-cabins' },
+        { label: 'Mingo Cabin', href: '/rentals-mingo' },
+        { label: 'Seasonal Cabins', href: '/rentals-seasonal-cabins' },
         { label: 'Outdoor Spaces', href: '/rentals-outdoor-spaces' },
         { label: 'Recreation', href: '/rentals-recreation' },
+        { label: 'Maps', href: '/rentals-maps' },
       ],
     },
     {

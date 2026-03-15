@@ -34,7 +34,7 @@ export async function GET(request: Request) {
       headers: {
         Authorization: `token ${token}`,
         Accept: 'application/vnd.github.v3+json',
-        'User-Agent': 'BearLakeCamp-CMS',
+        'User-Agent': 'CampOtyokwah-CMS',
       },
     });
 

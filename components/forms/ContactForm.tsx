@@ -48,6 +48,8 @@ export function ContactForm({ onSubmit }: ContactFormProps = {}): JSX.Element {
   const turnstileContainerRef = useRef<HTMLDivElement>(null);
   const turnstileWidgetId = useRef<string | null>(null);
   const turnstileTokenRef = useRef<string>("");
+  // Timing guard: record when form first rendered
+  const formLoadTime = useRef<number>(Date.now());
 
   // Load Cloudflare Turnstile script
   useEffect(() => {
@@ -102,12 +104,10 @@ export function ContactForm({ onSubmit }: ContactFormProps = {}): JSX.Element {
     // If not yet received, wait briefly for it
     let currentToken = turnstileTokenRef.current;
     if (!currentToken) {
-      // Brief delay to allow Turnstile to complete verification
       await new Promise((resolve) => setTimeout(resolve, 1500));
       currentToken = turnstileTokenRef.current;
       if (!currentToken) {
-        // Still no token - silently succeed per REQ-OP005 (silent handling)
-        setSubmitStatus("success");
+        setSubmitStatus("error");
         return;
       }
     }
@@ -119,6 +119,9 @@ export function ContactForm({ onSubmit }: ContactFormProps = {}): JSX.Element {
     const sanitizedName = name.replace(/[\0\r\n]/g, "").trim();
     const sanitizedEmail = email.replace(/[\0\r\n]/g, "").trim();
     const sanitizedMessage = message.replace(/\0/g, "").trim();
+
+    // Timing guard: how long since form was rendered
+    const timing = Date.now() - formLoadTime.current;
 
     try {
       const formData = new FormData();
@@ -138,6 +141,10 @@ export function ContactForm({ onSubmit }: ContactFormProps = {}): JSX.Element {
         params.append("email", sanitizedEmail);
         params.append("message", sanitizedMessage);
         params.append("turnstile-response", currentToken);
+        // Honeypot field (left empty by real users, filled by bots)
+        params.append("website", "");
+        // Timing field
+        params.append("_timing", String(timing));
 
         const response = await fetch("/api/contact", {
           method: "POST",
@@ -149,24 +156,20 @@ export function ContactForm({ onSubmit }: ContactFormProps = {}): JSX.Element {
 
         if (response.ok) {
           setSubmitStatus("success");
-          // Reset form
           setName("");
           setEmail("");
           setMessage("");
           setTurnstileToken("");
 
-          // Reset Turnstile widget
           if (window.turnstile && turnstileWidgetId.current) {
             window.turnstile.reset(turnstileWidgetId.current);
           }
         } else {
-          // Silent handling: show success even if email invalid
-          // Server logs the actual error
-          setSubmitStatus("success");
+          setSubmitStatus("error");
         }
       }
     } catch {
-      setSubmitStatus("success");
+      setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
     }
@@ -179,6 +182,17 @@ export function ContactForm({ onSubmit }: ContactFormProps = {}): JSX.Element {
       className="max-w-2xl mx-auto space-y-6"
       noValidate
     >
+      {/* Honeypot — hidden from real users, bots fill it in */}
+      <input
+        type="text"
+        name="website"
+        defaultValue=""
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        style={{ display: "none" }}
+      />
+
       {/* Name Field */}
       <div>
         <label
@@ -263,10 +277,19 @@ export function ContactForm({ onSubmit }: ContactFormProps = {}): JSX.Element {
 
       {/* Turnstile is invisible — no pending notice needed */}
 
-      {/* Success Message */}
       {submitStatus === "success" && (
         <div className="p-4 bg-cream border-2 border-secondary/30 rounded-lg text-secondary-dark">
           Thank you for contacting us! We&apos;ll get back to you soon.
+        </div>
+      )}
+
+      {submitStatus === "error" && (
+        <div className="p-4 bg-red-50 border-2 border-red-300 rounded-lg text-red-800">
+          Something went wrong. Please try again, or contact us directly at{" "}
+          <a href="mailto:info@otyokwah.org" className="underline font-semibold">
+            info@otyokwah.org
+          </a>{" "}
+          or call <a href="tel:+14198833854" className="underline font-semibold">(419) 883-3854</a>.
         </div>
       )}
     </form>

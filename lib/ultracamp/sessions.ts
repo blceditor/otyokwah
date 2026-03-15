@@ -20,8 +20,8 @@ export interface UltraCampSession {
 }
 
 // Mock data — replace with real UltraCamp API call once API key is available
-// Real endpoint: GET https://rest.ultracamp.com/api/camps/268/sessions
-// Auth: Basic Base64(268:API_KEY)
+// Real endpoint: GET https://rest.ultracamp.com/api/camps/1342/sessions
+// Auth: Basic Base64(1342:API_KEY)
 const MOCK_SESSIONS: UltraCampSession[] = [
   {
     sessionId: "1001",
@@ -40,7 +40,7 @@ const MOCK_SESSIONS: UltraCampSession[] = [
     totalWaitListCount: 0,
     open: true,
     registrationLink:
-      "https://www.ultracamp.com/clientlogin.aspx?idCamp=268&campCode=blc",
+      "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY",
     category: "Summer Camp",
     subCategory1: "Primary",
   },
@@ -61,7 +61,7 @@ const MOCK_SESSIONS: UltraCampSession[] = [
     totalWaitListCount: 0,
     open: true,
     registrationLink:
-      "https://www.ultracamp.com/clientlogin.aspx?idCamp=268&campCode=blc",
+      "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY",
     category: "Summer Camp",
     subCategory1: "Junior",
   },
@@ -82,7 +82,7 @@ const MOCK_SESSIONS: UltraCampSession[] = [
     totalWaitListCount: 3,
     open: true,
     registrationLink:
-      "https://www.ultracamp.com/clientlogin.aspx?idCamp=268&campCode=blc",
+      "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY",
     category: "Summer Camp",
     subCategory1: "Junior",
   },
@@ -103,7 +103,7 @@ const MOCK_SESSIONS: UltraCampSession[] = [
     totalWaitListCount: 0,
     open: true,
     registrationLink:
-      "https://www.ultracamp.com/clientlogin.aspx?idCamp=268&campCode=blc",
+      "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY",
     category: "Summer Camp",
     subCategory1: "Junior",
   },
@@ -124,7 +124,7 @@ const MOCK_SESSIONS: UltraCampSession[] = [
     totalWaitListCount: 2,
     open: true,
     registrationLink:
-      "https://www.ultracamp.com/clientlogin.aspx?idCamp=268&campCode=blc",
+      "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY",
     category: "Summer Camp",
     subCategory1: "Jr. High",
   },
@@ -145,7 +145,7 @@ const MOCK_SESSIONS: UltraCampSession[] = [
     totalWaitListCount: 0,
     open: true,
     registrationLink:
-      "https://www.ultracamp.com/clientlogin.aspx?idCamp=268&campCode=blc",
+      "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY",
     category: "Summer Camp",
     subCategory1: "Jr. High",
   },
@@ -166,7 +166,7 @@ const MOCK_SESSIONS: UltraCampSession[] = [
     totalWaitListCount: 0,
     open: true,
     registrationLink:
-      "https://www.ultracamp.com/clientlogin.aspx?idCamp=268&campCode=blc",
+      "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY",
     category: "Summer Camp",
     subCategory1: "Jr. High",
   },
@@ -187,7 +187,7 @@ const MOCK_SESSIONS: UltraCampSession[] = [
     totalWaitListCount: 0,
     open: true,
     registrationLink:
-      "https://www.ultracamp.com/clientlogin.aspx?idCamp=268&campCode=blc",
+      "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY",
     category: "Summer Camp",
     subCategory1: "Sr. High",
   },
@@ -200,7 +200,7 @@ export async function fetchUltraCampSessions(): Promise<UltraCampSession[]> {
     return MOCK_SESSIONS;
   }
 
-  const campId = "268";
+  const campId = "1342";
   const credentials = Buffer.from(`${campId}:${apiKey}`).toString("base64");
 
   const res = await fetch(

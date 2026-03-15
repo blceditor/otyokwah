@@ -13,6 +13,7 @@ vi.mock('@/lib/email/send-contact-email', () => ({
 }));
 
 import { POST } from '@/app/api/contact/route';
+import { _resetRateLimiter } from '@/lib/email/rate-limiter';
 
 function makeFormRequest(
   fields: Record<string, string>,
@@ -41,6 +42,7 @@ const validFields = {
 
 describe('REQ-OP005 — Contact Form API Endpoint', () => {
   beforeEach(() => {
+    _resetRateLimiter();
     vi.stubEnv('TURNSTILE_SECRET_KEY', 'test-secret');
     global.fetch = vi.fn().mockResolvedValue({
       json: async () => ({ success: true }),
@@ -49,6 +51,7 @@ describe('REQ-OP005 — Contact Form API Endpoint', () => {
 
   afterEach(() => {
     vi.unstubAllEnvs();
+    _resetRateLimiter();
   });
 
   test('accepts valid form submission with Turnstile token', async () => {

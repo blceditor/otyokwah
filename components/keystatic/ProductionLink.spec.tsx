@@ -29,7 +29,7 @@ describe("REQ-001 — Production Link Component", () => {
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute(
       "href",
-      "https://www.bearlakecamp.com/about",
+      "https://otyokwah.vercel.app/about",
     );
   });
 
@@ -39,7 +39,7 @@ describe("REQ-001 — Production Link Component", () => {
     render(<ProductionLink />);
 
     const link = screen.getByRole("link", { name: /view live page/i });
-    expect(link).toHaveAttribute("href", "https://www.bearlakecamp.com/");
+    expect(link).toHaveAttribute("href", "https://otyokwah.vercel.app/");
   });
 
   test("constructs URL correctly for deeply nested pages", () => {
@@ -50,7 +50,7 @@ describe("REQ-001 — Production Link Component", () => {
     const link = screen.getByRole("link", { name: /view live page/i });
     expect(link).toHaveAttribute(
       "href",
-      "https://www.bearlakecamp.com/programs/summer-camp",
+      "https://otyokwah.vercel.app/programs/summer-camp",
     );
   });
 
@@ -99,7 +99,7 @@ describe("REQ-001 — Production Link Component", () => {
     const link = screen.getByRole("link", { name: /view live page/i });
     // Should not have double slashes in path (after protocol) or trailing slash
     const href = link.getAttribute("href");
-    expect(href).toBe("https://www.bearlakecamp.com/about");
+    expect(href).toBe("https://otyokwah.vercel.app/about");
     // Verify no double slashes in the path portion (after https://)
     const pathPortion = href?.replace("https://", "") || "";
     expect(pathPortion).not.toContain("//");
@@ -150,15 +150,15 @@ describe("REQ-001 — Production Link Component", () => {
     const testCases = [
       {
         path: "/keystatic/pages/index",
-        expected: "https://www.bearlakecamp.com/",
+        expected: "https://otyokwah.vercel.app/",
       },
       {
         path: "/keystatic/pages/about",
-        expected: "https://www.bearlakecamp.com/about",
+        expected: "https://otyokwah.vercel.app/about",
       },
       {
         path: "/keystatic/pages/programs/youth",
-        expected: "https://www.bearlakecamp.com/programs/youth",
+        expected: "https://otyokwah.vercel.app/programs/youth",
       },
     ];
 

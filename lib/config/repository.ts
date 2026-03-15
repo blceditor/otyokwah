@@ -21,7 +21,7 @@ export const GITHUB = {
   owner: process.env.GITHUB_OWNER ?? "blceditor",
 
   /** Repository name */
-  repo: process.env.GITHUB_REPO?.split("/").pop() ?? "bearlakecamp",
+  repo: process.env.GITHUB_REPO?.split("/").pop() ?? "otyokwah",
 
   /** Full repository path (owner/repo) */
   get full(): string {
@@ -32,7 +32,7 @@ export const GITHUB = {
 
   /** GitHub App slug for Keystatic CMS */
   appSlug:
-    process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG ?? "bearlakecamp-cms",
+    process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG ?? "otyokwah-keystatic",
 
   /** GitHub repository URL */
   get url(): string {
@@ -44,10 +44,10 @@ export const GITHUB = {
 export const DEFAULT_GITHUB_OWNER = "blceditor";
 
 /** Default GitHub repo (for fallbacks in source code) */
-export const DEFAULT_GITHUB_REPO = "bearlakecamp";
+export const DEFAULT_GITHUB_REPO = "otyokwah";
 
 /** Default full repo path */
-export const DEFAULT_GITHUB_FULL = "blceditor/bearlakecamp";
+export const DEFAULT_GITHUB_FULL = "blceditor/otyokwah";
 
 /** GitHub App slug */
-export const GITHUB_APP_SLUG = "bearlakecamp-cms";
+export const GITHUB_APP_SLUG = "otyokwah-keystatic";

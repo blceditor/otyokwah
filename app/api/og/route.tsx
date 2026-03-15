@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
 
   // Get parameters from URL
-  const title = searchParams.get('title') || 'Bear Lake Camp';
+  const title = searchParams.get('title') || 'Camp Otyokwah';
   const subtitle = searchParams.get('subtitle') || '';
   const type = searchParams.get('type') || 'default';
   const rawImageUrl = searchParams.get('image') || '';
@@ -25,10 +25,10 @@ export async function GET(request: NextRequest) {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: '#1e40af',
+          backgroundColor: '#2D5A27',
           backgroundImage: imageUrl
             ? `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${imageUrl})`
-            : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            : 'linear-gradient(135deg, #2D5A27 0%, #333333 100%)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           fontFamily: 'system-ui, sans-serif',
@@ -49,10 +49,10 @@ export async function GET(request: NextRequest) {
               borderRadius: '10px',
               fontSize: '24px',
               fontWeight: 'bold',
-              color: '#1e40af',
+              color: '#2D5A27',
             }}
           >
-            Bear Lake Camp
+            Camp Otyokwah
           </div>
         </div>
 

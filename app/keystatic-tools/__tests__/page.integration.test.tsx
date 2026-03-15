@@ -156,7 +156,7 @@ describe('REQ-TOOLS-003 — Component Integration with Props', () => {
     // Verify href includes production URL
     expect(productionLink).toHaveAttribute('href');
     const href = productionLink.getAttribute('href');
-    expect(href).toContain('bearlakecamp.com');
+    expect(href).toContain('otyokwah');
   });
 
   test('DeploymentStatus integrates with Vercel API', async () => {

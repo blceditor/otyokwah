@@ -13,6 +13,7 @@ import {
   Tablet,
 } from "lucide-react";
 import type { AnalyticsSummary } from "@/lib/google-analytics/client";
+import { niceAxisMax } from "@/lib/charts/utils";
 
 type DateRange = 7 | 30 | 90;
 
@@ -50,6 +51,121 @@ interface AnalyticsDashboardProps {
   initialData: AnalyticsSummary;
 }
 
+function getYAxisTicks(max: number): number[] {
+  const tickCount = 5;
+  const step = max / tickCount;
+  return Array.from({ length: tickCount + 1 }, (_, i) => Math.round(i * step));
+}
+
+function DailyViewsChart({
+  dailyViews,
+  formatDate: fmtDate,
+}: {
+  dailyViews: { date: string; views: number; users: number }[];
+  formatDate: (s: string) => string;
+}) {
+  const maxRaw = Math.max(...dailyViews.map((d) => Math.max(d.views, d.users)), 1);
+  const yMax = niceAxisMax(Math.ceil(maxRaw * 1.05));
+  const ticks = getYAxisTicks(yMax);
+
+  const chartW = 600;
+  const chartH = 200;
+  const padL = 50;
+  const padR = 20;
+  const padT = 10;
+  const padB = 30;
+  const plotW = chartW - padL - padR;
+  const plotH = chartH - padT - padB;
+
+  const n = dailyViews.length;
+  const xStep = n > 1 ? plotW / (n - 1) : plotW;
+
+  function x(i: number) { return padL + (n > 1 ? i * xStep : plotW / 2); }
+  function y(v: number) { return padT + plotH - (v / yMax) * plotH; }
+
+  function polyline(key: "views" | "users") {
+    return dailyViews.map((d, i) => `${x(i)},${y(d[key])}`).join(" ");
+  }
+
+  return (
+    <div className="bg-white dark:bg-dark-surface rounded-xl border border-gray-200 dark:border-dark-border p-5 mb-8">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-sm font-medium text-gray-500 dark:text-dark-muted">
+          Daily Page Views
+        </h2>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-1.5">
+            <div className="w-3 h-3 rounded-sm bg-blue-500 dark:bg-blue-400 opacity-80" />
+            <span className="text-xs text-gray-400 dark:text-dark-muted">Views</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <div className="w-3 h-3 rounded-sm bg-green-500 dark:bg-green-400 opacity-80" />
+            <span className="text-xs text-gray-400 dark:text-dark-muted">Visitors</span>
+          </div>
+        </div>
+      </div>
+      <svg viewBox={`0 0 ${chartW} ${chartH}`} className="w-full h-auto" aria-label="Daily page views chart">
+        {/* Grid lines + Y-axis labels */}
+        {ticks.map((tick) => (
+          <g key={tick}>
+            <line
+              x1={padL} x2={chartW - padR}
+              y1={y(tick)} y2={y(tick)}
+              stroke="currentColor" strokeOpacity={0.15} strokeDasharray="4 4"
+            />
+            <text
+              x={padL - 8} y={y(tick) + 3}
+              textAnchor="end" fontSize={11}
+              fill="currentColor" opacity={0.6} fontWeight={500}
+            >
+              {tick}
+            </text>
+          </g>
+        ))}
+
+        {/* Views line */}
+        <polyline
+          points={polyline("views")}
+          fill="none" stroke="#3b82f6" strokeWidth={2.5}
+          strokeLinejoin="round" strokeLinecap="round"
+        />
+        {/* Views dots */}
+        {dailyViews.map((d, i) => (
+          <circle key={`v-${i}`} cx={x(i)} cy={y(d.views)} r={4}
+            fill="#3b82f6" opacity={0.9}>
+            <title>{`${fmtDate(d.date)}: ${d.views} views`}</title>
+          </circle>
+        ))}
+
+        {/* Visitors line */}
+        <polyline
+          points={polyline("users")}
+          fill="none" stroke="#22c55e" strokeWidth={2.5}
+          strokeLinejoin="round" strokeLinecap="round"
+        />
+        {/* Visitors dots */}
+        {dailyViews.map((d, i) => (
+          <circle key={`u-${i}`} cx={x(i)} cy={y(d.users)} r={4}
+            fill="#22c55e" opacity={0.9}>
+            <title>{`${fmtDate(d.date)}: ${d.users} visitors`}</title>
+          </circle>
+        ))}
+
+        {/* X-axis labels */}
+        {dailyViews.map((d, i) => (
+          <text key={`x-${i}`}
+            x={x(i)} y={chartH - 5}
+            textAnchor="middle" fontSize={11}
+            fill="currentColor" opacity={0.6} fontWeight={500}
+          >
+            {fmtDate(d.date)}
+          </text>
+        ))}
+      </svg>
+    </div>
+  );
+}
+
 export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
   const [data, setData] = useState(initialData);
   const [days, setDays] = useState<DateRange>(7);
@@ -78,11 +194,6 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
       fetchData(range);
     },
     [fetchData],
-  );
-
-  const maxDailyValue = Math.max(
-    ...data.dailyViews.map((d) => Math.max(d.views, d.users)),
-    1,
   );
 
   return (
@@ -167,70 +278,9 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
         />
       </div>
 
-      {/* Daily Views Chart */}
+      {/* Daily Views Line Chart */}
       {data.dailyViews.length > 0 && (
-        <div className="bg-white dark:bg-dark-surface rounded-xl border border-gray-200 dark:border-dark-border p-5 mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-sm font-medium text-gray-500 dark:text-dark-muted">
-              Daily Page Views
-            </h2>
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-1.5">
-                <div className="w-3 h-3 rounded-sm bg-blue-500 dark:bg-blue-400 opacity-80" />
-                <span className="text-xs text-gray-400 dark:text-dark-muted">
-                  Views
-                </span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <div className="w-3 h-3 rounded-sm bg-green-500 dark:bg-green-400 opacity-80" />
-                <span className="text-xs text-gray-400 dark:text-dark-muted">
-                  Visitors
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className="flex items-end gap-2 h-48">
-            {data.dailyViews.map((day) => (
-              <div
-                key={day.date}
-                className="flex flex-col items-center gap-1"
-                style={{
-                  flex: data.dailyViews.length <= 7 ? "0 0 auto" : "1",
-                  width:
-                    data.dailyViews.length <= 7
-                      ? `${Math.min(100, Math.floor(600 / data.dailyViews.length))}px`
-                      : undefined,
-                }}
-              >
-                <span className="text-[10px] text-gray-400 dark:text-dark-muted">
-                  {day.views > 0 ? day.views : ""}
-                </span>
-                <div
-                  className="w-full flex items-end gap-1"
-                  style={{ height: "100%" }}
-                >
-                  <div
-                    className="flex-1 bg-blue-500 dark:bg-blue-400 rounded-t opacity-80 hover:opacity-100 transition-opacity min-h-[4px]"
-                    style={{
-                      height: `${Math.max((day.views / maxDailyValue) * 100, 4)}%`,
-                    }}
-                    title={`${formatDate(day.date)}: ${day.views} views`}
-                  />
-                  <div
-                    className="flex-1 bg-green-500 dark:bg-green-400 rounded-t opacity-80 hover:opacity-100 transition-opacity min-h-[4px]"
-                    style={{
-                      height: `${Math.max((day.users / maxDailyValue) * 100, 4)}%`,
-                    }}
-                    title={`${formatDate(day.date)}: ${day.users} visitors`}
-                  />
-                </div>
-                <span className="text-[10px] text-gray-400 dark:text-dark-muted">
-                  {formatDate(day.date)}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
+        <DailyViewsChart dailyViews={data.dailyViews} formatDate={formatDate} />
       )}
 
       {/* Two-column grid */}
@@ -260,87 +310,34 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
         />
 
         {/* Devices */}
-        <div className="bg-white dark:bg-dark-surface rounded-xl border border-gray-200 dark:border-dark-border p-5">
-          <h2
-            className="text-sm font-medium text-gray-500 dark:text-dark-muted mb-4 cursor-help"
-            title="Breakdown of visitors by device type (desktop, mobile, tablet)"
-          >
-            Devices
-          </h2>
-          <div className="space-y-3">
-            {(() => {
-              const totalDeviceUsers = data.devices.reduce(
-                (sum, x) => sum + x.users,
-                0,
-              );
-              return data.devices.map((d) => {
-              const pct =
-                totalDeviceUsers > 0
-                  ? Math.round((d.users / totalDeviceUsers) * 100)
-                  : 0;
-              return (
-                <div key={d.device} className="flex items-center gap-3">
-                  <span className="text-gray-400 dark:text-dark-muted">
-                    {getDeviceIcon(d.device)}
-                  </span>
-                  <span className="text-sm text-gray-700 dark:text-dark-text w-20 capitalize">
-                    {d.device}
-                  </span>
-                  <div className="flex-1 h-2 rounded-full bg-gray-100 dark:bg-dark-border overflow-hidden">
-                    <div
-                      className="h-full rounded-full bg-indigo-500 dark:bg-indigo-400"
-                      style={{ width: `${pct}%` }}
-                    />
-                  </div>
-                  <span className="text-xs text-gray-500 dark:text-dark-muted w-12 text-right">
-                    {pct}%
-                  </span>
-                </div>
-              );
-            });
-            })()}
-          </div>
-        </div>
+        <BarCard
+          title="Devices"
+          tooltip="Breakdown of visitors by device type (desktop, mobile, tablet)"
+          items={data.devices.map((d) => ({
+            label: d.device,
+            users: d.users,
+            icon: (
+              <span className="text-gray-400 dark:text-dark-muted">
+                {getDeviceIcon(d.device)}
+              </span>
+            ),
+          }))}
+          barColor="bg-indigo-500 dark:bg-indigo-400"
+          labelWidth="w-20"
+          capitalize
+        />
 
         {/* Browsers */}
-        <div className="bg-white dark:bg-dark-surface rounded-xl border border-gray-200 dark:border-dark-border p-5">
-          <h2
-            className="text-sm font-medium text-gray-500 dark:text-dark-muted mb-4 cursor-help"
-            title="Which web browsers your visitors use"
-          >
-            Browsers
-          </h2>
-          <div className="space-y-3">
-            {(() => {
-              const totalBrowserUsers = data.browsers.reduce(
-                (sum, x) => sum + x.users,
-                0,
-              );
-              return data.browsers.slice(0, 6).map((b) => {
-              const pct =
-                totalBrowserUsers > 0
-                  ? Math.round((b.users / totalBrowserUsers) * 100)
-                  : 0;
-              return (
-                <div key={b.browser} className="flex items-center gap-3">
-                  <span className="text-sm text-gray-700 dark:text-dark-text w-24 truncate">
-                    {b.browser}
-                  </span>
-                  <div className="flex-1 h-2 rounded-full bg-gray-100 dark:bg-dark-border overflow-hidden">
-                    <div
-                      className="h-full rounded-full bg-green-500 dark:bg-green-400"
-                      style={{ width: `${pct}%` }}
-                    />
-                  </div>
-                  <span className="text-xs text-gray-500 dark:text-dark-muted w-12 text-right">
-                    {pct}%
-                  </span>
-                </div>
-              );
-            });
-            })()}
-          </div>
-        </div>
+        <BarCard
+          title="Browsers"
+          tooltip="Which web browsers your visitors use"
+          items={data.browsers.slice(0, 6).map((b) => ({
+            label: b.browser,
+            users: b.users,
+          }))}
+          barColor="bg-green-500 dark:bg-green-400"
+          labelWidth="w-24 truncate"
+        />
       </div>
 
       {/* CTA Clicks */}
@@ -556,6 +553,58 @@ function DataTable({
           ))}
         </tbody>
       </table>
+    </div>
+  );
+}
+
+function BarCard({
+  title,
+  tooltip,
+  items,
+  barColor,
+  labelWidth,
+  capitalize: cap,
+}: {
+  title: string;
+  tooltip?: string;
+  items: { label: string; users: number; icon?: React.ReactNode }[];
+  barColor: string;
+  labelWidth: string;
+  capitalize?: boolean;
+}) {
+  const total = items.reduce((sum, x) => sum + x.users, 0);
+  return (
+    <div className="bg-white dark:bg-dark-surface rounded-xl border border-gray-200 dark:border-dark-border p-5">
+      <h2
+        className="text-sm font-medium text-gray-500 dark:text-dark-muted mb-4 cursor-help"
+        title={tooltip}
+      >
+        {title}
+      </h2>
+      <div className="space-y-3">
+        {items.map((item) => {
+          const pct = total > 0 ? Math.round((item.users / total) * 100) : 0;
+          return (
+            <div key={item.label} className="flex items-center gap-3">
+              {item.icon}
+              <span
+                className={`text-sm text-gray-700 dark:text-dark-text ${labelWidth}${cap ? " capitalize" : ""}`}
+              >
+                {item.label}
+              </span>
+              <div className="flex-1 h-2 rounded-full bg-gray-100 dark:bg-dark-border overflow-hidden">
+                <div
+                  className={`h-full rounded-full ${barColor}`}
+                  style={{ width: `${pct}%` }}
+                />
+              </div>
+              <span className="text-xs text-gray-500 dark:text-dark-muted w-12 text-right">
+                {pct}%
+              </span>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

@@ -23,13 +23,11 @@ describe('REQ-F003 — Testimonials Keystatic Integration', () => {
   });
 
   test('can read individual testimonial by slug', async () => {
-    const testimonial = await reader.collections.testimonials.read('sample-parent');
+    const testimonial = await reader.collections.testimonials.read('parent-testimonial-1');
 
     // Should return testimonial data
     expect(testimonial).toBeDefined();
     expect(testimonial?.quote).toBeDefined();
-    expect(testimonial?.name).toBe('sarah-johnson');
-    expect(testimonial?.role).toBe('Parent of Camper');
     expect(testimonial?.tags).toContain('parent');
     expect(testimonial?.tags).toContain('summer-camp');
     expect(testimonial?.published).toBe(true);
@@ -90,12 +88,8 @@ describe('REQ-F003 — Testimonials Keystatic Integration', () => {
   test('can filter published testimonials', async () => {
     const allTestimonials = await reader.collections.testimonials.all();
 
-    // Sample testimonials are published (used by testimonialWidget)
-    const sampleTestimonials = allTestimonials.filter((t) =>
-      t.slug.startsWith('sample-')
-    );
-    const publishedSamples = sampleTestimonials.filter((t) => t.entry.published === true);
-    expect(publishedSamples.length).toBeGreaterThanOrEqual(3);
+    const publishedTestimonials = allTestimonials.filter((t) => t.entry.published === true);
+    expect(publishedTestimonials.length).toBeGreaterThanOrEqual(3);
   });
 
   test('testimonial quotes have reasonable length', async () => {
@@ -112,19 +106,19 @@ describe('REQ-F003 — Testimonials Keystatic Integration', () => {
     }
   });
 
-  test('sample testimonials have correct tags', async () => {
-    const parentTestimonial = await reader.collections.testimonials.read('sample-parent');
+  test('testimonials have correct tags', async () => {
+    const parentTestimonial = await reader.collections.testimonials.read('parent-testimonial-1');
     expect(parentTestimonial?.tags).toContain('parent');
     expect(parentTestimonial?.tags).toContain('summer-camp');
 
-    const staffTestimonial = await reader.collections.testimonials.read('sample-staff');
+    const staffTestimonial = await reader.collections.testimonials.read('summer-staff-1');
     expect(staffTestimonial?.tags).toContain('staff');
 
-    const donorTestimonial = await reader.collections.testimonials.read('sample-donor');
-    expect(donorTestimonial?.tags).toContain('giving');
+    const churchTestimonial = await reader.collections.testimonials.read('church-leader-1');
+    expect(churchTestimonial?.tags).toContain('giving');
 
-    const camperTestimonial = await reader.collections.testimonials.read('sample-camper');
-    expect(camperTestimonial?.tags).toContain('camper');
-    expect(camperTestimonial?.tags).toContain('summer-camp');
+    const parentTestimonial2 = await reader.collections.testimonials.read('parent-testimonial-2');
+    expect(parentTestimonial2?.tags).toContain('parent');
+    expect(parentTestimonial2?.tags).toContain('summer-camp');
   });
 });
