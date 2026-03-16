@@ -101,7 +101,7 @@ export async function GET(request: Request) {
 
       if (body.access_token && !body.expires_in) {
         // Classic OAuth App response — set cookie and redirect to Keystatic
-        const cookieValue = `keystatic-gh-access-token=${body.access_token}; Path=/; HttpOnly; SameSite=Lax${process.env.NODE_ENV === 'production' ? '; Secure' : ''}`;
+        const cookieValue = `keystatic-gh-access-token=${body.access_token}; Path=/; SameSite=Lax${process.env.NODE_ENV === 'production' ? '; Secure' : ''}`;
         const headers = new Headers();
         headers.append('Set-Cookie', cookieValue);
         headers.set('Location', '/keystatic');
