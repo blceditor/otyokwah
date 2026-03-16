@@ -18,13 +18,13 @@
 
 export const BRANDING_COLORS = {
   /** Brand blue */
-  primary: "#4A7A9E",
+  primary: "#2D5A27",
 
   /** Forest green */
-  secondary: "#2F4F3D",
+  secondary: "#333333",
 
   /** Warm brown */
-  accent: "#A07856",
+  accent: "#C4A84B",
 
   /** Off-white background */
   cream: "#F5F0E8",

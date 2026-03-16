@@ -110,7 +110,7 @@ export async function GET() {
         // P0 Fix: Use Bearer token format (modern GitHub API)
         Authorization: `Bearer ${token}`,
         Accept: 'application/vnd.github.v3+json',
-        'User-Agent': 'BearLakeCamp-CMS',
+        'User-Agent': 'CampOtyokwah-CMS',
       },
       signal: controller.signal,
       next: { revalidate: 300 },
@@ -145,7 +145,7 @@ export async function GET() {
             headers: {
               Authorization: `Bearer ${token}`,
               Accept: 'application/vnd.github.v3+json',
-              'User-Agent': 'BearLakeCamp-CMS',
+              'User-Agent': 'CampOtyokwah-CMS',
             },
             signal: controller.signal,
           });

@@ -226,7 +226,7 @@ export const pages = collection({
           schema: {
             heading: fields.text({
               label: "Section Heading",
-              description: 'E.g., "Why Choose Bear Lake?"',
+              description: 'E.g., "Why Choose Our Camp?"',
             }),
             cards: fields.array(
               fields.object({

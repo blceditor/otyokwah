@@ -19,8 +19,8 @@
 export const ANALYTICS = {
   /** Google Analytics 4 measurement ID */
   ga4MeasurementId:
-    process.env.NEXT_PUBLIC_GA_ID ?? "G-QF89BLRP5F",
+    process.env.NEXT_PUBLIC_GA_ID ?? "",
 } as const;
 
 /** Default GA4 measurement ID */
-export const DEFAULT_GA4_MEASUREMENT_ID = "G-QF89BLRP5F";
+export const DEFAULT_GA4_MEASUREMENT_ID = "";

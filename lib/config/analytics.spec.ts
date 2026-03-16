@@ -23,12 +23,12 @@ describe("REQ-CFG-001: Analytics Configuration", () => {
 
   it("exports the default GA4 measurement ID when no env var is set", async () => {
     const { ANALYTICS } = await import("./analytics");
-    expect(ANALYTICS.ga4MeasurementId).toBe("G-QF89BLRP5F");
+    expect(ANALYTICS.ga4MeasurementId).toBe("");
   });
 
   it("exports DEFAULT_GA4_MEASUREMENT_ID matching the YAML value", async () => {
     const { DEFAULT_GA4_MEASUREMENT_ID } = await import("./analytics");
-    expect(DEFAULT_GA4_MEASUREMENT_ID).toBe("G-QF89BLRP5F");
+    expect(DEFAULT_GA4_MEASUREMENT_ID).toBe("");
   });
 
   it("uses NEXT_PUBLIC_GA_ID env var override when set", async () => {

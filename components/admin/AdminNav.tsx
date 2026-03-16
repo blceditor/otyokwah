@@ -7,6 +7,7 @@ import {
   Tent,
   BarChart3,
   Gauge,
+  Mail,
   ArrowLeft,
 } from "lucide-react";
 import ThemeToggle from "@/components/keystatic/ThemeToggle";
@@ -26,6 +27,11 @@ const NAV_ITEMS = [
     label: "Performance",
     href: "/admin/performance",
     icon: Gauge,
+  },
+  {
+    label: "Contact",
+    href: "/admin/contact",
+    icon: Mail,
   },
 ];
 

@@ -12,7 +12,7 @@ import {
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Session Availability (v2 Design Mock) - Bear Lake Camp",
+  title: "Session Availability (v2 Design Mock) - Camp Otyokwah",
   robots: { index: false },
 };
 
@@ -184,7 +184,7 @@ export default async function CapacityDemoCards() {
               A fun first taste of overnight camp just for our youngest campers!
             </p>
             <a
-              href="https://www.ultracamp.com/clientlogin.aspx?idCamp=268&campCode=blc"
+              href="https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block mt-4 px-6 py-3 bg-white text-primary font-semibold rounded-lg hover:bg-white/90 transition-colors no-underline"
@@ -225,7 +225,7 @@ export default async function CapacityDemoCards() {
               Full-week adventure for elementary students!
             </p>
             <a
-              href="https://www.ultracamp.com/clientlogin.aspx?idCamp=268&campCode=blc"
+              href="https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block mt-4 px-6 py-3 bg-white text-accent font-semibold rounded-lg hover:bg-white/90 transition-colors no-underline"
@@ -242,7 +242,7 @@ export default async function CapacityDemoCards() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/summer-sessions/jr-high-camp.jpg"
-            alt="Jr. High campers at Bear Lake Camp"
+            alt="Jr. High campers at Camp Otyokwah"
             className="w-full h-full object-cover"
           />
         </div>
@@ -266,7 +266,7 @@ export default async function CapacityDemoCards() {
               A week of growth and exploration for middle school students!
             </p>
             <a
-              href="https://www.ultracamp.com/clientlogin.aspx?idCamp=268&campCode=blc"
+              href="https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block mt-4 px-6 py-3 bg-white text-secondary font-semibold rounded-lg hover:bg-white/90 transition-colors no-underline"
@@ -307,7 +307,7 @@ export default async function CapacityDemoCards() {
               Our summer session for high school students!
             </p>
             <a
-              href="https://www.ultracamp.com/clientlogin.aspx?idCamp=268&campCode=blc"
+              href="https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block mt-4 px-6 py-3 bg-white text-primary font-semibold rounded-lg hover:bg-white/90 transition-colors no-underline"

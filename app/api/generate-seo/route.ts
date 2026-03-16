@@ -139,28 +139,28 @@ export async function POST(request: NextRequest) {
       ? `\n${contextParts.join('\n')}\n`
       : '';
 
-    const systemPrompt = `You are an SEO expert for Bear Lake Camp, a Christian summer camp in Indiana. Generate optimized meta tags as JSON only. Focus on:
-- Include "Bear Lake Camp" in meta title
+    const systemPrompt = `You are an SEO expert for Camp Otyokwah, a Christian summer camp in Ohio. Generate optimized meta tags as JSON only. Focus on:
+- Include "Camp Otyokwah" in meta title
 - Highlight spiritual growth, outdoor adventure, Christian community
 - For program pages, mention age group and key benefits
 - Keep descriptions compelling and action-oriented
 Do not include any explanations or additional text outside the JSON structure.`;
 
-    const userPrompt = `Generate SEO metadata for this Bear Lake Camp page:
+    const userPrompt = `Generate SEO metadata for this Camp Otyokwah page:
 
 Title: ${pageTitle}${contextSection}
 Content Summary:
 ${truncatedContent}
 
 Return JSON only with these exact fields:
-{"metaTitle":"50-60 chars with Bear Lake Camp","metaDescription":"150-155 chars compelling description","ogTitle":"engaging social title","ogDescription":"descriptive for social sharing"}`;
+{"metaTitle":"50-60 chars with Camp Otyokwah","metaDescription":"150-155 chars compelling description","ogTitle":"engaging social title","ogDescription":"descriptive for social sharing"}`;
 
     const response = await fetch('https://universal.sparkry.ai/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${cleanKey}`,
-        'User-Agent': 'BearLakeCamp/1.0 (Next.js; SEO Generator)',
+        'User-Agent': 'CampOtyokwah/1.0 (Next.js; SEO Generator)',
         'Accept': 'application/json',
         'Accept-Language': 'en-US,en;q=0.9',
       },

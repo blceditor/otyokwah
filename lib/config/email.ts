@@ -18,17 +18,20 @@
 
 export const EMAIL = {
   /** General contact email */
-  contact: process.env.CONTACT_EMAIL ?? "info@bearlakecamp.org",
+  contact: process.env.CONTACT_EMAIL ?? "info@otyokwah.org",
 
   /** Camp registrar email */
-  registrar: process.env.REGISTRAR_EMAIL ?? "registrar@bearlakecamp.com",
+  registrar: process.env.REGISTRAR_EMAIL ?? "info@otyokwah.org",
 
   /** Default contact email (CMS defaults) */
-  default: "ben@bearlakecamp.com",
+  default: "info@otyokwah.org",
+
+  /** Email sending domain (used for Resend from address) */
+  domain: "otyokwah.org",
 } as const;
 
 /** Default contact email */
-export const DEFAULT_CONTACT_EMAIL = "info@bearlakecamp.org";
+export const DEFAULT_CONTACT_EMAIL = "info@otyokwah.org";
 
 /** Default registrar email */
-export const DEFAULT_REGISTRAR_EMAIL = "registrar@bearlakecamp.com";
+export const DEFAULT_REGISTRAR_EMAIL = "info@otyokwah.org";

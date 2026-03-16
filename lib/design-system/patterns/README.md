@@ -2,7 +2,7 @@
 
 **REQ-PROC-005: Core Design Patterns**
 
-Single source of truth for design patterns used across the Bear Lake Camp website.
+Single source of truth for design patterns used across the Camp Otyokwah website.
 
 ## Overview
 

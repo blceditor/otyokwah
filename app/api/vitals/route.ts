@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     if (!VITAL_METRICS.includes(name as typeof VITAL_METRICS[number])) {
       return NextResponse.json({ error: "Unknown metric" }, { status: 400 });
     }
-    recordVital(name, value);
+    await recordVital(name, value);
     return NextResponse.json({ ok: true });
   } catch {
     return NextResponse.json({ error: "Bad request" }, { status: 400 });
@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
 export async function GET() {
   const authError = await requireKeystatic();
   if (authError) return authError;
-  const summary = getVitalsSummary();
+  const summary = await getVitalsSummary();
   return NextResponse.json(summary, {
     headers: { "Cache-Control": "no-cache, must-revalidate" },
   });

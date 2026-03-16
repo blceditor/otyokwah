@@ -72,26 +72,23 @@ export function initializeNavigation(): void {
   - label: Retreats
     href: /retreats
     children:
-      - label: Defrost
-        href: /retreats-defrost
-        external: false
-      - label: Recharge
-        href: /retreats-recharge
+      - label: Ignite
+        href: /retreats-ignite
         external: false
   - label: Rentals
     href: /rentals
     children:
-      - label: Cabins
-        href: /rentals-cabins
-        external: false
-      - label: Dining Hall
+      - label: Hopewell Hall
         href: /rentals-dining-hall
         external: false
-      - label: Chapel
-        href: /rentals-chapel
+      - label: Delaware Lodge
+        href: /rentals-cabins
         external: false
-      - label: Gym
-        href: /rentals-gym
+      - label: Mingo Cabin
+        href: /rentals-mingo
+        external: false
+      - label: Seasonal Cabins
+        href: /rentals-seasonal-cabins
         external: false
       - label: Outdoor Spaces
         href: /rentals-outdoor-spaces
@@ -99,11 +96,15 @@ export function initializeNavigation(): void {
       - label: Recreation
         href: /rentals-recreation
         external: false
+      - label: Maps
+        href: /rentals-maps
+        external: false
   - label: Give
     href: /give
+    children: []
 primaryCTA:
   label: Register Now
-  href: https://www.ultracamp.com/clientlogin.aspx?idCamp=268
+  href: https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY
   external: true
 `;
 

@@ -11,15 +11,15 @@ import { BRANDING_COLORS } from "./branding";
 
 describe("REQ-CFG-002: Branding Colors Configuration", () => {
   it("exports primary brand blue", () => {
-    expect(BRANDING_COLORS.primary).toBe("#4A7A9E");
+    expect(BRANDING_COLORS.primary).toBe("#2D5A27");
   });
 
-  it("exports secondary forest green", () => {
-    expect(BRANDING_COLORS.secondary).toBe("#2F4F3D");
+  it("exports secondary dark charcoal", () => {
+    expect(BRANDING_COLORS.secondary).toBe("#333333");
   });
 
-  it("exports accent warm brown", () => {
-    expect(BRANDING_COLORS.accent).toBe("#A07856");
+  it("exports accent gold", () => {
+    expect(BRANDING_COLORS.accent).toBe("#C4A84B");
   });
 
   it("exports cream off-white background", () => {

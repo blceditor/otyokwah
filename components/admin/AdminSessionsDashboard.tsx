@@ -207,7 +207,7 @@ export function AdminSessionsDashboard({
       </div>
 
       {/* Sessions Table */}
-      <div className="bg-white dark:bg-dark-surface rounded-xl border border-gray-200 dark:border-dark-border overflow-hidden">
+      <div className="bg-white dark:bg-dark-surface rounded-xl border border-gray-200 dark:border-dark-border overflow-x-auto">
         <table className="w-full">
           <thead>
             <tr className="border-b border-gray-100 dark:border-dark-border bg-gray-50 dark:bg-dark-bg">

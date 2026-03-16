@@ -175,12 +175,12 @@ Scripture reveals that life in Christ will change us at the very core of our bei
     });
 
     test('handles links with special characters in URL', () => {
-      const MARKDOWN = '[Register](https://www.ultracamp.com/clientlogin.aspx?idCamp=268&campCode=blc)';
+      const MARKDOWN = '[Register](https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY)';
 
       render(<MarkdownRenderer content={MARKDOWN} />);
 
       const link = screen.getByRole('link', { name: 'Register' });
-      expect(link).toHaveAttribute('href', 'https://www.ultracamp.com/clientlogin.aspx?idCamp=268&campCode=blc');
+      expect(link).toHaveAttribute('href', 'https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY');
     });
   });
 
@@ -613,7 +613,7 @@ https://youtu.be/8N9Yeup1xVA?si=4KXXFghbmpg0j46-
 
 The call of Jesus has always been to "Come and follow me."
 
-[Registration Opens Jan 1st](https://www.ultracamp.com/clientlogin.aspx?idCamp=268&campCode=blc)`;
+[Registration Opens Jan 1st](https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY)`;
 
       const { container } = render(<MarkdownRenderer content={REAL_CONTENT} />);
 
@@ -623,7 +623,7 @@ The call of Jesus has always been to "Come and follow me."
 
       // Should have valid registration link
       const link = screen.getByRole('link', { name: /Registration Opens/i });
-      expect(link).toHaveAttribute('href', 'https://www.ultracamp.com/clientlogin.aspx?idCamp=268&campCode=blc');
+      expect(link).toHaveAttribute('href', 'https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY');
 
       // Should have headings
       expect(screen.getByRole('heading', { name: /Summer 2026/i })).toBeInTheDocument();

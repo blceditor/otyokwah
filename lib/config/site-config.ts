@@ -34,7 +34,7 @@ export async function getSiteConfig(): Promise<SiteConfig> {
 
     return {
       siteName: cms.siteName || FOOTER_CONFIG.siteName,
-      logoPath: cms.logoPath || '/images/logo/BLC-Logo-compass-whiteletters-no-background-small.png',
+      logoPath: cms.logoPath || '/images/logo/otyokwah-black-logo-forthekingdom.png',
       logoAlt: cms.logoAlt || FOOTER_CONFIG.siteName,
       contactEmail: cms.contactEmail || FOOTER_CONFIG.contactEmail,
       contactPhone: cms.contactPhone || FOOTER_CONFIG.contactPhone,
@@ -57,7 +57,7 @@ export async function getSiteConfig(): Promise<SiteConfig> {
 function buildFromDefaults(): SiteConfig {
   return {
     siteName: FOOTER_CONFIG.siteName,
-    logoPath: '/images/logo/BLC-Logo-compass-whiteletters-no-background-small.png',
+    logoPath: '/images/logo/otyokwah-black-logo-forthekingdom.png',
     logoAlt: FOOTER_CONFIG.siteName,
     contactEmail: FOOTER_CONFIG.contactEmail,
     contactPhone: FOOTER_CONFIG.contactPhone,

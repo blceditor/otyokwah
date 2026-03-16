@@ -7,7 +7,7 @@ interface OGImageParams {
 }
 
 export function generateOGImageURL(params: OGImageParams): string {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.bearlakecamp.com';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://otyokwah.vercel.app';
   const url = new URL(`${baseUrl}/api/og`);
 
   // Add parameters
