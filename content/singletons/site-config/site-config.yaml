@@ -2,13 +2,13 @@ siteName: Camp Otyokwah
 logoPath: /images/logo/otyokwah-black-logo-forthekingdom.png
 logoAlt: Camp Otyokwah
 contactEmail: info@otyokwah.org
-contactPhone: "(419) 883-3854"
+contactPhone: (419) 883-3854
 contactAddress: 3380 Tugend Rd, Butler, OH 44822
-registrationUrl: "https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY"
-donationUrl: "https://www.ultracamp.com/donations/donationintention.aspx?idCamp=1342&campCode=OTY"
+registrationUrl: https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY
+donationUrl: >-
+  https://www.ultracamp.com/donations/donationintention.aspx?idCamp=1342&campCode=OTY
 emailFromName: Camp Otyokwah Website
-facebookUrl: "https://www.facebook.com/campoty"
-instagramUrl: "https://www.instagram.com/campotyokwah/"
-youtubeUrl: "https://www.youtube.com/user/CampOtyokwah"
-spotifyUrl: ""
-mapsUrl: ""
+facebookUrl: https://www.facebook.com/campoty
+instagramUrl: https://www.instagram.com/campotyokwah/
+youtubeUrl: https://www.youtube.com/user/CampOtyokwah
+mapsUrl: https://maps.app.goo.gl/KzTETpxnp2x9x6V4A
