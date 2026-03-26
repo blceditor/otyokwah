@@ -15,14 +15,14 @@ import {
   History,
   LogOut,
   RefreshCw,
-  PanelRight,
   EyeOff,
   LayoutDashboard,
   BarChart3,
+  Tent,
+  Mail,
+  Gauge,
 } from "lucide-react";
 import {
-  isLivePreviewEnabled,
-  setLivePreviewEnabled,
   isNavHidden,
   setNavHidden,
 } from "@/lib/config/feature-flags";
@@ -277,10 +277,6 @@ export function KeystaticToolsHeader() {
   const [isLoadingGitDates, setIsLoadingGitDates] = useState(false);
   const { user: githubUser, isLoading: isLoadingUser } = useGitHubUser();
 
-  // REQ-LP-003: Live Preview toggle state
-  const [previewEnabled, setPreviewEnabled] = useState(() =>
-    isLivePreviewEnabled(),
-  );
   const [navHidden, setNavHiddenState] = useState(() => isNavHidden());
 
   // Check if we're editing a specific page
@@ -549,14 +545,6 @@ export function KeystaticToolsHeader() {
   }, []);
 
   // REQ-LP-003: Toggle live preview panel
-  const handleTogglePreview = useCallback(() => {
-    const newValue = !previewEnabled;
-    setLivePreviewEnabled(newValue);
-    setPreviewEnabled(newValue);
-    // Force re-render of layout by reloading
-    window.location.reload();
-  }, [previewEnabled]);
-
   const handleToggleNav = useCallback(() => {
     const newValue = !navHidden;
     setNavHidden(newValue);
@@ -615,16 +603,36 @@ export function KeystaticToolsHeader() {
             )}
           </NavDropdown>
 
-          {/* Tools Menu - SEO, Links, View Live, Cache */}
-          <NavDropdown label="Tools" icon={<Wrench size={16} />}>
-            {/* REQ-LP-003: Live Preview Toggle */}
+          {/* Site Dashboard Menu */}
+          <NavDropdown label="Site Dashboard" icon={<LayoutDashboard size={16} />}>
             <DropdownItem
-              onClick={handleTogglePreview}
-              icon={<PanelRight size={14} />}
-              variant={previewEnabled ? "success" : "default"}
+              href="/admin/sessions"
+              icon={<Tent size={14} />}
             >
-              {previewEnabled ? "✓ Live Preview On" : "Live Preview"}
+              Camp Sessions
             </DropdownItem>
+            <DropdownItem
+              href="/admin/contact"
+              icon={<Mail size={14} />}
+            >
+              Contacts
+            </DropdownItem>
+            <DropdownItem
+              href="/admin/analytics"
+              icon={<BarChart3 size={14} />}
+            >
+              Site Analytics
+            </DropdownItem>
+            <DropdownItem
+              href="/admin/performance"
+              icon={<Gauge size={14} />}
+            >
+              Site Performance
+            </DropdownItem>
+          </NavDropdown>
+
+          {/* Tools Menu - SEO, Links, Cache */}
+          <NavDropdown label="Tools" icon={<Wrench size={16} />}>
             <DropdownItem
               onClick={handleToggleNav}
               icon={<EyeOff size={14} />}
@@ -641,20 +649,7 @@ export function KeystaticToolsHeader() {
             >
               Check All Page Links
             </DropdownItem>
-            <div className="border-t border-gray-700 my-1" />
-            <DropdownItem
-              href="/admin/sessions"
-              icon={<LayoutDashboard size={14} />}
-            >
-              Sessions Dashboard
-            </DropdownItem>
-            <DropdownItem
-              href="/admin/analytics"
-              icon={<BarChart3 size={14} />}
-            >
-              Site Analytics
-            </DropdownItem>
-            <div className="border-t border-gray-700 my-1" />
+            <div className="border-t border-gray-200 dark:border-gray-700 my-1" />
             <DropdownItem
               onClick={handleDiscardDraft}
               icon={<X size={14} />}
@@ -696,7 +691,7 @@ export function KeystaticToolsHeader() {
               href={productionUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-white hover:bg-white/10 rounded-md transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-600 dark:text-white hover:bg-gray-100 dark:hover:bg-white/10 rounded-md transition-colors"
               aria-label={`View ${pathDisplay} live`}
               title="See this page on the live site"
             >
