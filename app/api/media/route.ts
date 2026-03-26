@@ -52,7 +52,7 @@ async function deleteViaGitHub(
   repoPath: string,
 ): Promise<boolean> {
   const owner = process.env.GITHUB_OWNER || DEFAULT_GITHUB_OWNER;
-  const repo = process.env.GITHUB_REPO || DEFAULT_GITHUB_REPO;
+  const repo = process.env.GITHUB_REPO?.split("/").pop() || DEFAULT_GITHUB_REPO;
 
   const getResponse = await fetch(
     `https://api.github.com/repos/${owner}/${repo}/contents/${repoPath}`,
@@ -94,7 +94,7 @@ async function uploadViaGitHub(
   message: string,
 ): Promise<{ ok: boolean; error?: string }> {
   const owner = process.env.GITHUB_OWNER || DEFAULT_GITHUB_OWNER;
-  const repo = process.env.GITHUB_REPO || DEFAULT_GITHUB_REPO;
+  const repo = process.env.GITHUB_REPO?.split("/").pop() || DEFAULT_GITHUB_REPO;
 
   const response = await fetch(
     `https://api.github.com/repos/${owner}/${repo}/contents/${repoPath}`,
