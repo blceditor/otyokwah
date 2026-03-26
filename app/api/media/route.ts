@@ -105,7 +105,11 @@ async function uploadViaGitHub(
         Accept: "application/vnd.github+json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ message, content }),
+      body: JSON.stringify({
+        message,
+        content,
+        branch: process.env.KEYSTATIC_DEFAULT_BRANCH || "main",
+      }),
     },
   );
 
