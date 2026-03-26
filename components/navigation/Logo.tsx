@@ -19,16 +19,18 @@ export default function Logo({
   return (
     <Link
       href={href}
-      className="relative flex-shrink-0 z-50 -mb-8 lg:-mb-12"
+      className={`relative flex-shrink-0 z-50 transition-all duration-300 ${
+        isScrolled ? "mb-0" : "-mb-8 lg:-mb-12"
+      }`}
       aria-label="Go to homepage"
     >
       <Image
         src={src}
         alt={alt}
-        width={isScrolled ? 120 : 160}
-        height={isScrolled ? 61 : 82}
+        width={isScrolled ? 80 : 160}
+        height={isScrolled ? 41 : 82}
         className={`h-auto transition-all duration-300 ${
-          isScrolled ? "w-[100px] lg:w-[120px]" : "w-[120px] lg:w-[160px]"
+          isScrolled ? "w-[60px] lg:w-[80px]" : "w-[120px] lg:w-[160px]"
         }`}
         priority
       />
