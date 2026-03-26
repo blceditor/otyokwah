@@ -192,6 +192,8 @@ export function MediaLibrary({
     const origMap = new Map<string, File>();
     for (const f of originalFiles) {
       origMap.set(f.name, f);
+      // Also store with sanitized name (spaces → underscores) for matching
+      origMap.set(f.name.replace(/[^a-zA-Z0-9.-]/g, "_"), f);
     }
 
     const optimistic: MediaFile[] = uploaded.map((u) => {
