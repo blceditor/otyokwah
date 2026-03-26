@@ -30,7 +30,7 @@ export default function Logo({
         width={isScrolled ? 80 : 160}
         height={isScrolled ? 41 : 82}
         className={`h-auto transition-all duration-300 ${
-          isScrolled ? "w-[60px] lg:w-[80px]" : "w-[120px] lg:w-[160px]"
+          isScrolled ? "w-[70px] lg:w-[90px]" : "w-[120px] lg:w-[160px]"
         }`}
         priority
       />
