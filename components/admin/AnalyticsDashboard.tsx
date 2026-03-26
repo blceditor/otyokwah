@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import {
   RefreshCw,
   Eye,
@@ -170,7 +170,12 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
   const [data, setData] = useState(initialData);
   const [days, setDays] = useState<DateRange>(7);
   const [isLoading, setIsLoading] = useState(false);
-  const [lastRefreshed, setLastRefreshed] = useState<Date>(new Date());
+  const [lastRefreshed, setLastRefreshed] = useState<Date | null>(null);
+
+  // Initialize timestamp client-side only to avoid hydration mismatch
+  useEffect(() => {
+    if (!lastRefreshed) setLastRefreshed(new Date());
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchData = useCallback(async (range: DateRange) => {
     setIsLoading(true);
@@ -226,10 +231,12 @@ export function AnalyticsDashboard({ initialData }: AnalyticsDashboardProps) {
             ))}
           </div>
           <span className="text-xs text-gray-400 dark:text-dark-muted">
-            {lastRefreshed.toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
+            {lastRefreshed
+              ? lastRefreshed.toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })
+              : "—"}
           </span>
           <button
             onClick={() => fetchData(days)}

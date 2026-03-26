@@ -228,36 +228,144 @@ export function MediaLibrary({
 
   type DataTransferFileList = DataTransfer["files"];
 
+  // Threshold for direct GitHub upload (bypasses serverless body size limit)
+  const DIRECT_UPLOAD_THRESHOLD = 4 * 1024 * 1024; // 4MB
+
+  const DOCUMENT_EXTENSIONS = [".pdf", ".doc", ".docx", ".xls", ".xlsx"];
+
+  // Upload a single file directly to GitHub Contents API
+  async function directGitHubUpload(
+    file: File,
+  ): Promise<{ filename: string; url: string } | { filename: string; error: string }> {
+    const configRes = await fetch("/api/media/upload-config");
+    if (!configRes.ok) {
+      return { filename: file.name, error: "Could not get upload config" };
+    }
+    const { owner, repo, branch, token } = await configRes.json();
+
+    const ext = file.name.substring(file.name.lastIndexOf(".")).toLowerCase();
+    const isDocument = DOCUMENT_EXTENSIONS.includes(ext);
+    const timestamp = Date.now();
+    const safeName = file.name.replace(/[^a-zA-Z0-9.-]/g, "_");
+    const filename = `${timestamp}-${safeName}`;
+    const repoDir = isDocument ? "public/documents" : "public/images/uploads";
+    const repoPath = `${repoDir}/${filename}`;
+    const publicUrl = isDocument
+      ? `/documents/${filename}`
+      : `/images/uploads/${filename}`;
+
+    // Convert file to base64
+    const buffer = await file.arrayBuffer();
+    const bytes = new Uint8Array(buffer);
+    let binary = "";
+    for (let i = 0; i < bytes.length; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    const base64Content = btoa(binary);
+
+    const res = await fetch(
+      `https://api.github.com/repos/${owner}/${repo}/contents/${repoPath}`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/vnd.github+json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: `media: upload ${filename}`,
+          content: base64Content,
+          branch,
+        }),
+      },
+    );
+
+    if (!res.ok) {
+      const errBody = await res.text();
+      return {
+        filename: file.name,
+        error: `GitHub upload failed (${res.status}): ${errBody.slice(0, 100)}`,
+      };
+    }
+
+    return { filename, url: publicUrl };
+  }
+
+  // Upload files — routes large files directly to GitHub, small files through API
+  async function uploadFiles(
+    fileList: FileList | DataTransferFileList,
+  ): Promise<{
+    uploaded: { filename: string; url: string }[];
+    errors: { filename: string; error: string }[];
+  }> {
+    const smallFiles: File[] = [];
+    const largeFiles: File[] = [];
+
+    for (const file of fileList) {
+      if (file.size > DIRECT_UPLOAD_THRESHOLD) {
+        largeFiles.push(file);
+      } else {
+        smallFiles.push(file);
+      }
+    }
+
+    const uploaded: { filename: string; url: string }[] = [];
+    const errors: { filename: string; error: string }[] = [];
+
+    // Upload small files through server API
+    if (smallFiles.length > 0) {
+      const formData = new FormData();
+      for (const file of smallFiles) {
+        formData.append("files", file);
+      }
+      const response = await fetch("/api/media", {
+        method: "POST",
+        body: formData,
+      });
+      if (!response.ok) {
+        for (const f of smallFiles) {
+          errors.push({ filename: f.name, error: "Server upload failed" });
+        }
+      } else {
+        const result = await response.json();
+        if (result.uploaded) uploaded.push(...result.uploaded);
+        if (result.errors) errors.push(...result.errors);
+      }
+    }
+
+    // Upload large files directly to GitHub
+    for (const file of largeFiles) {
+      const result = await directGitHubUpload(file);
+      if ("error" in result) {
+        errors.push(result);
+      } else {
+        uploaded.push(result);
+      }
+    }
+
+    return { uploaded, errors };
+  }
+
   // Handle file upload
   const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const uploadFiles = event.target.files;
-    if (!uploadFiles || uploadFiles.length === 0) return;
+    const uploadFileList = event.target.files;
+    if (!uploadFileList || uploadFileList.length === 0) return;
 
     setIsUploading(true);
     setError("");
 
     try {
-      const formData = new FormData();
-      for (const file of uploadFiles) {
-        formData.append("files", file);
-      }
+      const { uploaded, errors: uploadErrors } =
+        await uploadFiles(uploadFileList);
 
-      const response = await fetch("/api/media", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) throw new Error("Upload failed");
-
-      const result = await response.json();
-      if (result.errors?.length > 0) {
+      if (uploadErrors.length > 0) {
         setError(
-          `Some files failed: ${result.errors.map((e: { filename: string }) => e.filename).join(", ")}`,
+          `Some files failed: ${uploadErrors.map((e) => `${e.filename} (${e.error})`).join(", ")}`,
         );
       }
 
-      if (result.uploaded?.length > 0) {
-        addOptimisticFiles(result.uploaded, uploadFiles);
+      if (uploaded.length > 0) {
+        addOptimisticFiles(uploaded, uploadFileList);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Upload failed");
@@ -279,21 +387,17 @@ export function MediaLibrary({
     setError("");
 
     try {
-      const formData = new FormData();
-      for (const file of droppedFiles) {
-        formData.append("files", file);
+      const { uploaded, errors: uploadErrors } =
+        await uploadFiles(droppedFiles);
+
+      if (uploadErrors.length > 0) {
+        setError(
+          `Some files failed: ${uploadErrors.map((e) => `${e.filename} (${e.error})`).join(", ")}`,
+        );
       }
 
-      const response = await fetch("/api/media", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) throw new Error("Upload failed");
-
-      const result = await response.json();
-      if (result.uploaded?.length > 0) {
-        addOptimisticFiles(result.uploaded, droppedFiles);
+      if (uploaded.length > 0) {
+        addOptimisticFiles(uploaded, droppedFiles);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Upload failed");

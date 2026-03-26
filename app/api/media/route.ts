@@ -24,6 +24,9 @@ import {
   DEFAULT_GITHUB_REPO,
 } from "@/lib/config";
 
+// Allow longer timeouts for large file uploads
+export const maxDuration = 60;
+
 const PUBLIC_DIR = path.join(process.cwd(), "public");
 const UPLOAD_DIR = path.join(PUBLIC_DIR, "images", "uploads");
 const DOCUMENTS_DIR = path.join(PUBLIC_DIR, "documents");
@@ -89,7 +92,7 @@ async function uploadViaGitHub(
   repoPath: string,
   content: string,
   message: string,
-): Promise<boolean> {
+): Promise<{ ok: boolean; error?: string }> {
   const owner = process.env.GITHUB_OWNER || DEFAULT_GITHUB_OWNER;
   const repo = process.env.GITHUB_REPO || DEFAULT_GITHUB_REPO;
 
@@ -106,7 +109,16 @@ async function uploadViaGitHub(
     },
   );
 
-  return response.ok;
+  if (!response.ok) {
+    const body = await response.text().catch(() => "");
+    const detail = body.slice(0, 200);
+    console.error(
+      `[Media] GitHub upload failed: ${response.status} ${response.statusText} — ${detail}`,
+    );
+    return { ok: false, error: `GitHub API ${response.status}: ${detail}` };
+  }
+
+  return { ok: true };
 }
 
 /**
@@ -220,13 +232,19 @@ export async function POST(request: NextRequest) {
         continue;
       }
 
-      // REQ-BUG9: Documents allow up to 10MB, media up to 5MB
+      // Size limits: documents 10MB, videos 50MB, images 10MB
       const isDocument = isDocumentExtension(extension);
-      const MAX_SIZE = isDocument ? 10 * 1024 * 1024 : 5 * 1024 * 1024;
+      const isVideo = [".mp4", ".webm"].includes(extension);
+      const MAX_SIZE = isDocument
+        ? 10 * 1024 * 1024
+        : isVideo
+          ? 50 * 1024 * 1024
+          : 10 * 1024 * 1024;
+      const limitLabel = isDocument ? "10MB" : isVideo ? "50MB" : "10MB";
       if (file.size > MAX_SIZE) {
         errors.push({
           filename: file.name,
-          error: `File exceeds ${isDocument ? "10MB" : "5MB"} limit`,
+          error: `File exceeds ${limitLabel} limit`,
         });
         continue;
       }
@@ -246,14 +264,17 @@ export async function POST(request: NextRequest) {
         // Upload via GitHub Contents API (Vercel fs is read-only)
         const base64Content = buffer.toString("base64");
         const repoPath = `${repoDir}/${filename}`;
-        const ok = await uploadViaGitHub(
+        const result = await uploadViaGitHub(
           ghToken,
           repoPath,
           base64Content,
           `media: upload ${filename}`,
         );
-        if (!ok) {
-          errors.push({ filename: file.name, error: "GitHub upload failed" });
+        if (!result.ok) {
+          errors.push({
+            filename: file.name,
+            error: result.error || "GitHub upload failed",
+          });
           continue;
         }
       } else {
