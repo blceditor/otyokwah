@@ -566,7 +566,7 @@ export function KeystaticToolsHeader() {
           {/* Content Menu - Pages, Media, Recent */}
           <NavDropdown label="Content" icon={<FileText size={16} />}>
             <DropdownItem
-              href="/keystatic/branch/main/collection/pages"
+              href={`/keystatic/branch/${process.env.NEXT_PUBLIC_KEYSTATIC_DEFAULT_BRANCH || "main"}/collection/pages`}
               icon={<FileText size={14} />}
             >
               All Pages
