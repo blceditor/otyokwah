@@ -58,16 +58,13 @@ export function AdminNavStrip() {
   }
 
   // REQ-U03-FIX-004: Convert pathname to Keystatic edit URL with correct format
-  // - "/" -> /keystatic/branch/main/collection/pages/item/index
-  // - "/about" -> /keystatic/branch/main/collection/pages/item/about
-  // - "/work-at-camp/counselors" -> /keystatic/branch/main/collection/pages/item/work-at-camp-counselors
+  const cmsBranch = process.env.NEXT_PUBLIC_KEYSTATIC_DEFAULT_BRANCH || "main";
   const getEditUrl = () => {
     if (!pathname || pathname === "/") {
-      return "/keystatic/branch/main/collection/pages/item/index";
+      return `/keystatic/branch/${cmsBranch}/collection/pages/item/index`;
     }
-    // Remove leading slash and convert slashes to dashes for nested paths
     const pagePath = pathname.slice(1).replace(/\//g, "-");
-    return `/keystatic/branch/main/collection/pages/item/${pagePath}`;
+    return `/keystatic/branch/${cmsBranch}/collection/pages/item/${pagePath}`;
   };
 
   // Build bug report URL with current page context

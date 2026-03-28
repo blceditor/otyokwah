@@ -23,18 +23,20 @@ import {
   DEFAULT_GITHUB_OWNER,
   DEFAULT_GITHUB_REPO,
 } from "@/lib/config";
+import {
+  ALLOWED_EXTENSIONS,
+  getMaxFileSize,
+  getMaxFileSizeLabel,
+  isDocumentExtension,
+} from "@/lib/media/constants";
+
+export const maxDuration = 60;
 
 const PUBLIC_DIR = path.join(process.cwd(), "public");
 const UPLOAD_DIR = path.join(PUBLIC_DIR, "images", "uploads");
 const DOCUMENTS_DIR = path.join(PUBLIC_DIR, "documents");
 
-const DOCUMENT_EXTENSIONS = [".pdf", ".doc", ".docx", ".xls", ".xlsx"];
-
 const isProduction = process.env.NODE_ENV === "production";
-
-function isDocumentExtension(ext: string): boolean {
-  return DOCUMENT_EXTENSIONS.includes(ext);
-}
 
 async function ensureDir(dir: string) {
   try {
@@ -49,7 +51,7 @@ async function deleteViaGitHub(
   repoPath: string,
 ): Promise<boolean> {
   const owner = process.env.GITHUB_OWNER || DEFAULT_GITHUB_OWNER;
-  const repo = process.env.GITHUB_REPO || DEFAULT_GITHUB_REPO;
+  const repo = process.env.GITHUB_REPO?.split("/").pop() || DEFAULT_GITHUB_REPO;
 
   const getResponse = await fetch(
     `https://api.github.com/repos/${owner}/${repo}/contents/${repoPath}`,
@@ -77,6 +79,7 @@ async function deleteViaGitHub(
       body: JSON.stringify({
         message: `media: delete ${repoPath.split("/").pop()}`,
         sha,
+        branch: process.env.KEYSTATIC_DEFAULT_BRANCH || "main",
       }),
     },
   );
@@ -89,9 +92,9 @@ async function uploadViaGitHub(
   repoPath: string,
   content: string,
   message: string,
-): Promise<boolean> {
+): Promise<{ ok: boolean; error?: string }> {
   const owner = process.env.GITHUB_OWNER || DEFAULT_GITHUB_OWNER;
-  const repo = process.env.GITHUB_REPO || DEFAULT_GITHUB_REPO;
+  const repo = process.env.GITHUB_REPO?.split("/").pop() || DEFAULT_GITHUB_REPO;
 
   const response = await fetch(
     `https://api.github.com/repos/${owner}/${repo}/contents/${repoPath}`,
@@ -102,11 +105,24 @@ async function uploadViaGitHub(
         Accept: "application/vnd.github+json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ message, content }),
+      body: JSON.stringify({
+        message,
+        content,
+        branch: process.env.KEYSTATIC_DEFAULT_BRANCH || "main",
+      }),
     },
   );
 
-  return response.ok;
+  if (!response.ok) {
+    const body = await response.text().catch(() => "");
+    const detail = body.slice(0, 200);
+    console.error(
+      `[Media] GitHub upload failed: ${response.status} ${response.statusText} — ${detail}`,
+    );
+    return { ok: false, error: `GitHub API ${response.status}: ${detail}` };
+  }
+
+  return { ok: true };
 }
 
 /**
@@ -199,20 +215,8 @@ export async function POST(request: NextRequest) {
 
     for (const file of files) {
       const extension = path.extname(file.name).toLowerCase();
-      // REQ-SEC-003: SVG removed - can contain embedded JavaScript (XSS)
-      const allowedMediaExtensions = [
-        ".jpg",
-        ".jpeg",
-        ".png",
-        ".gif",
-        ".webp",
-        ".avif",
-        ".mp4",
-        ".webm",
-      ];
-      const allowedExtensions = [...allowedMediaExtensions, ...DOCUMENT_EXTENSIONS];
 
-      if (!allowedExtensions.includes(extension)) {
+      if (!ALLOWED_EXTENSIONS.includes(extension)) {
         errors.push({
           filename: file.name,
           error: `Invalid file type: ${extension}`,
@@ -220,13 +224,11 @@ export async function POST(request: NextRequest) {
         continue;
       }
 
-      // REQ-BUG9: Documents allow up to 10MB, media up to 5MB
-      const isDocument = isDocumentExtension(extension);
-      const MAX_SIZE = isDocument ? 10 * 1024 * 1024 : 5 * 1024 * 1024;
+      const MAX_SIZE = getMaxFileSize(extension);
       if (file.size > MAX_SIZE) {
         errors.push({
           filename: file.name,
-          error: `File exceeds ${isDocument ? "10MB" : "5MB"} limit`,
+          error: `File exceeds ${getMaxFileSizeLabel(extension)} limit`,
         });
         continue;
       }
@@ -235,8 +237,9 @@ export async function POST(request: NextRequest) {
       const timestamp = Date.now();
       const safeName = file.name.replace(/[^a-zA-Z0-9.-]/g, "_");
       const filename = `${timestamp}-${safeName}`;
-      const repoDir = isDocument ? "public/documents" : "public/images/uploads";
-      const publicUrl = isDocument
+      const isDoc = isDocumentExtension(extension);
+      const repoDir = isDoc ? "public/documents" : "public/images/uploads";
+      const publicUrl = isDoc
         ? `/documents/${filename}`
         : `/images/uploads/${filename}`;
 
@@ -246,19 +249,22 @@ export async function POST(request: NextRequest) {
         // Upload via GitHub Contents API (Vercel fs is read-only)
         const base64Content = buffer.toString("base64");
         const repoPath = `${repoDir}/${filename}`;
-        const ok = await uploadViaGitHub(
+        const result = await uploadViaGitHub(
           ghToken,
           repoPath,
           base64Content,
           `media: upload ${filename}`,
         );
-        if (!ok) {
-          errors.push({ filename: file.name, error: "GitHub upload failed" });
+        if (!result.ok) {
+          errors.push({
+            filename: file.name,
+            error: result.error || "GitHub upload failed",
+          });
           continue;
         }
       } else {
         // Local filesystem write (development)
-        const targetDir = isDocument ? DOCUMENTS_DIR : UPLOAD_DIR;
+        const targetDir = isDoc ? DOCUMENTS_DIR : UPLOAD_DIR;
         const filePath = path.join(targetDir, filename);
         await fs.writeFile(filePath, buffer);
       }

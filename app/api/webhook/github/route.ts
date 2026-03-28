@@ -52,6 +52,47 @@ function collectChangedFiles(commits: GitHubCommit[]): Set<string> {
   return files;
 }
 
+/**
+ * Detect page additions/removals (slug renames count as remove+add).
+ * Content modifications are handled by ISR revalidation, but structural
+ * changes need a deploy because dynamicParams=false requires
+ * generateStaticParams to run again. The build ignore script skips
+ * content-only pushes, so we trigger a deploy hook explicitly.
+ */
+function hasPageStructureChanges(commits: GitHubCommit[]): boolean {
+  const pagePattern = /^content\/pages\/.*\.mdoc$/;
+  for (const commit of commits) {
+    for (const file of commit.added) {
+      if (pagePattern.test(file)) return true;
+    }
+    for (const file of commit.removed) {
+      if (pagePattern.test(file)) return true;
+    }
+  }
+  return false;
+}
+
+async function triggerDeployHook(): Promise<boolean> {
+  const hookUrl = process.env.VERCEL_DEPLOY_HOOK_URL;
+  if (!hookUrl) {
+    console.warn('[Webhook] VERCEL_DEPLOY_HOOK_URL not configured — skipping deploy trigger');
+    return false;
+  }
+
+  try {
+    const res = await fetch(hookUrl, { method: 'POST' });
+    if (res.ok) {
+      console.log('[Webhook] Deploy hook triggered for page structure change');
+      return true;
+    }
+    console.error(`[Webhook] Deploy hook failed: ${res.status}`);
+    return false;
+  } catch (err) {
+    console.error('[Webhook] Deploy hook error:', err);
+    return false;
+  }
+}
+
 function revalidateChangedPaths(changedFiles: Set<string>): string[] {
   const revalidated: string[] = [];
   let layoutRevalidated = false;
@@ -115,13 +156,23 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  const changedFiles = collectChangedFiles(payload.commits ?? []);
+  const commits = payload.commits ?? [];
+  const changedFiles = collectChangedFiles(commits);
   const revalidated = revalidateChangedPaths(changedFiles);
 
-  console.log(`[Webhook] Revalidated: ${revalidated.join(', ') || 'none'}`);
+  // Page additions/removals need a deploy (build ignore script skips content-only pushes)
+  let deployTriggered = false;
+  if (hasPageStructureChanges(commits)) {
+    deployTriggered = await triggerDeployHook();
+  }
+
+  console.log(
+    `[Webhook] Revalidated: ${revalidated.join(', ') || 'none'}${deployTriggered ? ' + deploy triggered' : ''}`,
+  );
 
   return NextResponse.json({
     revalidated,
+    deployTriggered,
     message: `Processed ${changedFiles.size} changed files`,
   });
 }

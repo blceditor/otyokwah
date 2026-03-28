@@ -19,19 +19,19 @@ const NAV_ITEMS = [
     icon: Tent,
   },
   {
+    label: "Contacts",
+    href: "/admin/contact",
+    icon: Mail,
+  },
+  {
     label: "Site Analytics",
     href: "/admin/analytics",
     icon: BarChart3,
   },
   {
-    label: "Performance",
+    label: "Site Performance",
     href: "/admin/performance",
     icon: Gauge,
-  },
-  {
-    label: "Contact",
-    href: "/admin/contact",
-    icon: Mail,
   },
 ];
 
@@ -39,23 +39,25 @@ export function AdminNav() {
   const pathname = usePathname();
 
   return (
-    <header className="h-14 w-full flex items-center bg-gray-900 px-4 gap-2">
+    <header className="h-14 w-full flex items-center bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 px-4 gap-2">
       <Link
         href="/keystatic"
-        className="flex items-center gap-1.5 text-white/60 hover:text-white text-sm mr-4 transition-colors"
+        className="flex items-center gap-1.5 text-gray-500 dark:text-white/60 hover:text-gray-900 dark:hover:text-white text-sm mr-4 transition-colors"
       >
         <ArrowLeft className="h-4 w-4" />
         <span>CMS</span>
       </Link>
 
-      <div className="h-6 w-px bg-white/20" />
+      <div className="h-6 w-px bg-gray-200 dark:bg-white/20" />
 
       <div className="flex items-center gap-1 ml-2">
-        <LayoutDashboard className="h-4 w-4 text-white/70" />
-        <span className="text-white font-medium text-sm">Dashboard</span>
+        <LayoutDashboard className="h-4 w-4 text-gray-500 dark:text-white/70" />
+        <span className="text-gray-900 dark:text-white font-medium text-sm">
+          Site Dashboard
+        </span>
       </div>
 
-      <div className="h-6 w-px bg-white/20 mx-2" />
+      <div className="h-6 w-px bg-gray-200 dark:bg-white/20 mx-2" />
 
       <nav className="flex items-center gap-1">
         {NAV_ITEMS.map((item) => {
@@ -67,8 +69,8 @@ export function AdminNav() {
               href={item.href}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-sm transition-colors ${
                 isActive
-                  ? "bg-white/15 text-white"
-                  : "text-white/70 hover:text-white hover:bg-white/10"
+                  ? "bg-gray-100 dark:bg-white/15 text-gray-900 dark:text-white"
+                  : "text-gray-500 dark:text-white/70 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/10"
               }`}
             >
               <Icon className="h-3.5 w-3.5" />
@@ -82,7 +84,7 @@ export function AdminNav() {
         <ThemeToggle compact />
         <Link
           href="/"
-          className="text-white/50 hover:text-white text-xs transition-colors"
+          className="text-gray-400 dark:text-white/50 hover:text-gray-900 dark:hover:text-white text-xs transition-colors"
         >
           View Site
         </Link>

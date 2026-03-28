@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import {
   RefreshCw,
   BedDouble,
@@ -80,8 +80,13 @@ export function AdminSessionsDashboard({
 }: AdminSessionsDashboardProps) {
   const [sessions, setSessions] = useState(initialSessions);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [lastRefreshed, setLastRefreshed] = useState<Date>(new Date());
+  const [lastRefreshed, setLastRefreshed] = useState<Date | null>(null);
   const [sortKey, setSortKey] = useState<SortKey>("date");
+
+  // Initialize timestamp client-side only to avoid hydration mismatch
+  useEffect(() => {
+    if (!lastRefreshed) setLastRefreshed(new Date());
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const [sortDir, setSortDir] = useState<SortDir>("asc");
 
   const refresh = useCallback(async () => {
@@ -156,10 +161,13 @@ export function AdminSessionsDashboard({
         <div className="flex items-center gap-3">
           <span className="text-xs text-gray-400 dark:text-dark-muted">
             Last updated:{" "}
-            {lastRefreshed.toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}
+            {lastRefreshed
+              ? lastRefreshed.toLocaleString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  timeZoneName: "short",
+                })
+              : "—"}
           </span>
           <button
             onClick={refresh}
@@ -207,7 +215,7 @@ export function AdminSessionsDashboard({
       </div>
 
       {/* Sessions Table */}
-      <div className="bg-white dark:bg-dark-surface rounded-xl border border-gray-200 dark:border-dark-border overflow-x-auto">
+      <div className="bg-white dark:bg-dark-surface rounded-xl border border-gray-200 dark:border-dark-border overflow-hidden">
         <table className="w-full">
           <thead>
             <tr className="border-b border-gray-100 dark:border-dark-border bg-gray-50 dark:bg-dark-bg">
