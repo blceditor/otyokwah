@@ -80,6 +80,7 @@ async function deleteViaGitHub(
       body: JSON.stringify({
         message: `media: delete ${repoPath.split("/").pop()}`,
         sha,
+        branch: process.env.KEYSTATIC_DEFAULT_BRANCH || "main",
       }),
     },
   );
