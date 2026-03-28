@@ -23,21 +23,20 @@ import {
   DEFAULT_GITHUB_OWNER,
   DEFAULT_GITHUB_REPO,
 } from "@/lib/config";
+import {
+  ALLOWED_EXTENSIONS,
+  getMaxFileSize,
+  getMaxFileSizeLabel,
+  isDocumentExtension,
+} from "@/lib/media/constants";
 
-// Allow longer timeouts for large file uploads
 export const maxDuration = 60;
 
 const PUBLIC_DIR = path.join(process.cwd(), "public");
 const UPLOAD_DIR = path.join(PUBLIC_DIR, "images", "uploads");
 const DOCUMENTS_DIR = path.join(PUBLIC_DIR, "documents");
 
-const DOCUMENT_EXTENSIONS = [".pdf", ".doc", ".docx", ".xls", ".xlsx"];
-
 const isProduction = process.env.NODE_ENV === "production";
-
-function isDocumentExtension(ext: string): boolean {
-  return DOCUMENT_EXTENSIONS.includes(ext);
-}
 
 async function ensureDir(dir: string) {
   try {
@@ -216,20 +215,8 @@ export async function POST(request: NextRequest) {
 
     for (const file of files) {
       const extension = path.extname(file.name).toLowerCase();
-      // REQ-SEC-003: SVG removed - can contain embedded JavaScript (XSS)
-      const allowedMediaExtensions = [
-        ".jpg",
-        ".jpeg",
-        ".png",
-        ".gif",
-        ".webp",
-        ".avif",
-        ".mp4",
-        ".webm",
-      ];
-      const allowedExtensions = [...allowedMediaExtensions, ...DOCUMENT_EXTENSIONS];
 
-      if (!allowedExtensions.includes(extension)) {
+      if (!ALLOWED_EXTENSIONS.includes(extension)) {
         errors.push({
           filename: file.name,
           error: `Invalid file type: ${extension}`,
@@ -237,19 +224,11 @@ export async function POST(request: NextRequest) {
         continue;
       }
 
-      // Size limits: documents 10MB, videos 50MB, images 10MB
-      const isDocument = isDocumentExtension(extension);
-      const isVideo = [".mp4", ".webm"].includes(extension);
-      const MAX_SIZE = isDocument
-        ? 10 * 1024 * 1024
-        : isVideo
-          ? 50 * 1024 * 1024
-          : 10 * 1024 * 1024;
-      const limitLabel = isDocument ? "10MB" : isVideo ? "50MB" : "10MB";
+      const MAX_SIZE = getMaxFileSize(extension);
       if (file.size > MAX_SIZE) {
         errors.push({
           filename: file.name,
-          error: `File exceeds ${limitLabel} limit`,
+          error: `File exceeds ${getMaxFileSizeLabel(extension)} limit`,
         });
         continue;
       }
@@ -258,8 +237,9 @@ export async function POST(request: NextRequest) {
       const timestamp = Date.now();
       const safeName = file.name.replace(/[^a-zA-Z0-9.-]/g, "_");
       const filename = `${timestamp}-${safeName}`;
-      const repoDir = isDocument ? "public/documents" : "public/images/uploads";
-      const publicUrl = isDocument
+      const isDoc = isDocumentExtension(extension);
+      const repoDir = isDoc ? "public/documents" : "public/images/uploads";
+      const publicUrl = isDoc
         ? `/documents/${filename}`
         : `/images/uploads/${filename}`;
 
@@ -284,7 +264,7 @@ export async function POST(request: NextRequest) {
         }
       } else {
         // Local filesystem write (development)
-        const targetDir = isDocument ? DOCUMENTS_DIR : UPLOAD_DIR;
+        const targetDir = isDoc ? DOCUMENTS_DIR : UPLOAD_DIR;
         const filePath = path.join(targetDir, filename);
         await fs.writeFile(filePath, buffer);
       }

@@ -2,6 +2,10 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import {
+  DIRECT_UPLOAD_THRESHOLD,
+  DOCUMENT_EXTENSIONS,
+} from "@/lib/media/constants";
+import {
   FolderOpen,
   Search,
   Grid3x3,
@@ -230,10 +234,6 @@ export function MediaLibrary({
 
   type DataTransferFileList = DataTransfer["files"];
 
-  // Threshold for direct GitHub upload (bypasses serverless body size limit)
-  const DIRECT_UPLOAD_THRESHOLD = 4 * 1024 * 1024; // 4MB
-
-  const DOCUMENT_EXTENSIONS = [".pdf", ".doc", ".docx", ".xls", ".xlsx"];
 
   // Upload a single file directly to GitHub Contents API
   async function directGitHubUpload(
