@@ -3,9 +3,10 @@ title: Camp Sessions 2026
 hero:
   heroImage: heroes/hero-camp-sessions-poster.jpg
   heroVideo: /videos/hero-camp-sessions.mp4
-  heroYouTubeId: ''
   heroTagline: Summer 2026 Sessions
   heroHeight: standard
+templateFields:
+  discriminant: fullbleed
 seo:
   metaTitle: Summer Camp Sessions 2026 | Camp Otyokwah | Butler, Ohio
   metaDescription: >-
@@ -13,8 +14,6 @@ seo:
     Butler, Ohio. Pioneer Camp, Junior Camp, Jr. High Camp, and Sr. High Camp.
   twitterCard: summary_large_image
   noIndex: false
-templateFields:
-  discriminant: fullbleed
 ---
 {% anchorNav %}
 {% anchorNavItem
@@ -22,18 +21,33 @@ templateFields:
    label="Pioneer Camp"
    grades="Entering 2nd-3rd Grade" /%}
 
-{% anchorNavItem #junior-camp label="Junior Camp" grades="Entering 4th-6th Grade" /%}
+{% anchorNavItem
+   #junior-camp
+   label="Junior Camp"
+   grades="Entering 4th-6th Grade" /%}
 
-{% anchorNavItem #jr-high-camp label="Jr. High Camp" grades="Entering 7th-9th Grade" /%}
+{% anchorNavItem
+   #jr-high-camp
+   label="Jr. High Camp"
+   grades="Entering 7th-9th Grade" /%}
 
-{% anchorNavItem #sr-high-camp label="Sr. High Camp" grades="Entering 10th Grade-Graduation" /%}
+{% anchorNavItem
+   #sr-high-camp
+   label="Sr. High Camp"
+   grades="Entering 10th Grade-Graduation" /%}
 {% /anchorNav %}
 
-{% squareGrid columns="2" gap="none" width="auto" height="auto" %}
+{% squareGrid
+   columns="2"
+   gap="none"
+   width="auto"
+   height="auto"
+   backgroundColor="" %}
 {% gridSquare
    contentType="image"
-   image="/images/summer-sessions/primary-overnight.jpg"
+   image="/images/uploads/1774964457521-IMG_9243__1_.JPG"
    imageAlt="Pioneer campers enjoying their first taste of Camp Otyokwah"
+   backgroundColor="#f5f0e8"
    textColor="dark"
    aspectRatio="square"
    width="auto"
@@ -62,13 +76,15 @@ A one-night day camp experience designed just for our youngest campers! Pioneer 
    href="https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY"
    variant="inverse"
    size="lg"
+   align="left"
    textColor="primary" /%}
 {% /gridSquare %}
 
 {% gridSquare
    contentType="image"
-   image="/images/summer-sessions/junior-camp.jpg"
+   image="/images/summer-program-and-general/staff-rec-leader.jpg"
    imageAlt="Junior campers enjoying summer activities at Camp Otyokwah"
+   backgroundColor="#f5f0e8"
    textColor="dark"
    aspectRatio="square"
    width="auto"
@@ -92,20 +108,22 @@ A one-night day camp experience designed just for our youngest campers! Pioneer 
 
 $440 ($390 before 4/14)
 
-Full-week adventure for elementary students! Junior Campers enjoy a full schedule — worship, Bible study, climbing the wall, zip line thrills, The Blob, kayaking, archery, disc golf, campfire gatherings, and more — all while building friendships and mentor relationships.
+Full-week adventure for elementary students! Junior Campers enjoy a full schedule of activities — Worship, Bible Study, games (like Melee), waterfront fun, crafts, campfires, and more — all while building mentor relationships and friendships.
 
 {% ctaButton
    label="Register Now"
    href="https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY"
    variant="inverse"
    size="lg"
+   align="left"
    textColor="accent" /%}
 {% /gridSquare %}
 
 {% gridSquare
    contentType="image"
-   image="/images/summer-sessions/jr-high-camp.jpg"
+   image="/images/uploads/1774965933999-IMG_8626.JPG"
    imageAlt="Jr. High campers at Camp Otyokwah"
+   backgroundColor="#f5f0e8"
    textColor="dark"
    aspectRatio="square"
    width="auto"
@@ -129,20 +147,22 @@ Full-week adventure for elementary students! Junior Campers enjoy a full schedul
 
 $440 ($390 before 4/14)
 
-A week of growth and exploration for middle school students! Jr. High Campers are challenged to grow in faith through group discussions, Bible study, and chapel messages — all while conquering the climbing wall, flying down the zip line, hitting The Blob, paddling kayaks, and building lasting friendships.
+A week of growth and exploration for middle school students! Jr. High Campers get challenged to grow in their faith through group discussions, Inductive Bible Studies, and Chapel Messages, all while experiencing exciting activities and building lasting friendships.
 
 {% ctaButton
    label="Register Now"
    href="https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY"
    variant="inverse"
    size="lg"
+   align="left"
    textColor="secondary" /%}
 {% /gridSquare %}
 
 {% gridSquare
    contentType="image"
-   image="/images/summer-sessions/sr-high-camp.jpg"
+   image="/images/uploads/1774964471741-IMG_0399__1_.JPG"
    imageAlt="Sr. High campers enjoying summer activities at Camp Otyokwah"
+   backgroundColor="#f5f0e8"
    textColor="dark"
    aspectRatio="square"
    width="auto"
@@ -164,27 +184,29 @@ A week of growth and exploration for middle school students! Jr. High Campers ar
 
 **June 21–26** — $440 ($390 before 4/14)
 
-Our summer session for high school students! Sr. High campers dive into rich community, awesome activities like the climbing wall, zip line, disc golf, kayaking, and archery, and are equipped to engage Jesus Christ through Scripture and worship around the campfire.
+Our summer session for high school students! Sr. High campers dive into rich community, awesome activities like black light dodgeball and a Square Dance Night, and are equipped to engage Jesus Christ through Scripture and Worship.
 
 {% ctaButton
    label="Register Now"
    href="https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY"
    variant="inverse"
    size="lg"
+   align="left"
    textColor="primary" /%}
 {% /gridSquare %}
 {% /squareGrid %}
 
 ## Registration Information
 
-{% cardGrid cols="2" width="auto" height="auto" %}
+{% cardGrid cols="2" width="auto" height="auto" backgroundColor="" %}
 {% contentCard
    icon="DollarSign"
    iconSize="md"
    title="Pricing & Early Bird"
    headingLevel="3"
    width="auto"
-   height="auto" %}
+   height="auto"
+   backgroundColor="" %}
 Pioneer Camp: $100 | All Overnight Sessions: $440 ($390 before 4/14)
 
 Early bird pricing available for registrations completed before April 14, 2026.
@@ -196,7 +218,8 @@ Early bird pricing available for registrations completed before April 14, 2026.
    title="Pop Tewell Campership Fund"
    headingLevel="3"
    width="auto"
-   height="auto" %}
+   height="auto"
+   backgroundColor="" %}
 No camper should miss camp due to financial hardship. The **Pop Tewell Campership Fund** provides scholarship assistance for families who need it.
 
 Contact us to learn more about applying for a campership.
@@ -208,7 +231,8 @@ Contact us to learn more about applying for a campership.
    title="Grade Levels"
    headingLevel="3"
    width="auto"
-   height="auto" %}
+   height="auto"
+   backgroundColor="" %}
 Grade levels shown are based on the grade the camper will be entering in the upcoming school year (fall 2026).
 {% /contentCard %}
 
@@ -218,7 +242,8 @@ Grade levels shown are based on the grade the camper will be entering in the upc
    title="Questions?"
    headingLevel="3"
    width="auto"
-   height="auto" %}
+   height="auto"
+   backgroundColor="" %}
 **Email:** [info@otyokwah.org](mailto:info@otyokwah.org)
 
 **Phone:** (419) 883-3854
@@ -227,9 +252,9 @@ Grade levels shown are based on the grade the camper will be entering in the upc
 
 {% ctaSection
    heading="Scholarships Available"
-   description="The Pop Tewell Campership Fund ensures no camper misses out due to financial need. Contact us to learn more about scholarship assistance."
-   buttonLabel="Contact Us"
-   buttonHref="/contact"
+   description="The Pop Tewell Campership Fund ensures no camper misses out due to financial need. If you wish to apply for the Pop Tewell Camper Fund, you will need to fill out the form below."
+   buttonLabel="Pop Tewell Scholarship Form"
+   buttonHref="https://forms.gle/a777jN4pd5sorYAK7"
    variant="green"
    external=false /%}
 

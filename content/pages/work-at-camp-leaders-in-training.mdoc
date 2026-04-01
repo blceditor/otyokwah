@@ -3,9 +3,10 @@ title: Leaders in Training (LIT)
 hero:
   heroImage: heroes/hero-lit-poster.jpg
   heroVideo: /videos/hero-lit.mp4
-  heroYouTubeId: ''
   heroTagline: High School Servant Leadership Program
   heroHeight: medium
+templateFields:
+  discriminant: fullbleed
 seo:
   metaTitle: Leaders in Training | Camp Otyokwah
   metaDescription: >-
@@ -14,8 +15,6 @@ seo:
     summer staff.
   twitterCard: summary_large_image
   noIndex: false
-templateFields:
-  discriminant: fullbleed
 ---
 {% ctaSection
    heading="Want to make a difference this summer?"
@@ -25,18 +24,29 @@ templateFields:
    variant="green"
    external=true /%}
 
-{% squareGrid columns="2" gap="none" %}
+{% squareGrid
+   columns="2"
+   gap="none"
+   width="auto"
+   height="auto"
+   backgroundColor="" %}
 {% gridSquare
    contentType="image"
    image="/images/summer-program-and-general/lit-hero-image.jpg"
    imageAlt="LIT participants in leadership training at Camp Otyokwah"
-   aspectRatio="square" /%}
+   backgroundColor="#f5f0e8"
+   textColor="dark"
+   aspectRatio="square"
+   width="auto"
+   height="auto" /%}
 
 {% gridSquare
    contentType="color"
    backgroundColor="#2F4F3D"
    textColor="light"
-   aspectRatio="square" %}
+   aspectRatio="square"
+   width="auto"
+   height="auto" %}
 ## What is LIT?
 
 The Leaders in Training program is designed for students ages 15–17 to experience an incredible adventure of following Christ and developing their leadership skills alongside a real summer camp session.
@@ -48,14 +58,27 @@ Through first-hand experience and hands-on learning, you will focus on your God-
    href="https://www.ultracamp.com/forms.aspx?idCamp=1342&campCode=OTY&idF=39868"
    variant="inverse"
    size="lg"
+   align="left"
    textColor="secondary" /%}
 {% /gridSquare %}
+
+{% gridSquare
+   contentType="image"
+   image="/images/summer-program-and-general/lit-group.jpg"
+   imageAlt="LIT group serving together at Camp Otyokwah"
+   backgroundColor="#f5f0e8"
+   textColor="dark"
+   aspectRatio="square"
+   width="auto"
+   height="auto" /%}
 
 {% gridSquare
    contentType="color"
    backgroundColor="#4A7A9E"
    textColor="light"
-   aspectRatio="square" %}
+   aspectRatio="square"
+   width="auto"
+   height="auto" %}
 ## Servant Leadership
 
 Camp Otyokwah's LIT program is a volunteer, servant leadership experience for high school students. This program has become a critical part of the summer — benefiting the staff, the campers, and the entire camp community.
@@ -67,29 +90,31 @@ LIT is intentionally designed to teach leadership skills, positive and responsib
    href="https://www.ultracamp.com/forms.aspx?idCamp=1342&campCode=OTY&idF=39868"
    variant="inverse"
    size="lg"
+   align="left"
    textColor="primary" /%}
 {% /gridSquare %}
-
-{% gridSquare
-   contentType="image"
-   image="/images/summer-program-and-general/lit-group.jpg"
-   imageAlt="LIT group serving together at Camp Otyokwah"
-   aspectRatio="square" /%}
 {% /squareGrid %}
 
-{% faqAccordion title="Leaders in Training FAQ" %}
+{% faqAccordion
+   title="Leaders in Training FAQ"
+   titleAlign="left"
+   allowMultiple=false %}
 {% faqItem
    question="How old do I have to be to participate in Leaders in Training?"
    answer="You must be between 15 and 17 years old (ages 15–17) and have a desire for a growing, personal relationship with God." /%}
+
 {% faqItem
    question="How long is the LIT program?"
    answer="The LIT program runs in 2-week sessions alongside regular summer camp sessions. We ask that you commit to at least one full 2-week session. If you are interested in a second session, you may apply for two, but we cannot guarantee multiple placements." /%}
+
 {% faqItem
    question="Do I get paid to be a part of Leaders in Training?"
    answer="No, LIT is a volunteer opportunity. Housing and all meals are provided for the duration of your session at camp." /%}
+
 {% faqItem
    question="When will I find out which weeks I will be volunteering?"
    answer="Applications will be reviewed and applicants will be notified by mid-May. If accepted, you will be required to attend Staff Training Day in June." /%}
+
 {% faqItem
    question="What does a day of Leaders in Training look like?"
    answer="Every morning before breakfast, LITs spend time in personal devotion. At each meal you sit with the campers, build relationships, and encourage positive life skills. After each meal, LITs are responsible for cleaning the dining room. Each day you will either do a work project in the morning and participate in afternoon activities with campers, or the other way around. LITs run the snack shack, participate in the evening game, and attend Chapel each night. Before bed, LITs gather together for reflection and prayer." /%}
