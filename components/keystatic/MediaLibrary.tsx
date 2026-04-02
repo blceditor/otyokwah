@@ -491,12 +491,17 @@ export function MediaLibrary({
           </label>
         </div>
 
-        {/* Storage gauge */}
+        {/* Storage gauge — upload space remaining */}
         {(() => {
-          const STORAGE_BUDGET_MB = 150;
-          const totalBytes = files.reduce((sum, f) => sum + (f.size || 0), 0);
-          const usedMB = totalBytes / (1024 * 1024);
-          const pct = Math.min((usedMB / STORAGE_BUDGET_MB) * 100, 100);
+          const TOTAL_BUDGET_MB = 150;
+          const FIXED_ASSETS_MB = 80;
+          const availableMB = TOTAL_BUDGET_MB - FIXED_ASSETS_MB;
+          const uploadBytes = files
+            .filter((f) => f.path?.startsWith("images/uploads/"))
+            .reduce((sum, f) => sum + (f.size || 0), 0);
+          const uploadMB = uploadBytes / (1024 * 1024);
+          const pct = Math.min((uploadMB / availableMB) * 100, 100);
+          const remainingMB = Math.max(availableMB - uploadMB, 0);
           const color =
             pct > 80
               ? "bg-red-500"
@@ -512,7 +517,7 @@ export function MediaLibrary({
                 />
               </div>
               <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
-                {usedMB.toFixed(0)} MB / {STORAGE_BUDGET_MB} MB
+                {remainingMB.toFixed(0)} MB available
               </span>
             </div>
           );
