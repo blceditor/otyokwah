@@ -517,7 +517,7 @@ export function MediaLibrary({
                 />
               </div>
               <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
-                {remainingMB.toFixed(0)} MB available
+                {uploadMB.toFixed(0)} MB / {availableMB} MB used
               </span>
             </div>
           );
