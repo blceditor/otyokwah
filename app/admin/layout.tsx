@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { AdminNav } from "@/components/admin/AdminNav";
+import { AdminOverflowReset } from "@/components/admin/AdminOverflowReset";
 import { ThemeProvider } from "@/components/keystatic/ThemeProvider";
 
 export const metadata = {
@@ -21,10 +22,11 @@ export default async function AdminLayout({
 
   return (
     <ThemeProvider>
-      <div className="bg-gray-50 dark:bg-dark-bg transition-colors min-h-screen pt-16">
-        <AdminNav />
-        <main>{children}</main>
-      </div>
+      <AdminOverflowReset />
+      <AdminNav />
+      <main className="bg-gray-50 dark:bg-dark-bg transition-colors min-h-screen">
+        {children}
+      </main>
     </ThemeProvider>
   );
 }
