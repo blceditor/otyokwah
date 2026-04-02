@@ -5,6 +5,7 @@ import {
   DIRECT_UPLOAD_THRESHOLD,
   DOCUMENT_EXTENSIONS,
 } from "@/lib/media/constants";
+import { compressImage } from "@/lib/media/compress-image";
 import {
   FolderOpen,
   Search,
@@ -233,63 +234,6 @@ export function MediaLibrary({
   };
 
   type DataTransferFileList = DataTransfer["files"];
-
-  const MAX_IMAGE_DIMENSION = 1920;
-  const COMPRESSION_QUALITY = 0.8;
-  const IMAGE_COMPRESS_EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp"];
-
-  async function compressImage(file: File): Promise<File> {
-    const ext = file.name
-      .substring(file.name.lastIndexOf("."))
-      .toLowerCase();
-    if (!IMAGE_COMPRESS_EXTENSIONS.includes(ext)) return file;
-    if (file.size < 500 * 1024) return file;
-
-    return new Promise((resolve) => {
-      const img = new Image();
-      const url = URL.createObjectURL(file);
-      img.onload = () => {
-        URL.revokeObjectURL(url);
-        let { width, height } = img;
-        if (width <= MAX_IMAGE_DIMENSION && height <= MAX_IMAGE_DIMENSION) {
-          resolve(file);
-          return;
-        }
-        const scale = Math.min(
-          MAX_IMAGE_DIMENSION / width,
-          MAX_IMAGE_DIMENSION / height,
-        );
-        width = Math.round(width * scale);
-        height = Math.round(height * scale);
-
-        const canvas = document.createElement("canvas");
-        canvas.width = width;
-        canvas.height = height;
-        const ctx = canvas.getContext("2d");
-        if (!ctx) {
-          resolve(file);
-          return;
-        }
-        ctx.drawImage(img, 0, 0, width, height);
-        canvas.toBlob(
-          (blob) => {
-            if (!blob || blob.size >= file.size) {
-              resolve(file);
-              return;
-            }
-            resolve(new File([blob], file.name, { type: file.type }));
-          },
-          ext === ".png" ? "image/png" : "image/jpeg",
-          COMPRESSION_QUALITY,
-        );
-      };
-      img.onerror = () => {
-        URL.revokeObjectURL(url);
-        resolve(file);
-      };
-      img.src = url;
-    });
-  }
 
   // Upload a single file directly to GitHub Contents API
   async function directGitHubUpload(
@@ -546,6 +490,60 @@ export function MediaLibrary({
             />
           </label>
         </div>
+
+        {/* Storage gauge */}
+        {(() => {
+          const STORAGE_BUDGET_MB = 150;
+          const totalBytes = files.reduce((sum, f) => sum + (f.size || 0), 0);
+          const usedMB = totalBytes / (1024 * 1024);
+          const pct = Math.min((usedMB / STORAGE_BUDGET_MB) * 100, 100);
+          const color =
+            pct > 80
+              ? "bg-red-500"
+              : pct > 60
+                ? "bg-yellow-500"
+                : "bg-green-500";
+          return (
+            <div className="flex items-center gap-3 px-1">
+              <div className="flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                <div
+                  className={`h-full ${color} rounded-full transition-all`}
+                  style={{ width: `${pct}%` }}
+                />
+              </div>
+              <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                {usedMB.toFixed(0)} MB / {STORAGE_BUDGET_MB} MB
+              </span>
+            </div>
+          );
+        })()}
+
+        {/* Storage gauge */}
+        {(() => {
+          const STORAGE_BUDGET_MB = 150;
+          const totalBytes = files.reduce((sum, f) => sum + (f.size || 0), 0);
+          const usedMB = totalBytes / (1024 * 1024);
+          const pct = Math.min((usedMB / STORAGE_BUDGET_MB) * 100, 100);
+          const color =
+            pct > 80
+              ? "bg-red-500"
+              : pct > 60
+                ? "bg-yellow-500"
+                : "bg-green-500";
+          return (
+            <div className="flex items-center gap-3 px-1">
+              <div className="flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                <div
+                  className={`h-full ${color} rounded-full transition-all`}
+                  style={{ width: `${pct}%` }}
+                />
+              </div>
+              <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                {usedMB.toFixed(0)} MB / {STORAGE_BUDGET_MB} MB
+              </span>
+            </div>
+          );
+        })()}
 
         {/* Row 2: Filters + Sort + View */}
         <div className="flex flex-wrap items-center gap-2">
