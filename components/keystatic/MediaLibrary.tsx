@@ -518,33 +518,6 @@ export function MediaLibrary({
           );
         })()}
 
-        {/* Storage gauge */}
-        {(() => {
-          const STORAGE_BUDGET_MB = 150;
-          const totalBytes = files.reduce((sum, f) => sum + (f.size || 0), 0);
-          const usedMB = totalBytes / (1024 * 1024);
-          const pct = Math.min((usedMB / STORAGE_BUDGET_MB) * 100, 100);
-          const color =
-            pct > 80
-              ? "bg-red-500"
-              : pct > 60
-                ? "bg-yellow-500"
-                : "bg-green-500";
-          return (
-            <div className="flex items-center gap-3 px-1">
-              <div className="flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                <div
-                  className={`h-full ${color} rounded-full transition-all`}
-                  style={{ width: `${pct}%` }}
-                />
-              </div>
-              <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
-                {usedMB.toFixed(0)} MB / {STORAGE_BUDGET_MB} MB
-              </span>
-            </div>
-          );
-        })()}
-
         {/* Row 2: Filters + Sort + View */}
         <div className="flex flex-wrap items-center gap-2">
           {/* Filters */}
