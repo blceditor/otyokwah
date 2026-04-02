@@ -501,7 +501,6 @@ export function MediaLibrary({
             .reduce((sum, f) => sum + (f.size || 0), 0);
           const uploadMB = uploadBytes / (1024 * 1024);
           const pct = Math.min((uploadMB / availableMB) * 100, 100);
-          const remainingMB = Math.max(availableMB - uploadMB, 0);
           const color =
             pct > 80
               ? "bg-red-500"
