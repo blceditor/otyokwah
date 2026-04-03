@@ -24,9 +24,9 @@ export default async function AdminLayout({
     <ThemeProvider>
       <AdminOverflowReset />
       <AdminNav />
-      <main className="bg-gray-50 dark:bg-dark-bg transition-colors min-h-screen">
+      <div className="bg-gray-50 dark:bg-dark-bg transition-colors">
         {children}
-      </main>
+      </div>
     </ThemeProvider>
   );
 }
