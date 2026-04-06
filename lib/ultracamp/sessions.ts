@@ -200,7 +200,7 @@ export async function fetchUltraCampSessions(): Promise<UltraCampSession[]> {
     return MOCK_SESSIONS;
   }
 
-  const campId = "1342";
+  const campId = process.env.ULTRACAMP_CAMP_ID ?? "1342";
   const credentials = Buffer.from(`${campId}:${apiKey}`).toString("base64");
 
   const res = await fetch(
