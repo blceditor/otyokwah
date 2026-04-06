@@ -110,8 +110,12 @@ export default function AdminContactPage() {
   const [metrics, setMetrics] = useState<ContactMetrics | null>(null);
   const [security, setSecurity] = useState<SecurityData | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [lastRefreshed, setLastRefreshed] = useState<Date>(new Date());
+  const [lastRefreshed, setLastRefreshed] = useState<Date | null>(null);
   const [metricsError, setMetricsError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!lastRefreshed) setLastRefreshed(new Date());
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchData = useCallback(async () => {
     setIsRefreshing(true);
@@ -167,11 +171,13 @@ export default function AdminContactPage() {
         <div className="flex items-center gap-3">
           <span className="text-xs text-gray-400 dark:text-dark-muted">
             Last updated:{" "}
-            {lastRefreshed.toLocaleString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-              timeZoneName: "short",
-            })}
+            {lastRefreshed
+              ? lastRefreshed.toLocaleString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  timeZoneName: "short",
+                })
+              : "—"}
           </span>
           <button
             onClick={() => void fetchData()}

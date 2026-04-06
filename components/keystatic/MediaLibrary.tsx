@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import {
   DIRECT_UPLOAD_THRESHOLD,
   DOCUMENT_EXTENSIONS,
+  MEDIA_BUDGET_MB,
 } from "@/lib/media/constants";
 import { compressImage } from "@/lib/media/compress-image";
 import {
@@ -235,15 +236,18 @@ export function MediaLibrary({
 
   type DataTransferFileList = DataTransfer["files"];
 
-  // Upload a single file directly to GitHub Contents API
+  interface UploadConfig {
+    owner: string;
+    repo: string;
+    branch: string;
+    token: string;
+  }
+
   async function directGitHubUpload(
     file: File,
+    config: UploadConfig,
   ): Promise<{ filename: string; url: string } | { filename: string; error: string }> {
-    const configRes = await fetch("/api/media/upload-config");
-    if (!configRes.ok) {
-      return { filename: file.name, error: "Could not get upload config" };
-    }
-    const { owner, repo, branch, token } = await configRes.json();
+    const { owner, repo, branch, token } = config;
 
     const ext = file.name.substring(file.name.lastIndexOf(".")).toLowerCase();
     const isDocument = DOCUMENT_EXTENSIONS.includes(ext);
@@ -256,14 +260,16 @@ export function MediaLibrary({
       ? `/documents/${filename}`
       : `/images/uploads/${filename}`;
 
-    // Convert file to base64
-    const buffer = await file.arrayBuffer();
-    const bytes = new Uint8Array(buffer);
-    let binary = "";
-    for (let i = 0; i < bytes.length; i++) {
-      binary += String.fromCharCode(bytes[i]);
-    }
-    const base64Content = btoa(binary);
+    // Convert file to base64 using FileReader to avoid OOM on large files
+    const base64Content = await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const dataUrl = reader.result as string;
+        resolve(dataUrl.split(",")[1]);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
 
     const res = await fetch(
       `https://api.github.com/repos/${owner}/${repo}/contents/${repoPath}`,
@@ -302,12 +308,14 @@ export function MediaLibrary({
     const smallFiles: File[] = [];
     const largeFiles: File[] = [];
 
-    for (const file of fileList) {
-      const compressed = await compressImage(file);
-      if (compressed.size > DIRECT_UPLOAD_THRESHOLD) {
-        largeFiles.push(compressed);
+    const compressed = await Promise.all(
+      Array.from(fileList).map((file) => compressImage(file)),
+    );
+    for (const file of compressed) {
+      if (file.size > DIRECT_UPLOAD_THRESHOLD) {
+        largeFiles.push(file);
       } else {
-        smallFiles.push(compressed);
+        smallFiles.push(file);
       }
     }
 
@@ -336,12 +344,25 @@ export function MediaLibrary({
     }
 
     // Upload large files directly to GitHub
-    for (const file of largeFiles) {
-      const result = await directGitHubUpload(file);
-      if ("error" in result) {
-        errors.push(result);
+    if (largeFiles.length > 0) {
+      const configRes = await fetch("/api/media/upload-config");
+      if (!configRes.ok) {
+        for (const f of largeFiles) {
+          errors.push({ filename: f.name, error: "Could not get upload config" });
+        }
       } else {
-        uploaded.push(result);
+        const config: UploadConfig = await configRes.json();
+        const results = await Promise.allSettled(
+          largeFiles.map((file) => directGitHubUpload(file, config)),
+        );
+        for (const r of results) {
+          if (r.status === "fulfilled") {
+            if ("error" in r.value) errors.push(r.value);
+            else uploaded.push(r.value);
+          } else {
+            errors.push({ filename: "unknown", error: r.reason?.message || "Upload failed" });
+          }
+        }
       }
     }
 
@@ -382,6 +403,7 @@ export function MediaLibrary({
   // Handle drag and drop
   const handleDrop = async (event: React.DragEvent) => {
     event.preventDefault();
+    if (isUploading) return;
     const droppedFiles = event.dataTransfer.files;
     if (droppedFiles.length === 0) return;
 
@@ -486,6 +508,7 @@ export function MediaLibrary({
               multiple
               accept="image/*,video/*,.pdf,.doc,.docx,.xls,.xlsx"
               onChange={handleUpload}
+              disabled={isUploading}
               className="hidden"
             />
           </label>
@@ -493,7 +516,7 @@ export function MediaLibrary({
 
         {/* Storage gauge — media space used */}
         {(() => {
-          const BUDGET_MB = 120;
+          const BUDGET_MB = MEDIA_BUDGET_MB;
           const totalBytes = files.reduce((sum, f) => sum + (f.size || 0), 0);
           const usedMB = totalBytes / (1024 * 1024);
           const pct = Math.min((usedMB / BUDGET_MB) * 100, 100);

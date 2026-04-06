@@ -49,7 +49,7 @@ async function ensureDir(dir: string) {
 async function deleteViaGitHub(
   token: string,
   repoPath: string,
-): Promise<boolean> {
+): Promise<{ ok: boolean; error?: string }> {
   const owner = process.env.GITHUB_OWNER || DEFAULT_GITHUB_OWNER;
   const repo = process.env.GITHUB_REPO?.split("/").pop() || DEFAULT_GITHUB_REPO;
 
@@ -63,7 +63,14 @@ async function deleteViaGitHub(
     },
   );
 
-  if (!getResponse.ok) return false;
+  if (!getResponse.ok) {
+    const body = await getResponse.text().catch(() => "");
+    const detail = body.slice(0, 200);
+    console.error(
+      `[Media] GitHub get-for-delete failed: ${getResponse.status} ${getResponse.statusText} — ${detail}`,
+    );
+    return { ok: false, error: `GitHub API ${getResponse.status}: ${detail}` };
+  }
 
   const { sha } = await getResponse.json();
 
@@ -84,7 +91,16 @@ async function deleteViaGitHub(
     },
   );
 
-  return deleteResponse.ok;
+  if (!deleteResponse.ok) {
+    const body = await deleteResponse.text().catch(() => "");
+    const detail = body.slice(0, 200);
+    console.error(
+      `[Media] GitHub delete failed: ${deleteResponse.status} ${deleteResponse.statusText} — ${detail}`,
+    );
+    return { ok: false, error: `GitHub API ${deleteResponse.status}: ${detail}` };
+  }
+
+  return { ok: true };
 }
 
 async function uploadViaGitHub(
@@ -353,7 +369,12 @@ export async function DELETE(request: NextRequest) {
           });
           continue;
         }
-        success = await deleteViaGitHub(ghToken, `public/${relativePath}`);
+        const ghResult = await deleteViaGitHub(ghToken, `public/${relativePath}`);
+        success = ghResult.ok;
+        if (!ghResult.ok) {
+          results.push({ path: filePath, success: false, error: ghResult.error });
+          continue;
+        }
       } else {
         success = await deleteMediaFile(relativePath);
       }

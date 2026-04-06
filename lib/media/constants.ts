@@ -12,6 +12,9 @@ export const ALLOWED_EXTENSIONS = [...ALLOWED_MEDIA_EXTENSIONS, ...DOCUMENT_EXTE
 /** Vercel serverless body limit is ~4.5MB; use 3.5MB with margin for multipart overhead */
 export const DIRECT_UPLOAD_THRESHOLD = 3.5 * 1024 * 1024;
 
+/** Storage budget for media uploads (MB). Total Vercel limit ~150MB minus ~30MB fixed site assets. */
+export const MEDIA_BUDGET_MB = 120;
+
 export function getMaxFileSize(extension: string): number {
   const isDocument = DOCUMENT_EXTENSIONS.includes(extension);
   const isVideo = VIDEO_EXTENSIONS.includes(extension);

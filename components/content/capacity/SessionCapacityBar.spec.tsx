@@ -59,10 +59,10 @@ describe("SessionCapacityBar", () => {
           })}
         />
       );
-      expect(screen.getByText("Waitlist")).toBeInTheDocument();
+      expect(screen.getAllByText("Waitlist").length).toBeGreaterThanOrEqual(1);
     });
 
-    it("renders 'Almost Full!' pill when session has a waitlist but spots remain", () => {
+    it("renders 'Filling Fast' pill when one gender has waitlist but other has spots", () => {
       render(
         <SessionCapacityBar
           session={makeSession({
@@ -76,7 +76,41 @@ describe("SessionCapacityBar", () => {
           })}
         />
       );
-      expect(screen.getByText("Almost Full!")).toBeInTheDocument();
+      expect(screen.getByText("Filling Fast")).toBeInTheDocument();
+    });
+
+    it("REQ-CAP-002: renders 'Waitlist' pill when open beds equal waitlist count (reserved for waitlisted families)", () => {
+      render(
+        <SessionCapacityBar
+          session={makeSession({
+            totalEnrollment: 48,
+            maxTotal: 50,
+            maleEnrollment: 24,
+            maxMales: 25,
+            femaleEnrollment: 24,
+            maxFemales: 25,
+            totalWaitListCount: 2,
+          })}
+        />
+      );
+      expect(screen.getAllByText("Waitlist").length).toBeGreaterThanOrEqual(1);
+    });
+
+    it("REQ-CAP-002: renders 'Waitlist' pill when open beds are fewer than waitlist count", () => {
+      render(
+        <SessionCapacityBar
+          session={makeSession({
+            totalEnrollment: 49,
+            maxTotal: 50,
+            maleEnrollment: 24,
+            maxMales: 25,
+            femaleEnrollment: 25,
+            maxFemales: 25,
+            totalWaitListCount: 3,
+          })}
+        />
+      );
+      expect(screen.getAllByText("Waitlist").length).toBeGreaterThanOrEqual(1);
     });
 
     it("does not render a status pill when capacity is comfortably available", () => {
@@ -93,9 +127,125 @@ describe("SessionCapacityBar", () => {
           })}
         />
       );
-      expect(screen.queryByText("Waitlist")).not.toBeInTheDocument();
+      
       expect(screen.queryByText(/Almost Full/i)).not.toBeInTheDocument();
       expect(screen.queryByText(/Filling Fast/i)).not.toBeInTheDocument();
+    });
+  });
+
+  describe("REQ-CAP-003: Per-gender waitlist-hold state machine", () => {
+    it("State 1: AT_CAPACITY — shows Waitlist when enrollment >= max (all sessions allow waitlists)", () => {
+      render(
+        <SessionCapacityBar
+          session={makeSession({
+            maleEnrollment: 36, maxMales: 36,
+            femaleEnrollment: 45, maxFemales: 45,
+            totalWaitListCount: 0,
+          })}
+        />,
+      );
+      const waitlistLabels = screen.getAllByText("Waitlist");
+      expect(waitlistLabels.length).toBeGreaterThanOrEqual(2);
+    });
+
+    it("State 2: WAITLIST_HOLD — shows Waitlist for gender with open bed reserved", () => {
+      // Jr. High 1 scenario: girls=44/45 (1 spot), waitlist=5
+      render(
+        <SessionCapacityBar
+          session={makeSession({
+            maleEnrollment: 30, maxMales: 36,
+            femaleEnrollment: 44, maxFemales: 45,
+            totalWaitListCount: 5,
+          })}
+        />,
+      );
+      expect(screen.getByText("6 spots left")).toBeInTheDocument();
+      expect(screen.getAllByText("Waitlist").length).toBeGreaterThanOrEqual(1);
+    });
+
+    it("State 2: WAITLIST_HOLD — shows Waitlist for both when both have fewer spots than waitlist", () => {
+      render(
+        <SessionCapacityBar
+          session={makeSession({
+            maleEnrollment: 34, maxMales: 36,
+            femaleEnrollment: 43, maxFemales: 45,
+            totalWaitListCount: 5,
+          })}
+        />,
+      );
+      const waitlistLabels = screen.getAllByText("Waitlist");
+      expect(waitlistLabels.length).toBeGreaterThanOrEqual(2);
+    });
+
+    it("State 3: AVAILABLE — shows spots when gender has more open than waitlist count", () => {
+      // Boys have 20 spots open, waitlist only 2 — boys are genuinely available
+      // Girls at capacity → "Full" (atCapacity, not waitlistHold)
+      render(
+        <SessionCapacityBar
+          session={makeSession({
+            maleEnrollment: 16, maxMales: 36,
+            femaleEnrollment: 45, maxFemales: 45,
+            totalWaitListCount: 2,
+          })}
+        />,
+      );
+      expect(screen.getByText("20 spots left")).toBeInTheDocument();
+      expect(screen.getAllByText("Waitlist").length).toBeGreaterThanOrEqual(1);
+    });
+
+    it("State 3: AVAILABLE — shows spots for both when no waitlist", () => {
+      render(
+        <SessionCapacityBar
+          session={makeSession({
+            maleEnrollment: 23, maxMales: 36,
+            femaleEnrollment: 43, maxFemales: 45,
+            totalWaitListCount: 0,
+          })}
+        />,
+      );
+      expect(screen.getByText("13 spots left")).toBeInTheDocument();
+      expect(screen.getByText("2 spots left")).toBeInTheDocument();
+      expect(screen.queryByText("Full")).not.toBeInTheDocument();
+    });
+
+    it("Mixed: one gender at capacity, other available, no waitlist → Waitlist (all sessions allow waitlists)", () => {
+      render(
+        <SessionCapacityBar
+          session={makeSession({
+            maleEnrollment: 36, maxMales: 36,
+            femaleEnrollment: 20, maxFemales: 45,
+            totalWaitListCount: 0,
+          })}
+        />,
+      );
+      expect(screen.getAllByText("Waitlist").length).toBeGreaterThanOrEqual(1);
+      expect(screen.getByText("25 spots left")).toBeInTheDocument();
+    });
+
+    it("Edge: exactly 1 spot left, singular 'spot' text", () => {
+      render(
+        <SessionCapacityBar
+          session={makeSession({
+            maleEnrollment: 35, maxMales: 36,
+            femaleEnrollment: 20, maxFemales: 45,
+            totalWaitListCount: 0,
+          })}
+        />,
+      );
+      expect(screen.getByText("1 spot left")).toBeInTheDocument();
+    });
+
+    it("Edge: waitlist=1, boys 1 spot open → Waitlist, girls at capacity → Waitlist", () => {
+      render(
+        <SessionCapacityBar
+          session={makeSession({
+            maleEnrollment: 35, maxMales: 36,
+            femaleEnrollment: 45, maxFemales: 45,
+            totalWaitListCount: 1,
+          })}
+        />,
+      );
+      expect(screen.getAllByText("Waitlist").length).toBeGreaterThanOrEqual(2);
     });
   });
 
@@ -141,8 +291,8 @@ describe("SessionCapacityBar", () => {
           })}
         />
       );
-      const fullLabels = screen.getAllByText("Full");
-      expect(fullLabels.length).toBeGreaterThanOrEqual(1);
+      const waitlistLabels = screen.getAllByText("Waitlist");
+      expect(waitlistLabels.length).toBeGreaterThanOrEqual(1);
     });
   });
 });

@@ -37,6 +37,7 @@ export async function compressImage(file: File): Promise<File> {
       canvas.height = height;
       const ctx = canvas.getContext("2d");
       if (!ctx) {
+        URL.revokeObjectURL(url);
         resolve(file);
         return;
       }
@@ -49,7 +50,11 @@ export async function compressImage(file: File): Promise<File> {
           }
           resolve(new File([blob], file.name, { type: file.type }));
         },
-        ext === ".png" ? "image/png" : "image/jpeg",
+        ext === ".png"
+          ? "image/png"
+          : ext === ".webp"
+            ? "image/webp"
+            : "image/jpeg",
         COMPRESSION_QUALITY,
       );
     };
