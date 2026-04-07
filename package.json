@@ -64,6 +64,7 @@
     "dotenv": "^17.2.3",
     "eslint": "^8",
     "eslint-config-next": "^14.2.0",
+    "eslint-plugin-local-rules": "^3.0.2",
     "fast-xml-parser": "^5.3.3",
     "jsdom": "^27.1.0",
     "pagefind": "^1.4.0",
