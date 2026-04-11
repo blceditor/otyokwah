@@ -105,7 +105,7 @@ export async function GET() {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second total timeout
 
-    const response = await fetch(commitsUrl, {
+    const response = await fetch(commitsUrl, { // nosec — hardcoded api.github.com endpoint
       headers: {
         // P0 Fix: Use Bearer token format (modern GitHub API)
         Authorization: `Bearer ${token}`,
@@ -141,7 +141,7 @@ export async function GET() {
       const batchResults = await Promise.allSettled(
         batch.map(async (commit) => {
           const commitDetailUrl = `https://api.github.com/repos/${owner}/${repo}/commits/${commit.sha}`;
-          const detailResponse = await fetch(commitDetailUrl, {
+          const detailResponse = await fetch(commitDetailUrl, { // nosec — hardcoded api.github.com endpoint
             headers: {
               Authorization: `Bearer ${token}`,
               Accept: 'application/vnd.github.v3+json',
