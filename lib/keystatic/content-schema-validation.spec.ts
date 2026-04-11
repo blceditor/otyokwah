@@ -278,7 +278,9 @@ describe("Content-Schema Contract Validation", () => {
         const imagePath = String(hero.heroImage);
         // Keystatic image fields store just the filename; publicPath is prepended by reader
         // Check in the configured directory
-        const fullPath = path.join(PUBLIC_DIR, "images", imagePath);
+        const fullPath = imagePath.startsWith("/images/")
+          ? path.join(PUBLIC_DIR, imagePath)
+          : path.join(PUBLIC_DIR, "images", imagePath);
         if (!fs.existsSync(fullPath)) {
           missing.push(`${slug}: hero.heroImage="${imagePath}" → ${fullPath}`);
         }

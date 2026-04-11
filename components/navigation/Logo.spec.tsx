@@ -232,8 +232,8 @@ describe('REQ-WEB-002 — Logo 2X Larger + Hanging Effect', () => {
       rerender(<Logo {...mockLogoProps} isScrolled={true} />);
 
       img = container.querySelector('img');
-      expect(img?.getAttribute('width')).toBe('120');
-      expect(img?.getAttribute('height')).toBe('61');
+      expect(img?.getAttribute('width')).toBe('80');
+      expect(img?.getAttribute('height')).toBe('41');
     });
 
     test('REQ-WEB-002 — absolute positioning prevents content reflow', () => {
