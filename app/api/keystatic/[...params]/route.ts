@@ -93,7 +93,7 @@ export async function GET(request: Request) {
       tokenUrl.searchParams.set('client_id', clientId);
       tokenUrl.searchParams.set('client_secret', clientSecret);
       tokenUrl.searchParams.set('code', code);
-      const res = await fetch(tokenUrl, {
+      const res = await fetch(tokenUrl, { // nosec — hardcoded github.com OAuth endpoint
         method: 'POST',
         headers: { Accept: 'application/json' },
       });

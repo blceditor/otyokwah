@@ -62,7 +62,9 @@ describe("REQ-CONTENT-REGRESS-003: Referenced images exist", () => {
         heroMatch[1] !== "''" &&
         /\.\w+$/.test(heroMatch[1])
       ) {
-        const imgPath = `public/images/${heroMatch[1]}`;
+        const imgPath = heroMatch[1].startsWith("/images/")
+          ? `public${heroMatch[1]}`
+          : `public/images/${heroMatch[1]}`;
         expect(
           existsSync(imgPath),
           `${pagePath} references missing hero: ${imgPath}`,

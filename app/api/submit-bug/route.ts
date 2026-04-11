@@ -209,7 +209,7 @@ export async function POST(request: NextRequest) {
 
     const issueBody = formatIssueBody(body);
 
-    const response = await fetch(githubUrl, {
+    const response = await fetch(githubUrl, { // nosec — hardcoded api.github.com endpoint
       method: 'POST',
       headers: {
         Authorization: `Bearer ${GITHUB_TOKEN}`,
