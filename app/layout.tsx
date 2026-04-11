@@ -33,6 +33,15 @@ export async function generateMetadata(): Promise<Metadata> {
     title: `${config.siteName} - To Know Christ`,
     description:
       "Christian summer camp challenging individuals to know and mature in Christ. Summer camps for 2nd grade through graduation.",
+    icons: {
+      icon: [
+        { url: "/favicon.ico", sizes: "any" },
+        { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+        { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      ],
+      apple: "/apple-touch-icon.png",
+    },
+    manifest: "/site.webmanifest",
     openGraph: {
       title: config.siteName,
       description: "To Know Christ",
