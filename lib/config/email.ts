@@ -25,9 +25,6 @@ export const EMAIL = {
 
   /** Default contact email (CMS defaults) */
   default: "info@otyokwah.org",
-
-  /** Email sending domain (used for Resend from address) */
-  domain: "otyokwah.org",
 } as const;
 
 /** Default contact email */
