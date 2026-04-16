@@ -30,7 +30,7 @@ interface EmailResult {
 const RESEND_API_KEY = process.env.RESEND_API_KEY || "";
 const CONTACT_FORM_TO = process.env.CONTACT_FORM_TO || EMAIL.contact;
 const CONTACT_FORM_FROM =
-  process.env.CONTACT_FORM_FROM || `noreply@${EMAIL.domain}`;
+  process.env.CONTACT_FORM_FROM || `noreply@${EMAIL.default.split('@')[1]}`;
 
 interface ConfirmationTemplate {
   confirmationSubject: string;
