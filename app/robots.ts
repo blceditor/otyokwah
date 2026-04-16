@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 
-const SITE_URL = process.env.PRODUCTION_URL || 'https://otyokwah.vercel.app';
+const SITE_URL = process.env.PRODUCTION_URL || 'https://www.otyokwah.org';
 
 export default function robots(): MetadataRoute.Robots {
   return {

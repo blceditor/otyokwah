@@ -1,7 +1,7 @@
 import { reader } from '@/lib/keystatic-reader';
 import type { MetadataRoute } from 'next';
 
-const SITE_URL = process.env.PRODUCTION_URL || 'https://otyokwah.vercel.app';
+const SITE_URL = process.env.PRODUCTION_URL || 'https://www.otyokwah.org';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const pages = await reader().collections.pages.list();

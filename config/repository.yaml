@@ -27,11 +27,11 @@ github:
 # Site/Domain Configuration
 site:
   # Production domain (without protocol)
-  production_domain: otyokwah.vercel.app
+  production_domain: www.otyokwah.org
   # Production URL (with protocol)
-  production_url: https://otyokwah.vercel.app
+  production_url: https://www.otyokwah.org
   # Keystatic CMS URL
-  keystatic_url: https://otyokwah.vercel.app/keystatic
+  keystatic_url: https://www.otyokwah.org/keystatic
 
 # Contact Email Configuration
 email:
