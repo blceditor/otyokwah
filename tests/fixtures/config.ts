@@ -27,9 +27,9 @@ export const TEST_GITHUB = {
 
 /** Current site configuration for tests */
 export const TEST_SITE = {
-  productionDomain: "otyokwah.vercel.app",
-  productionUrl: "https://otyokwah.vercel.app",
-  keystaticUrl: "https://otyokwah.vercel.app/keystatic",
+  productionDomain: "www.otyokwah.org",
+  productionUrl: "https://www.otyokwah.org",
+  keystaticUrl: "https://www.otyokwah.org/keystatic",
 } as const;
 
 /** Current email configuration for tests */
@@ -62,8 +62,8 @@ export const TEST_BRANDING_COLORS = {
 export const TEST_ENV_STUBS = {
   GITHUB_OWNER: "blceditor",
   GITHUB_REPO: "blceditor/otyokwah",
-  PRODUCTION_URL: "https://otyokwah.vercel.app",
-  PRODUCTION_DOMAIN: "otyokwah.vercel.app",
-  E2E_BASE_URL: "https://otyokwah.vercel.app",
+  PRODUCTION_URL: "https://www.otyokwah.org",
+  PRODUCTION_DOMAIN: "www.otyokwah.org",
+  E2E_BASE_URL: "https://www.otyokwah.org",
   NEXT_PUBLIC_GA_ID: "",
 } as const;

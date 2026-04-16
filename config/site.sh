@@ -20,9 +20,9 @@ CONFIG_GITHUB_APP_SLUG="otyokwah-keystatic"
 CONFIG_GITHUB_URL="https://github.com/blceditor/otyokwah"
 
 # Site/Domain Configuration
-CONFIG_PRODUCTION_DOMAIN="otyokwah.vercel.app"
-CONFIG_PRODUCTION_URL="https://otyokwah.vercel.app"
-CONFIG_KEYSTATIC_URL="https://otyokwah.vercel.app/keystatic"
+CONFIG_PRODUCTION_DOMAIN="www.otyokwah.org"
+CONFIG_PRODUCTION_URL="https://www.otyokwah.org"
+CONFIG_KEYSTATIC_URL="https://www.otyokwah.org/keystatic"
 
 # Email Configuration
 CONFIG_EMAIL_CONTACT="info@otyokwah.org"

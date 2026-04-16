@@ -29,7 +29,7 @@ describe("REQ-001 — Production Link Component", () => {
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute(
       "href",
-      "https://otyokwah.vercel.app/about",
+      "https://www.otyokwah.org/about",
     );
   });
 
@@ -39,7 +39,7 @@ describe("REQ-001 — Production Link Component", () => {
     render(<ProductionLink />);
 
     const link = screen.getByRole("link", { name: /view live page/i });
-    expect(link).toHaveAttribute("href", "https://otyokwah.vercel.app/");
+    expect(link).toHaveAttribute("href", "https://www.otyokwah.org/");
   });
 
   test("constructs URL correctly for deeply nested pages", () => {
@@ -50,7 +50,7 @@ describe("REQ-001 — Production Link Component", () => {
     const link = screen.getByRole("link", { name: /view live page/i });
     expect(link).toHaveAttribute(
       "href",
-      "https://otyokwah.vercel.app/programs/summer-camp",
+      "https://www.otyokwah.org/programs/summer-camp",
     );
   });
 
@@ -99,7 +99,7 @@ describe("REQ-001 — Production Link Component", () => {
     const link = screen.getByRole("link", { name: /view live page/i });
     // Should not have double slashes in path (after protocol) or trailing slash
     const href = link.getAttribute("href");
-    expect(href).toBe("https://otyokwah.vercel.app/about");
+    expect(href).toBe("https://www.otyokwah.org/about");
     // Verify no double slashes in the path portion (after https://)
     const pathPortion = href?.replace("https://", "") || "";
     expect(pathPortion).not.toContain("//");
@@ -150,15 +150,15 @@ describe("REQ-001 — Production Link Component", () => {
     const testCases = [
       {
         path: "/keystatic/pages/index",
-        expected: "https://otyokwah.vercel.app/",
+        expected: "https://www.otyokwah.org/",
       },
       {
         path: "/keystatic/pages/about",
-        expected: "https://otyokwah.vercel.app/about",
+        expected: "https://www.otyokwah.org/about",
       },
       {
         path: "/keystatic/pages/programs/youth",
-        expected: "https://otyokwah.vercel.app/programs/youth",
+        expected: "https://www.otyokwah.org/programs/youth",
       },
     ];
 
