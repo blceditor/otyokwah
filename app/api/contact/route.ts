@@ -133,12 +133,21 @@ function isValidEmail(email: string): boolean {
   return emailRegex.test(email);
 }
 
-function sanitizeInput(input: string, stripNewlines = false): string {
+// Per-field length caps — MUST match components/forms/ContactForm.tsx
+const MAX_NAME_LENGTH = 100;
+const MAX_EMAIL_LENGTH = 254;
+const MAX_MESSAGE_LENGTH = 2000;
+
+function sanitizeInput(
+  input: string,
+  maxLength: number,
+  stripNewlines = false,
+): string {
   let result = input.replace(/[<>]/g, "").trim();
   if (stripNewlines) {
     result = result.replace(/[\r\n]/g, " ");
   }
-  return result.slice(0, 1000);
+  return result.slice(0, maxLength);
 }
 
 async function parseFormData(request: NextRequest): Promise<{
@@ -155,9 +164,9 @@ async function parseFormData(request: NextRequest): Promise<{
     const body = await request.text();
     const params = new URLSearchParams(body);
     return {
-      name: sanitizeInput(params.get("name") || "", true),
-      email: sanitizeInput(params.get("email") || "", true),
-      message: sanitizeInput(params.get("message") || ""),
+      name: sanitizeInput(params.get("name") || "", MAX_NAME_LENGTH, true),
+      email: sanitizeInput(params.get("email") || "", MAX_EMAIL_LENGTH, true),
+      message: sanitizeInput(params.get("message") || "", MAX_MESSAGE_LENGTH),
       turnstileToken: params.get("turnstile-response") || "",
       honeypot: params.get("website") || "",
       timing: parseInt(params.get("_timing") || "0", 10),
@@ -166,9 +175,9 @@ async function parseFormData(request: NextRequest): Promise<{
 
   const formData = await request.formData();
   return {
-    name: sanitizeInput((formData.get("name") as string) || "", true),
-    email: sanitizeInput((formData.get("email") as string) || "", true),
-    message: sanitizeInput((formData.get("message") as string) || ""),
+    name: sanitizeInput((formData.get("name") as string) || "", MAX_NAME_LENGTH, true),
+    email: sanitizeInput((formData.get("email") as string) || "", MAX_EMAIL_LENGTH, true),
+    message: sanitizeInput((formData.get("message") as string) || "", MAX_MESSAGE_LENGTH),
     turnstileToken: (formData.get("turnstile-response") as string) || "",
     honeypot: (formData.get("website") as string) || "",
     timing: parseInt((formData.get("_timing") as string) || "0", 10),
