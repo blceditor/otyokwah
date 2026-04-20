@@ -8,6 +8,11 @@
 
 import { useState, useEffect, useRef } from "react";
 
+// Per-field length caps — MUST match app/api/contact/route.ts
+const MAX_NAME_LENGTH = 100;
+const MAX_EMAIL_LENGTH = 254;
+const MAX_MESSAGE_LENGTH = 2000;
+
 // Cloudflare Turnstile widget types
 declare global {
   interface Window {
@@ -207,6 +212,7 @@ export function ContactForm({ onSubmit }: ContactFormProps = {}): JSX.Element {
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
+          maxLength={MAX_NAME_LENGTH}
           className="w-full px-4 py-2 border-2 border-secondary/20 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:border-transparent"
         />
       </div>
@@ -225,6 +231,7 @@ export function ContactForm({ onSubmit }: ContactFormProps = {}): JSX.Element {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          maxLength={MAX_EMAIL_LENGTH}
           className="w-full px-4 py-2 border-2 border-secondary/20 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:border-transparent"
         />
       </div>
@@ -243,8 +250,22 @@ export function ContactForm({ onSubmit }: ContactFormProps = {}): JSX.Element {
           onChange={(e) => setMessage(e.target.value)}
           required
           rows={6}
+          maxLength={MAX_MESSAGE_LENGTH}
+          aria-describedby="contact-message-counter"
           className="w-full px-4 py-2 border-2 border-secondary/20 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:border-transparent resize-vertical"
         />
+        <p
+          id="contact-message-counter"
+          className="mt-1 text-sm text-bark/70"
+          aria-live="polite"
+        >
+          {message.length.toLocaleString()} / {MAX_MESSAGE_LENGTH.toLocaleString()} characters
+          {message.length >= MAX_MESSAGE_LENGTH && (
+            <span className="ml-2 font-semibold text-red-700">
+              (limit reached)
+            </span>
+          )}
+        </p>
       </div>
 
       {/* Cloudflare Turnstile Captcha */}

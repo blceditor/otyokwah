@@ -8,8 +8,6 @@
 import { Resend } from "resend";
 import { SITE_URL } from "@/lib/site-url";
 import { EMAIL } from "@/lib/config/email";
-import { resolve } from "@/lib/feature-flags";
-import { CC_STAFF_EMAIL } from "@/lib/feature-flags/flags";
 import { getSiteConfig } from "@/lib/config/site-config";
 import { reader } from "@/lib/keystatic-reader";
 
@@ -201,14 +199,13 @@ export async function sendContactEmail(
     ]);
     const resend = new Resend(RESEND_API_KEY);
     const fromAddress = `${config.siteName} <${CONTACT_FORM_FROM}>`;
-    const ccRecipients = resolve(CC_STAFF_EMAIL);
 
     // Send both emails concurrently
     const [staffResult, confirmResult] = await Promise.all([
       // 1. Staff notification — reply-to is the person who submitted
       resend.emails.send({
         from: fromAddress,
-        to: [CONTACT_FORM_TO, ...ccRecipients],
+        to: [CONTACT_FORM_TO],
         replyTo: data.email,
         subject: `Contact Form: ${data.name}`,
         text: formatStaffNotificationText(data, config.siteName),
