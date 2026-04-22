@@ -268,12 +268,10 @@ export function ContactForm({ onSubmit }: ContactFormProps = {}): JSX.Element {
         </p>
       </div>
 
-      {/* Cloudflare Turnstile Captcha */}
-      <div
-        ref={turnstileContainerRef}
-        data-turnstile
-        className="cf-turnstile"
-      />
+      {/* Cloudflare Turnstile Captcha — rendered explicitly via window.turnstile.render;
+          do NOT set className="cf-turnstile" or Cloudflare's auto-scanner renders a
+          second widget in the same container without data-sitekey, failing the first one. */}
+      <div ref={turnstileContainerRef} data-turnstile />
       {/* Hidden input for testing purposes */}
       <input
         type="text"
