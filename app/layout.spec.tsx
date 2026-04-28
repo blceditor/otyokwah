@@ -1,33 +1,22 @@
 // REQ-104: Vercel Analytics Integration
 import { describe, test, expect } from "vitest";
+import fs from "fs";
+import path from "path";
+
+const layoutSource = fs.readFileSync(path.resolve(__dirname, "layout.tsx"), "utf-8");
 
 describe("REQ-104 — Vercel Analytics Integration", () => {
   test("Analytics component is imported from @vercel/analytics", () => {
-    const moduleSource = require("fs").readFileSync(
-      require.resolve("./layout"),
-      "utf-8",
-    );
-
-    expect(moduleSource).toContain("@vercel/analytics");
+    expect(layoutSource).toContain("@vercel/analytics");
   });
 
   test("Analytics loads asynchronously", () => {
-    const moduleSource = require("fs").readFileSync(
-      require.resolve("./layout"),
-      "utf-8",
-    );
-
-    expect(moduleSource).toContain("Analytics");
+    expect(layoutSource).toContain("Analytics");
   });
 
   test("SpeedInsights component is imported for Web Vitals", () => {
-    const moduleSource = require("fs").readFileSync(
-      require.resolve("./layout"),
-      "utf-8",
-    );
-
-    expect(moduleSource).toContain("SpeedInsights");
-    expect(moduleSource).toContain("@vercel/speed-insights");
+    expect(layoutSource).toContain("SpeedInsights");
+    expect(layoutSource).toContain("@vercel/speed-insights");
   });
 });
 
@@ -59,27 +48,12 @@ describe("REQ-104 — Vercel Analytics Integration", () => {
 // });
 
 describe("REQ-104 — Analytics Tracking Capabilities", () => {
-  test("tracks unique visitors", async () => {
-    // This is handled automatically by Vercel Analytics
-    // Just verify the component is configured
-    const moduleSource = require("fs").readFileSync(
-      require.resolve("./layout"),
-      "utf-8",
-    );
-
-    expect(moduleSource).toContain("Analytics");
+  test("tracks unique visitors", () => {
+    expect(layoutSource).toContain("Analytics");
   });
 
-  test("respects DNT (Do Not Track) browser settings", async () => {
-    // Vercel Analytics respects DNT automatically
-    // Test that we're using the official SDK
-    const moduleSource = require("fs").readFileSync(
-      require.resolve("./layout"),
-      "utf-8",
-    );
-
-    // Should import from official package (includes DNT support)
-    expect(moduleSource).toContain("@vercel/analytics");
+  test("respects DNT (Do Not Track) browser settings", () => {
+    expect(layoutSource).toContain("@vercel/analytics");
   });
 });
 
@@ -165,15 +139,38 @@ describe("REQ-104 — Analytics Tracking Capabilities", () => {
 //   });
 // });
 
-describe("REQ-ANALYTICS-001: Google Analytics 4", () => {
-  test("GA4 is injected via middleware for tag verification compatibility", () => {
-    const middlewareSource = require("fs").readFileSync(
-      require("path").resolve(__dirname, "../middleware.ts"),
-      "utf-8",
-    );
-    expect(middlewareSource).toContain("googletagmanager.com/gtag/js");
-    expect(middlewareSource).toContain("gtag('config'");
-    expect(middlewareSource).toContain("NEXT_PUBLIC_GA_ID");
+describe("REQ-COST-001 / REQ-ANALYTICS-001: Replace GA4 middleware with client-side component", () => {
+  test("middleware.ts does not exist (GA4 middleware deleted)", () => {
+    const middlewareExists = fs.existsSync(path.resolve(__dirname, "../middleware.ts"));
+    expect(middlewareExists).toBe(false);
+  });
+
+  test("layout.tsx imports GoogleAnalytics from @next/third-parties/google", () => {
+    expect(layoutSource).toContain("@next/third-parties/google");
+    expect(layoutSource).toContain("GoogleAnalytics");
+  });
+
+  test("GoogleAnalytics component is rendered in layout JSX", () => {
+    expect(layoutSource).toMatch(/<GoogleAnalytics\s/);
+  });
+
+  test("GoogleAnalytics uses NEXT_PUBLIC_GA_ID env var", () => {
+    expect(layoutSource).toContain("NEXT_PUBLIC_GA_ID");
+  });
+});
+
+describe("REQ-COST-002: Remove redundant VitalsReporter", () => {
+  test("layout.tsx does NOT import VitalsReporter", () => {
+    expect(layoutSource).not.toContain("VitalsReporter");
+  });
+
+  test("layout.tsx does NOT render <VitalsReporter", () => {
+    expect(layoutSource).not.toMatch(/<VitalsReporter\s*\/>/);
+  });
+
+  test("SpeedInsights is still present as the sole Web Vitals provider", () => {
+    expect(layoutSource).toContain("SpeedInsights");
+    expect(layoutSource).toContain("@vercel/speed-insights");
   });
 });
 
@@ -188,22 +185,12 @@ describe("REQ-104 — Analytics Script Size", () => {
 });
 
 describe("REQ-104 — GDPR and CCPA Compliance", () => {
-  test("Analytics is cookie-free", async () => {
-    // Vercel Analytics doesn't use cookies
-    // Test that we're using the official SDK
-    const moduleSource = require("fs").readFileSync(
-      require.resolve("./layout"),
-      "utf-8",
-    );
-
-    expect(moduleSource).toContain("@vercel/analytics");
+  test("Analytics is cookie-free", () => {
+    expect(layoutSource).toContain("@vercel/analytics");
   });
 
-  test("Analytics does not store PII", async () => {
-    // Vercel Analytics is GDPR compliant by design
-    // Verify we're using official package
+  test("Analytics does not store PII", () => {
     const packageJson = require("../package.json");
-
     expect(packageJson.dependencies["@vercel/analytics"]).toBeTruthy();
   });
 });
