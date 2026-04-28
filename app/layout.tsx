@@ -12,7 +12,7 @@ import { OrganizationJsonLd } from "../lib/seo/schemas/organization"; // REQ-SEO
 import { Caveat } from "next/font/google";
 import localFont from "next/font/local";
 import { AdminNavStrip } from "../components/admin"; // REQ-ADMIN-001, REQ-ADMIN-002
-import { VitalsReporter } from "../components/VitalsReporter";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const caveat = Caveat({
   weight: "400",
@@ -62,7 +62,6 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={`${caveat.variable} ${tradesmith.variable}`}>
-      {/* GA4 script injected via middleware.ts for Google tag verification compatibility */}
       <head />
       <body className="font-sans text-[1.125rem] leading-relaxed text-bark bg-cream">
         <OrganizationJsonLd config={siteConfig} />
@@ -79,9 +78,10 @@ export default async function RootLayout({
         <DraftModeBanner />
         <Analytics />
         <SpeedInsights />
-        <VitalsReporter />
-        <ScrollAnimationsInit />{" "}
-        {/* REQ-Q2-007: Initialize scroll animations */}
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        )}
+        <ScrollAnimationsInit />
       </body>
     </html>
   );

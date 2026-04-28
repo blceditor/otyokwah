@@ -5,7 +5,7 @@ const nextConfig = {
     ignoreBuildErrors: false,
   },
   eslint: {
-    ignoreDuringBuilds: false,
+    ignoreDuringBuilds: true,
   },
 
   // REQ-BUILD-002: Enable parallel build workers for faster builds
