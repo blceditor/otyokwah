@@ -47,6 +47,9 @@ menuItems:
       - label: Ignite
         href: /retreats-ignite
         external: false
+      - label: Rooted
+        href: retreats-rooted
+        external: false
   - label: Rentals
     href: /rentals
     children:
