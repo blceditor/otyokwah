@@ -32,6 +32,9 @@ menuItems:
   - label: BOLD
     href: /bold
     children:
+      - label: About BOLD
+        href: /about-bold
+        external: false
       - label: Schedule
         href: /bold-schedule
         external: false
