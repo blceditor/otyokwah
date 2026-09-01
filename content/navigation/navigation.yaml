@@ -43,7 +43,10 @@ menuItems:
         external: false
   - label: BOLD
     href: /bold
-    children: []
+    children:
+      - label: Schedule
+        href: /bold-schedule
+        external: false
   - label: Retreats
     href: /retreats
     children:
