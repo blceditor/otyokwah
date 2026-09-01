@@ -29,6 +29,12 @@ menuItems:
       - label: Parent Info
         href: /summer-camp-parent-info
         external: false
+  - label: BOLD
+    href: /bold
+    children:
+      - label: Schedule
+        href: /bold-schedule
+        external: false
   - label: Work at Camp
     href: /work-at-camp
     children:
@@ -40,12 +46,6 @@ menuItems:
         external: false
       - label: Year Round Positions
         href: /work-at-camp-year-round
-        external: false
-  - label: BOLD
-    href: /bold
-    children:
-      - label: Schedule
-        href: /bold-schedule
         external: false
   - label: Retreats
     href: /retreats
