@@ -41,6 +41,9 @@ menuItems:
       - label: Year Round Positions
         href: /work-at-camp-year-round
         external: false
+  - label: BOLD
+    href: /bold
+    children: []
   - label: Retreats
     href: /retreats
     children:
