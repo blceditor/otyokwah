@@ -23,7 +23,39 @@ seo:
    variant="green"
    external=false /%}
 
-{% gallery images=[] columns=5 /%}
+{% section
+   backgroundColor="white"
+   centered=true
+   width="auto"
+   height="auto" %}
+{% cardGrid cols="2" width="auto" height="auto" backgroundColor="" %}
+{% contentCard
+   icon=""
+   iconSize="md"
+   headingLevel="3"
+   width="auto"
+   height="auto"
+   backgroundColor="" /%}
+
+{% contentCard
+   icon=""
+   iconSize="md"
+   headingLevel="3"
+   width="auto"
+   height="auto"
+   backgroundColor="" /%}
+
+{% contentCard
+   icon=""
+   iconSize="md"
+   headingLevel="3"
+   width="auto"
+   height="auto"
+   backgroundColor="" /%}
+{% /cardGrid %}
+
+...
+{% /section %}
 
 {% ctaSection variant="brown" external=false %}
 ## **Our mission**
