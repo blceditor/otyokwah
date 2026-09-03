@@ -33,7 +33,7 @@ menuItems:
     href: /bold
     children:
       - label: Look Into a BOLD Year
-        href: /alookintobold
+        href: /lookintobold
         external: false
       - label: Schedule
         href: /bold-schedule
