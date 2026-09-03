@@ -32,8 +32,8 @@ menuItems:
   - label: BOLD
     href: /bold
     children:
-      - label: About BOLD
-        href: /about-bold
+      - label: Look Into a BOLD Year
+        href: /alookintobold
         external: false
       - label: Schedule
         href: /bold-schedule
