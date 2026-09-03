@@ -3,8 +3,17 @@ title: bold schedule
 hero:
   heroHeight: standard
 templateFields:
-  discriminant: standard
+  discriminant: fullbleed
 seo:
   twitterCard: summary_large_image
   noIndex: false
 ---
+{% testimonialWidget mode="random" /%}
+
+{% section
+   backgroundColor="secondary"
+   centered=true
+   width="auto"
+   height="auto" %}
+{% imageSection overlayPosition="center" height="md" /%}
+{% /section %}
