@@ -38,11 +38,14 @@ menuItems:
       - label: 'Requirements '
         href: /bold-requirements
         external: false
+      - label: 'Skill Development Opportunities '
+        href: /bold-skill-development-opportunities
+        external: false
       - label: Timeline and Phases
         href: /bold-timeline-and-phases
         external: false
-      - label: Schedule
-        href: /bold-schedule
+      - label: BOLD Objectives
+        href: /bold-objectives
         external: false
   - label: Work at Camp
     href: /work-at-camp
