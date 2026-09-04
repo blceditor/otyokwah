@@ -35,6 +35,12 @@ menuItems:
       - label: Program Overview
         href: /bold-program-overview
         external: false
+      - label: 'Requirements '
+        href: /bold-requirements
+        external: false
+      - label: Timeline and Phases
+        href: /bold-timeline-and-phases
+        external: false
       - label: Schedule
         href: /bold-schedule
         external: false
