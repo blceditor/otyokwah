@@ -32,8 +32,8 @@ menuItems:
   - label: BOLD
     href: /bold
     children:
-      - label: Program Overview
-        href: /bold-program-overview
+      - label: Why Choose BOLD?
+        href: /bold-why-choose-bold
         external: false
       - label: 'Requirements '
         href: /bold-requirements
