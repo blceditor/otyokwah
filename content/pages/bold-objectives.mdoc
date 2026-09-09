@@ -37,13 +37,22 @@ seo:
    textColor="dark"
    aspectRatio="square"
    width="auto"
-   height="auto" %}
-{% cardGrid cols="2" width="auto" height="auto" backgroundColor="" /%}
+   height="auto" /%}
 
-{% cardGrid cols="3" width="auto" height="auto" backgroundColor="" /%}
-
-{% cardGrid cols="2" width="auto" height="auto" backgroundColor="" /%}
-{% /gridSquare %}
+{% squareGrid
+   columns="3"
+   gap="none"
+   width="auto"
+   height="auto"
+   backgroundColor="" %}
+{% gridSquare
+   contentType="color"
+   backgroundColor="#f5f0e8"
+   textColor="dark"
+   aspectRatio="square"
+   width="auto"
+   height="auto" /%}
+{% /squareGrid %}
 
 {% ctaSection variant="green" external=false /%}
 
