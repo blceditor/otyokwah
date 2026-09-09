@@ -9,29 +9,6 @@ seo:
   twitterCard: summary_large_image
   noIndex: false
 ---
-{% squareGrid
-   columns="2"
-   gap="none"
-   width="auto"
-   height="auto"
-   backgroundColor="" %}
-{% gridSquare
-   contentType="color"
-   backgroundColor="#f5f0e8"
-   textColor="dark"
-   aspectRatio="square"
-   width="auto"
-   height="auto" /%}
-
-{% gridSquare
-   contentType="color"
-   backgroundColor="#f5f0e8"
-   textColor="dark"
-   aspectRatio="square"
-   width="auto"
-   height="auto" /%}
-{% /squareGrid %}
-
 {% section
    backgroundColor="cream"
    centered=true
@@ -126,8 +103,35 @@ Doctrinal Statement
    variant="green"
    external=false %}
 Communal Living Statement
+
+## 
 {% /ctaSection %}
 
+{% squareGrid
+   columns="2"
+   gap="none"
+   width="auto"
+   height="auto"
+   backgroundColor="#f5f0e8" %}
+{% gridSquare
+   contentType="color"
+   backgroundColor="#f5f0e8"
+   textColor="dark"
+   aspectRatio="square"
+   width="auto"
+   height="auto" %}
+## Why Choose BOLD?
+
+{% ctaButton variant="primary" size="lg" align="left" textColor="" /%}
+{% /gridSquare %}
+
+{% gridSquare
+   contentType="color"
+   backgroundColor="#f5f0e8"
+   textColor="dark"
+   aspectRatio="square"
+   width="auto"
+   height="auto" %}
 {% section
    backgroundColor="cream"
    centered=true
@@ -143,3 +147,5 @@ Communal Living Statement
    align="center"
    textColor="" /%}
 {% /section %}
+{% /gridSquare %}
+{% /squareGrid %}
