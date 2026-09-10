@@ -41,8 +41,8 @@ menuItems:
       - label: 'Growth Opportunities '
         href: '/bold-growth-opportunities '
         external: false
-      - label: Timeline and Phases
-        href: /bold-timeline-and-phases
+      - label: Schedules and Timeline
+        href: /bold-schedules-and-timeline
         external: false
       - label: Program Leaders
         href: /bold-program-leaders
