@@ -9,9 +9,12 @@ seo:
   twitterCard: summary_large_image
   noIndex: false
 ---
-{% ctaButton variant="primary" size="lg" align="left" textColor="" /%}
-
-{% ctaSection variant="green" external=false %}
+{% squareGrid
+   columns="2"
+   gap="none"
+   width="auto"
+   height="auto"
+   backgroundColor="" %}
 {% gridSquare
    contentType="color"
    backgroundColor="#f5f0e8"
@@ -31,7 +34,7 @@ The Narrative
    height="auto" %}
 The Question
 {% /gridSquare %}
-{% /ctaSection %}
+{% /squareGrid %}
 
 {% ctaSection
    heading="The Solution"
