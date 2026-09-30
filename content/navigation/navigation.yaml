@@ -29,7 +29,7 @@ menuItems:
       - label: Parent Info
         href: /summer-camp-parent-info
         external: false
-  - label: 'BOLD Discipleship '
+  - label: BOLD Discipleship
     href: /bold
     children:
       - label: Why Choose BOLD?
