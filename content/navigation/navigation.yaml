@@ -35,14 +35,14 @@ menuItems:
       - label: Why Choose BOLD?
         href: /bold-why-choose-bold
         external: false
-      - label: 'Requirements '
-        href: /bold-requirements
-        external: false
       - label: 'Growth Opportunities '
         href: '/bold-growth-opportunities '
         external: false
       - label: Schedules and Timeline
         href: /bold-schedules-and-timeline
+        external: false
+      - label: Requirements and FAQs
+        href: /bold-requirements-and-faqs
         external: false
       - label: Program Leaders
         href: /bold-program-leaders
