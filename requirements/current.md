@@ -141,3 +141,19 @@
 | 017 — Verification Audit | T-001 through T-004 | Yes |
 
 Full evidence in `requirements/verification-audit-results.md`.
+
+## Otyokwah content fixes — 2 SP
+
+Approach: edit the existing navigation and rental frontmatter, then copy the Ignite page for HS Fall Retreat. Reuse existing rendering and images; this keeps the change small, with temporary interior photos and TBD event details as the tradeoffs. No production deployment, merge, or Vercel settings changes.
+
+### REQ-OTY-CONTENT-001: Navigation href integrity
+- Acceptance: every href has no surrounding whitespace; internal hrefs start with `/` and resolve to a page.
+
+### REQ-OTY-CONTENT-002: Rental hero images
+- Acceptance: Delaware Lodge, Mingo Cabin, and Seasonal Cabins use the requested existing interior/common-area images. Real exterior photos remain a camp follow-up.
+
+### REQ-OTY-CONTENT-003: HS Fall Retreat
+- Acceptance: copy `retreats-ignite.mdoc` to `retreats-hs-fall.mdoc`; title HS Fall Retreat, grades 9th-12th, October 9-11, 2026, $125 before the early-bird deadline. Remove or mark TBD unsupported event details and list each in the PR body. Add navigation after Rooted.
+
+### REQ-OTY-CONTENT-004: Verification and preview
+- Acceptance: record full-suite before/after counts; the three reported failures pass; full suite, typecheck, lint, and build pass. Verify changed content with Playwright and screenshots, then open one PR against main and verify Vercel preview URLs. Leave merging to Travis.

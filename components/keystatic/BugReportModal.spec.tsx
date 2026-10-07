@@ -98,13 +98,11 @@ describe('REQ-006 — Bug Report Modal Component', () => {
     const triggerButton = screen.getByRole('button', { name: /report bug/i });
     await user.click(triggerButton);
 
-    await waitFor(async () => {
-      const titleInput = screen.getByLabelText(/title/i);
-      const descriptionInput = screen.getByLabelText(/description/i);
+    const titleInput = await screen.findByLabelText(/title/i);
+    const descriptionInput = await screen.findByLabelText(/description/i);
 
-      await user.type(titleInput, 'Image upload fails');
-      await user.type(descriptionInput, 'Cannot upload images larger than 2MB');
-    });
+    await user.type(titleInput, 'Image upload fails');
+    await user.type(descriptionInput, 'Cannot upload images larger than 2MB');
 
     const submitButton = screen.getByRole('button', { name: /submit/i });
     await user.click(submitButton);
@@ -133,13 +131,11 @@ describe('REQ-006 — Bug Report Modal Component', () => {
     const triggerButton = screen.getByRole('button', { name: /report bug/i });
     await user.click(triggerButton);
 
-    await waitFor(async () => {
-      const titleInput = screen.getByLabelText(/title/i);
-      const descriptionInput = screen.getByLabelText(/description/i);
+    const titleInput = await screen.findByLabelText(/title/i);
+    const descriptionInput = await screen.findByLabelText(/description/i);
 
-      await user.type(titleInput, 'Browser compatibility issue');
-      await user.type(descriptionInput, 'Feature not working in Safari');
-    });
+    await user.type(titleInput, 'Browser compatibility issue');
+    await user.type(descriptionInput, 'Feature not working in Safari');
 
     const submitButton = screen.getByRole('button', { name: /submit/i });
     await user.click(submitButton);
@@ -162,9 +158,7 @@ describe('REQ-006 — Bug Report Modal Component', () => {
     // Mock failed API to verify submission doesn't happen
     global.fetch = vi.fn();
 
-    render(
-      <BugReportModal pageContext={mockPageContext} />
-    );
+    render(<BugReportModal pageContext={mockPageContext} />);
 
     // Open modal
     const triggerButton = screen.getByRole('button', { name: /report bug/i });
@@ -221,7 +215,9 @@ describe('REQ-006 — Bug Report Modal Component', () => {
 
     // Should show success message
     await waitFor(() => {
-      const successMessage = screen.getByText(/bug report submitted successfully|submitted|success/i);
+      const successMessage = screen.getByText(
+        /bug report submitted successfully|submitted|success/i
+      );
       expect(successMessage).toBeInTheDocument();
     });
   });
@@ -300,7 +296,9 @@ describe('REQ-006 — Bug Report Modal Component', () => {
 
     // Should show error message
     await waitFor(() => {
-      const errorMessage = screen.getByText(/failed to submit|error|something went wrong/i);
+      const errorMessage = screen.getByText(
+        /failed to submit|error|something went wrong/i
+      );
       expect(errorMessage).toBeInTheDocument();
     });
   });
