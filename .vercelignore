@@ -35,9 +35,6 @@ requirements
 scripts/**
 !scripts/ignore-build.sh
 
-# Git
-.git
-
 # Editor
 .vscode
 .idea
