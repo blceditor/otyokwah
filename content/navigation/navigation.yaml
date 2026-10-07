@@ -36,7 +36,7 @@ menuItems:
         href: /bold-why-choose-bold
         external: false
       - label: 'Growth Opportunities '
-        href: '/bold-growth-opportunities '
+        href: /bold-growth-opportunities
         external: false
       - label: Schedules and Timeline
         href: /bold-schedules-and-timeline
@@ -66,7 +66,10 @@ menuItems:
         href: /retreats-ignite
         external: false
       - label: Rooted
-        href: retreats-rooted
+        href: /retreats-rooted
+        external: false
+      - label: HS Fall Retreat
+        href: /retreats-hs-fall
         external: false
   - label: Rentals
     href: /rentals

@@ -1,5 +1,6 @@
 import { describe, test, expect } from "vitest";
 import { readFileSync, existsSync, readdirSync } from "fs";
+import { parse } from "yaml";
 
 describe("REQ-CONTENT-REGRESS-001: Fullbleed pages have hero images", () => {
   const fullbleedPages = [
@@ -102,7 +103,11 @@ describe("REQ-CONTENT-REGRESS-004: Summer-staff FAQ section", () => {
 });
 
 describe("REQ-CONTENT-REGRESS-005: FAQ accordions have title attribute", () => {
-  const pagesWithFaq = ["summer-staff", "summer-camp-faq", "work-at-camp-leaders-in-training"];
+  const pagesWithFaq = [
+    "summer-staff",
+    "summer-camp-faq",
+    "work-at-camp-leaders-in-training",
+  ];
 
   for (const slug of pagesWithFaq) {
     test(`${slug}.mdoc faqAccordion has title= attribute`, () => {
@@ -112,4 +117,72 @@ describe("REQ-CONTENT-REGRESS-005: FAQ accordions have title attribute", () => {
       expect(faqTag![0]).toMatch(/title="/);
     });
   }
+});
+
+describe("REQ-OTY-CONTENT-001 — Navigation href integrity", () => {
+  test("all hrefs are trimmed and internal hrefs are absolute paths", () => {
+    const nav = parse(
+      readFileSync("content/navigation/navigation.yaml", "utf-8"),
+    );
+    const links = [
+      ...nav.menuItems.flatMap((item: { children?: unknown[] }) => [
+        item,
+        ...(item.children ?? []),
+      ]),
+      nav.primaryCTA,
+    ];
+    for (const link of links) {
+      expect(link.href, link.label).toBe(link.href.trim());
+      if (!link.external) expect(link.href, link.label).toMatch(/^\//);
+    }
+  });
+});
+
+describe("REQ-OTY-CONTENT-003 — HS Fall Retreat", () => {
+  const pagePath = "content/pages/retreats-hs-fall.mdoc";
+
+  test("publishes the confirmed title, audience, dates, and early-bird cost", () => {
+    expect(existsSync(pagePath)).toBe(true);
+    const content = readFileSync(pagePath, "utf-8");
+    expect(content).toMatch(/^title: HS Fall Retreat$/m);
+    expect(content).toContain("grades 9th-12th");
+    expect(content).toContain("October 9-11, 2026");
+    expect(content).toContain(
+      "**$125** for registrations before the early-bird deadline",
+    );
+  });
+
+  test("does not publish copied Ignite event specifics as fall retreat facts", () => {
+    expect(existsSync(pagePath)).toBe(true);
+    const content = readFileSync(pagePath, "utf-8");
+    expect(content).not.toMatch(
+      /Ignite|Jr\. High|winter|February|January|2027|\$115|589282|ultracamp|7:00pm|1:00pm|blacklight|ice and snow/i,
+    );
+    expect(content).toContain("**Early-bird deadline**: TBD");
+    expect(content).toContain("**Cost after the early-bird deadline**: TBD");
+    expect(content).toContain("**Registration link**: TBD");
+    expect(content).toContain("**Check-in**: TBD");
+    expect(content).toContain("**Pick-up**: TBD");
+    expect(content).toContain(
+      "Breakout group discussions and prayer time: TBD",
+    );
+  });
+
+  test("appears immediately after Rooted in Retreats navigation", () => {
+    const nav = parse(
+      readFileSync("content/navigation/navigation.yaml", "utf-8"),
+    );
+    const retreats = nav.menuItems.find(
+      (item: { label: string }) => item.label === "Retreats",
+    );
+    const rootedIndex = retreats.children.findIndex(
+      (item: { label: string }) => item.label === "Rooted",
+    );
+    expect(rootedIndex).toBeGreaterThanOrEqual(0);
+    expect(retreats.children[rootedIndex + 1]).toEqual({
+      label: "HS Fall Retreat",
+      href: "/retreats-hs-fall",
+      external: false,
+    });
+  });
 });

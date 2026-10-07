@@ -1,5 +1,16 @@
 # Requirements Lock - Updates-04
 
+## Otyokwah content fixes — locked scope (2 SP)
+
+- REQ-OTY-CONTENT-001: Verified all 34 navigation hrefs; 0 surrounding-whitespace, relative-path, or missing-page issues.
+- REQ-OTY-CONTENT-002: Verified `delaware-lodge-interior.jpg`, `mingo-cabin-common-area.jpg`, and `seasonal-cabin-interior.jpg` exist and are rental hero video posters. Exterior replacements remain a camp follow-up.
+- REQ-OTY-CONTENT-003: Verified HS Fall Retreat page and navigation after Rooted; grades 9th-12th, October 9-11, 2026, $125 before the early-bird deadline; unsupported Ignite specifics removed/TBD and enumerated in PR.
+- REQ-OTY-CONTENT-004: Local full suite 2489 passed / 0 failed (138 files); typecheck, lint, and build exit 0. Playwright against the production build: 5 passed / 0 failed. PR and Vercel preview receipts are tracked in the PR body; required before handoff.
+- Fresh base: `origin/main` at `38f24b2`. Baseline: 3 failed / 2474 passed / 2477 total; 3 failed / 135 passed / 138 test files. Receipt: `npm run test`, external `receipts/before-full-suite.log`.
+- Constraints: Vercel preview only; never merge, modify Vercel settings/env vars, or put credentials in files/remotes.
+- Screenshots: `verification-screenshots/REQ-OTY-CONTENT-003-hs-fall.png`, `REQ-OTY-CONTENT-002-rentals-cabins.png`, `REQ-OTY-CONTENT-002-rentals-mingo.png`, `REQ-OTY-CONTENT-002-rentals-seasonal-cabins.png`, `REQ-OTY-CONTENT-004-rentals.png` (local artifacts, ignored by repository policy).
+- Test harness correction: two modal tests timed out while typing inside `waitFor`; field discovery and typing now use separate awaits, with unchanged submission assertions and timeout settings. Full-suite regression passed after the correction. Estimate: 0.2 SP in addition to the 2 SP content task.
+
 **Locked**: 2025-12-31T10:00:00Z
 **Source**: requirements/QPLAN-updates-04.md
 **Execution Mode**: Autonomous
