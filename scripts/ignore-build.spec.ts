@@ -3,6 +3,7 @@ import { execFileSync, spawn, spawnSync } from "node:child_process";
 import {
   mkdirSync,
   mkdtempSync,
+  readFileSync,
   rmSync,
   writeFileSync,
 } from "node:fs";
@@ -353,3 +354,13 @@ describe("REQ-OTY-IGN-1 — an error never skips the build", () => {
   }, 60_000);
 });
 
+describe("REQ-OTY-IGN-2 — preserves Git metadata until the ignored-build step", () => {
+  it("REQ-OTY-IGN-2 — Vercel upload does not strip the repository history", () => {
+    const ignorePatterns = readFileSync(
+      path.resolve(__dirname, "../.vercelignore"),
+      "utf8",
+    ).split(/\r?\n/).map((line) => line.trim());
+
+    expect(ignorePatterns).not.toContain(".git");
+  });
+});
