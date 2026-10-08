@@ -13,6 +13,8 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 
 const SCRIPT = path.resolve(__dirname, "ignore-build.sh");
+const VERCEL_JSON = path.resolve(__dirname, "../vercel.json");
+const PROJECT_SETTING_IGNORE_STEP = "bash scripts/ignore-build.sh";
 const SKIP = 0;
 const BUILD = 1;
 const UNKNOWN_SHA = "0123456789abcdef0123456789abcdef01234567";
@@ -352,6 +354,25 @@ describe("REQ-OTY-IGN-1 — an error never skips the build", () => {
     expect(log).toContain("could not be fetched");
     expect(exitCode).toBe(BUILD);
   }, 60_000);
+});
+
+describe("REQ-OTY-17-001 — every deployment builds while revalidation cannot publish CMS edits", () => {
+  it("REQ-OTY-17-001 — the effective ignore step builds a content-only CMS save", () => {
+    const { ignoreCommand } = JSON.parse(readFileSync(VERCEL_JSON, "utf8"));
+    const effectiveIgnoreStep = ignoreCommand ?? PROJECT_SETTING_IGNORE_STEP;
+    const previous = commit(origin, {
+      "scripts/ignore-build.sh": readFileSync(SCRIPT, "utf8"),
+    });
+    const current = commit(origin, { "content/pages/about.mdoc": "about v2" });
+
+    const result = spawnSync("bash", ["-c", effectiveIgnoreStep], {
+      cwd: origin,
+      encoding: "utf8",
+      env: vercelEnv({ previous, current }, {}),
+    });
+
+    expect(result.status).toBe(BUILD);
+  });
 });
 
 describe("REQ-OTY-IGN-2 — preserves Git metadata until the ignored-build step", () => {

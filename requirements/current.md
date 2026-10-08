@@ -76,7 +76,8 @@
 
 ### REQ-BUILD-004: Build Time Reduction — PASS
 
-- ISR, parallel workers, optimized imports, pnpm, content-only build skip (`scripts/ignore-build.sh`)
+- ISR, parallel workers, optimized imports, pnpm
+- Content-only build skip (`scripts/ignore-build.sh`) is disabled by REQ-OTY-17-001 until on-demand revalidation publishes CMS saves
 
 ### REQ-BUILD-005: Incremental Content Updates — PASS
 
@@ -152,8 +153,15 @@ Approach: edit the existing navigation and rental frontmatter, then copy the Ign
 ### REQ-OTY-CONTENT-002: Rental hero images
 - Acceptance: Delaware Lodge, Mingo Cabin, and Seasonal Cabins use the requested existing interior/common-area images. Real exterior photos remain a camp follow-up.
 
-### REQ-OTY-CONTENT-003: HS Fall Retreat
-- Acceptance: copy `retreats-ignite.mdoc` to `retreats-hs-fall.mdoc`; title HS Fall Retreat, grades 9th-12th, October 9-11, 2026, $125 before the early-bird deadline. Remove or mark TBD unsupported event details and list each in the PR body. Add navigation after Rooted.
+### REQ-OTY-CONTENT-003: HS Fall Retreat — WITHDRAWN
+- Withdrawn 2026-10-08: the client removed the page (eec2053) and its navigation entry (2039da3) in favor of Rooted; do not restore it (issue #17). Its tests are retired.
+- Original acceptance: copy `retreats-ignite.mdoc` to `retreats-hs-fall.mdoc`; title HS Fall Retreat, grades 9th-12th, October 9-11, 2026, $125 before the early-bird deadline. Remove or mark TBD unsupported event details and list each in the PR body. Add navigation after Rooted.
 
 ### REQ-OTY-CONTENT-004: Verification and preview
 - Acceptance: record full-suite before/after counts; the three reported failures pass; full suite, typecheck, lint, and build pass. Verify changed content with Playwright and screenshots, then open one PR against main and verify Vercel preview URLs. Leave merging to Travis.
+
+## Issue #17: CMS saves reach production — 0.3 SP
+
+### REQ-OTY-17-001: Every deployment builds
+- Acceptance: `vercel.json` `ignoreCommand` exits 1, overriding the Vercel project setting `bash scripts/ignore-build.sh`; a content-only CMS save produces a READY production build, not CANCELED.
+- Non-Goals: changing the Vercel project setting; deleting `scripts/ignore-build.sh` (kept inert until revalidation is proven live).
