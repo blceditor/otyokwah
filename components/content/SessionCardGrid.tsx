@@ -28,6 +28,7 @@ export interface SessionCardGridProps {
   backgroundColor?: string;
   imagePosition?: "left" | "right";
   className?: string;
+  showPricing?: boolean;
 }
 
 /**
@@ -51,6 +52,7 @@ export function SessionCardGrid({
   backgroundColor = "bg-secondary",
   imagePosition = "left",
   className = "",
+  showPricing = true,
 }: SessionCardGridProps) {
   // Determine flex direction based on image position
   const flexDirection =
@@ -87,7 +89,10 @@ export function SessionCardGrid({
         {/* Cards Grid */}
         <div className="grid grid-cols-1 gap-6">
           {cards.map((card, index) => (
-            <SessionCardItem key={`${card.title}-${index}`} card={card} />
+            <SessionCardItem
+              key={`${card.title}-${index}`}
+              card={showPricing ? card : { ...card, price: undefined }}
+            />
           ))}
         </div>
       </div>

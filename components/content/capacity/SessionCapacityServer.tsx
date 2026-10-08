@@ -3,10 +3,12 @@ import { SessionCapacityLive } from "./SessionCapacityLive";
 
 interface SessionCapacityServerProps {
   sessions: string[];
+  showPricing?: boolean;
 }
 
 export async function SessionCapacityServer({
   sessions: sessionNames,
+  showPricing = true,
 }: SessionCapacityServerProps) {
   const allSessions = await fetchUltraCampSessions();
 
@@ -19,6 +21,7 @@ export async function SessionCapacityServer({
       initialSessions={allSessions}
       sessionNames={sessionNames}
       isEarlyBirdActive={isEarlyBirdActive}
+      showPricing={showPricing}
     />
   );
 }

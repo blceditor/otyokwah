@@ -11,6 +11,7 @@ import { ContentCard } from "./ContentCard";
 import { SectionCard } from "./SectionCard";
 import { CardGrid } from "./CardGrid";
 import { SessionCard } from "./SessionCard"; // REQ-UI-005
+import type { SessionCardProps } from "./SessionCard";
 import { DonateButton } from "./DonateButton";
 import { CtaSection } from "./CtaSection";
 import { YouTubeEmbed } from "./YouTubeEmbed";
@@ -33,6 +34,7 @@ import { ImageSection } from "./ImageSection";
 import { GridSquare } from "./GridSquare";
 import { SquareGrid } from "./SquareGrid";
 import { InlineSessionCard } from "./InlineSessionCard";
+import type { InlineSessionCardProps } from "./InlineSessionCard";
 import { SessionCardGroup } from "./SessionCardGroup";
 import { AnchorNav } from "./AnchorNav";
 import { CampSessionCard } from "./CampSessionCard";
@@ -54,6 +56,7 @@ export interface MarkdocRendererProps {
   content: string;
   testimonials?: TestimonialData[];
   ultracampSessions?: UltraCampSession[];
+  showPricing?: boolean;
 }
 
 function Heading({
@@ -1030,11 +1033,13 @@ const config = {
       selfClosing: true,
       attributes: {
         sessions: { type: Array, required: true },
+        showPricing: { type: Boolean, default: true },
       },
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       transform(node: any) {
         return new Markdoc.Tag("SessionCapacityLive", {
           sessionNames: node.attributes.sessions || [],
+          showPricing: node.attributes.showPricing !== false,
         });
       },
     },
@@ -1273,6 +1278,7 @@ export function MarkdocRenderer({
   content,
   testimonials,
   ultracampSessions,
+  showPricing = true,
 }: MarkdocRendererProps): JSX.Element {
   try {
     // Parse Markdoc content
@@ -1303,7 +1309,19 @@ export function MarkdocRenderer({
           initialSessions={ultracampSessions}
           sessionNames={(props.sessionNames as string[]) || []}
           isEarlyBirdActive={isEarlyBirdActive}
+          showPricing={showPricing && props.showPricing !== false}
         />
+      );
+    }
+
+    if (!showPricing) {
+      // eslint-disable-next-line react/display-name
+      renderComponents.SessionCard = (props: SessionCardProps) => (
+        <SessionCard {...props} showPricing={false} />
+      );
+      // eslint-disable-next-line react/display-name
+      renderComponents.InlineSessionCard = (props: InlineSessionCardProps) => (
+        <InlineSessionCard {...props} showPricing={false} />
       );
     }
 

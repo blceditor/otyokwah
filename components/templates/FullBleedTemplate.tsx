@@ -24,6 +24,7 @@ export interface FullBleedTemplateProps {
   heroTagline?: string;
   testimonials?: TestimonialData[];
   ultracampSessions?: UltraCampSession[];
+  showPricing?: boolean;
 }
 
 export function FullBleedTemplate({
@@ -35,6 +36,7 @@ export function FullBleedTemplate({
   heroTagline,
   testimonials,
   ultracampSessions,
+  showPricing = true,
 }: FullBleedTemplateProps) {
   return (
     <div className="min-h-screen">
@@ -87,7 +89,7 @@ export function FullBleedTemplate({
       )}
 
       {/* Full-bleed content - no section wrappers */}
-      <MarkdocRenderer content={bodyContent} testimonials={testimonials} ultracampSessions={ultracampSessions} />
+      <MarkdocRenderer content={bodyContent} testimonials={testimonials} ultracampSessions={ultracampSessions} showPricing={showPricing} />
     </div>
   );
 }

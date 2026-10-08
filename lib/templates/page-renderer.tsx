@@ -28,6 +28,7 @@ export interface PageData {
   title: string;
   hero: HeroFields;
   templateFields: TemplateFields;
+  showPricing?: boolean;
 }
 
 function renderFullBleedTemplate(
@@ -46,6 +47,7 @@ function renderFullBleedTemplate(
       heroTagline={page.hero.heroTagline ?? undefined}
       testimonials={testimonials}
       ultracampSessions={ultracampSessions}
+      showPricing={page.showPricing !== false}
     />
   );
 }
@@ -104,7 +106,11 @@ function renderStandardTemplate(
               {page.title}
             </h1>
           )}
-          <MarkdocRenderer content={bodyContent} testimonials={testimonials} />
+          <MarkdocRenderer
+            content={bodyContent}
+            testimonials={testimonials}
+            showPricing={page.showPricing !== false}
+          />
         </div>
       </div>
     </div>

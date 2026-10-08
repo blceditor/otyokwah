@@ -15,6 +15,7 @@ export interface SessionCardProps {
   pricing: string;
   earlyBird?: string;
   registrationLink?: string;
+  showPricing?: boolean;
 }
 
 export function SessionCard({
@@ -24,6 +25,7 @@ export function SessionCard({
   pricing,
   earlyBird,
   registrationLink = 'https://www.ultracamp.com/clientlogin.aspx?idCamp=1342&campCode=OTY',
+  showPricing = true,
 }: SessionCardProps): JSX.Element {
   return (
     <article className="bg-cream rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow border-l-4 border-secondary">
@@ -40,15 +42,17 @@ export function SessionCard({
           <span className="text-bark">{grades}</span>
         </div>
 
-        <div className="flex items-center gap-3">
-          <DollarSign className="w-5 h-5 text-secondary flex-shrink-0" aria-hidden="true" />
-          <div>
-            <span className="text-bark font-semibold">{pricing}</span>
-            {earlyBird && (
-              <span className="text-accent text-sm ml-2">({earlyBird})</span>
-            )}
+        {showPricing && (
+          <div className="flex items-center gap-3">
+            <DollarSign className="w-5 h-5 text-secondary flex-shrink-0" aria-hidden="true" />
+            <div>
+              <span className="text-bark font-semibold">{pricing}</span>
+              {earlyBird && (
+                <span className="text-accent text-sm ml-2">({earlyBird})</span>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       <a

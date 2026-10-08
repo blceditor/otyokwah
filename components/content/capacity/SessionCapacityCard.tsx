@@ -42,8 +42,10 @@ const WAITLIST_STATUS = {
 
 export function SessionCapacityCard({
   session,
+  showPricing = true,
 }: {
   session: UltraCampSession;
+  showPricing?: boolean;
 }) {
   const pct = getCapacityPct(session.totalEnrollment, session.maxTotal);
   const spotsLeft = session.maxTotal - session.totalEnrollment;
@@ -67,8 +69,8 @@ export function SessionCapacityCard({
         </div>
 
         <p className="text-sm text-bark/60 mb-4">
-          {formatDateRange(session.beginDate, session.endDate, { abbrev: true })} &middot;{" "}
-          {session.cost}
+          {formatDateRange(session.beginDate, session.endDate, { abbrev: true })}
+          {showPricing && <> &middot; {session.cost}</>}
         </p>
 
         {/* Progress bar */}
@@ -108,8 +110,10 @@ export function SessionCapacityCard({
 
 export function SessionCapacityCardGrid({
   sessions,
+  showPricing = true,
 }: {
   sessions: UltraCampSession[];
+  showPricing?: boolean;
 }) {
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
@@ -123,7 +127,11 @@ export function SessionCapacityCardGrid({
       </div>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {sessions.map((s) => (
-          <SessionCapacityCard key={s.sessionId} session={s} />
+          <SessionCapacityCard
+            key={s.sessionId}
+            session={s}
+            showPricing={showPricing}
+          />
         ))}
       </div>
     </div>
