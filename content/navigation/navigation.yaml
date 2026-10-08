@@ -68,9 +68,6 @@ menuItems:
       - label: Rooted
         href: /retreats-rooted
         external: false
-      - label: HS Fall Retreat
-        href: /retreats-hs-fall
-        external: false
   - label: Rentals
     href: /rentals
     children:
