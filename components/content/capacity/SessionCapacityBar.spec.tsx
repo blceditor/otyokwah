@@ -295,4 +295,53 @@ describe("SessionCapacityBar", () => {
       expect(waitlistLabels.length).toBeGreaterThanOrEqual(1);
     });
   });
+
+  describe("REQ-PRICE-002: showPricing=false hides price, keeps everything else", () => {
+    const fullSession = makeSession({
+      totalEnrollment: 50,
+      maleEnrollment: 25,
+      femaleEnrollment: 25,
+      totalWaitListCount: 3,
+    });
+
+    it("REQ-PRICE-002 — renders no price text when showPricing is false", () => {
+      render(<SessionCapacityBar session={makeSession()} showPricing={false} />);
+      expect(screen.queryAllByText(/\$\d/)).toHaveLength(0);
+    });
+
+    it("REQ-PRICE-002 — renders no early bird price when showPricing is false", () => {
+      render(
+        <SessionCapacityBar
+          session={makeSession()}
+          isEarlyBirdActive
+          showPricing={false}
+        />,
+      );
+      expect(screen.queryAllByText(/\$\d/)).toHaveLength(0);
+    });
+
+    it("REQ-PRICE-002 — still renders name, dates, status pill and capacity bars", () => {
+      render(<SessionCapacityBar session={fullSession} showPricing={false} />);
+      expect(screen.getByText("Test Session")).toBeInTheDocument();
+      expect(screen.getByText(/Jun/)).toBeInTheDocument();
+      expect(screen.getByText("Boys")).toBeInTheDocument();
+      expect(screen.getByText("Girls")).toBeInTheDocument();
+      expect(screen.getAllByText("Waitlist").length).toBeGreaterThanOrEqual(1);
+    });
+  });
+
+  describe("REQ-PRICE-003: pricing shown by default", () => {
+    it("REQ-PRICE-003 — renders the price when showPricing is absent", () => {
+      render(<SessionCapacityBar session={makeSession()} />);
+      expect(screen.getByText("$390")).toBeInTheDocument();
+    });
+
+    it("REQ-PRICE-003 — markup is identical with showPricing absent and true", () => {
+      const absent = render(<SessionCapacityBar session={makeSession()} />);
+      const explicit = render(
+        <SessionCapacityBar session={makeSession()} showPricing />,
+      );
+      expect(absent.container.innerHTML).toBe(explicit.container.innerHTML);
+    });
+  });
 });

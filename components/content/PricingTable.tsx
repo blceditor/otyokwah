@@ -14,9 +14,10 @@ interface PricingTier {
 
 interface PricingTableProps {
   tiers: PricingTier[];
+  showPricing?: boolean;
 }
 
-export function PricingTable({ tiers }: PricingTableProps) {
+export function PricingTable({ tiers, showPricing = true }: PricingTableProps) {
   return (
     <div
       className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
@@ -45,14 +46,16 @@ export function PricingTable({ tiers }: PricingTableProps) {
             <h3 className="mb-2 text-2xl font-bold text-bark">
               {tier.name}
             </h3>
-            <div className="flex items-baseline gap-1">
-              <span className="text-4xl font-bold text-bark">
-                ${tier.price}
-              </span>
-              <span className="text-sm text-stone">
-                {tier.period}
-              </span>
-            </div>
+            {showPricing && (
+              <div className="flex items-baseline gap-1">
+                <span className="text-4xl font-bold text-bark">
+                  ${tier.price}
+                </span>
+                <span className="text-sm text-stone">
+                  {tier.period}
+                </span>
+              </div>
+            )}
           </div>
 
           <ul className="mb-8 flex-1 space-y-3">

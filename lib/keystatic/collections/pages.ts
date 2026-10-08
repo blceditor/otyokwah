@@ -95,6 +95,12 @@ export const pages = collection({
       },
     ),
 
+    showPricing: fields.checkbox({
+      label: "Show pricing",
+      description: "Uncheck to hide all prices on this page; dates stay",
+      defaultValue: true,
+    }),
+
     body: fields.markdoc({
       label: "Page Content",
       description:
@@ -542,6 +548,12 @@ export const pages = collection({
                 itemLabel: (props) => props.value || "Session",
               },
             ),
+            showPricing: fields.checkbox({
+              label: "Show pricing",
+              description:
+                "Uncheck to hide prices on these session blocks. Dates stay visible.",
+              defaultValue: true,
+            }),
           },
         },
 

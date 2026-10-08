@@ -121,12 +121,14 @@ interface SessionCapacityBarProps {
   session: UltraCampSession;
   isRefreshing?: boolean;
   isEarlyBirdActive?: boolean;
+  showPricing?: boolean;
 }
 
 export function SessionCapacityBar({
   session,
   isRefreshing = false,
   isEarlyBirdActive = false,
+  showPricing = true,
 }: SessionCapacityBarProps) {
   const statusPill = getOverallStatusPill(session);
   const shimmer = isRefreshing ? "animate-pulse" : "";
@@ -141,9 +143,11 @@ export function SessionCapacityBar({
           <p className="text-sm text-white/80 !m-0">
             {formatDateRange(session.beginDate, session.endDate)}
           </p>
-          <p className="text-xs text-white/60 !m-0">
-            {formatPrice(session.cost, isEarlyBirdActive)}
-          </p>
+          {showPricing && (
+            <p className="text-xs text-white/60 !m-0">
+              {formatPrice(session.cost, isEarlyBirdActive)}
+            </p>
+          )}
         </div>
         {statusPill}
       </div>

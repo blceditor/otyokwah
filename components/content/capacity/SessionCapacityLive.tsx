@@ -8,6 +8,7 @@ interface SessionCapacityLiveProps {
   initialSessions: UltraCampSession[];
   sessionNames: string[];
   isEarlyBirdActive?: boolean;
+  showPricing?: boolean;
 }
 
 function findSessions(
@@ -29,6 +30,7 @@ export function SessionCapacityLive({
   initialSessions,
   sessionNames,
   isEarlyBirdActive = false,
+  showPricing = true,
 }: SessionCapacityLiveProps) {
   const { sessions, isRefreshing } = useSessionCapacity(initialSessions);
   const matched = findSessions(sessions, sessionNames);
@@ -43,6 +45,7 @@ export function SessionCapacityLive({
           session={session}
           isRefreshing={isRefreshing}
           isEarlyBirdActive={isEarlyBirdActive}
+          showPricing={showPricing}
         />
       ))}
     </div>

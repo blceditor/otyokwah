@@ -97,7 +97,11 @@ export default async function Home() {
 
       {/* Body Content rendered via Markdoc (includes TrustBar, Mission, Gallery, CTA, etc.) */}
       {bodyContent ? (
-        <MarkdocRenderer content={bodyContent} testimonials={testimonials} />
+        <MarkdocRenderer
+          content={bodyContent}
+          testimonials={testimonials}
+          showPricing={page.showPricing !== false}
+        />
       ) : (
         <div className="flex items-center justify-center py-20 bg-cream">
           <p className="text-lg text-bark/60">Content is being updated.</p>

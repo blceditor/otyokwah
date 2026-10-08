@@ -157,3 +157,35 @@ Approach: edit the existing navigation and rental frontmatter, then copy the Ign
 
 ### REQ-OTY-CONTENT-004: Verification and preview
 - Acceptance: record full-suite before/after counts; the three reported failures pass; full suite, typecheck, lint, and build pass. Verify changed content with Playwright and screenshots, then open one PR against main and verify Vercel preview URLs. Leave merging to Travis.
+
+## Session Pricing Toggle (issue #18), 2 SP
+
+Approach: template push of blceditor/bearlakecamp PR #30 (landed 2026-10-01). Same REQ IDs as bearlakecamp. Otyokwah differences: the `SessionCard` default registration link, the Camp Sessions page session names, and no content change (the page ships with pricing shown; camp staff flip the switch in the CMS).
+
+### REQ-PRICE-001: CMS "Show pricing" checkbox on Session Capacity
+- Acceptance: the `sessionCapacity` component in `lib/keystatic/collections/pages.ts` has a checkbox field `showPricing`, label "Show pricing", defaultValue true, with a description saying unchecking hides prices and keeps dates.
+
+### REQ-PRICE-002: Hidden pricing keeps the rest of the session bar
+- Acceptance: with showPricing=false no price text renders in any session bar of that block; session name, dates, status pill and capacity bars still render.
+
+### REQ-PRICE-003: Absent attribute shows pricing
+- Acceptance: a `sessionCapacity` tag without `showPricing` renders the same markup as before this change.
+
+### REQ-PRICE-004: Markdoc attribute passes through the transform
+- Acceptance: Markdoc attribute `showPricing` (Boolean, default true) on `sessionCapacity` reaches `SessionCapacityLive` and each `SessionCapacityBar`.
+
+### REQ-PRICE-005: Every price component can hide its price
+- Acceptance: `SessionCard`, `InlineSessionCard`, `SessionCardGrid`, `PricingTable`, `SessionCapacityCard`, `SessionCapacityCardGrid` and `SessionCapacityBar` accept `showPricing`; when false the price element is not rendered at all (not CSS-hidden) and names and dates still render.
+
+### REQ-PRICE-006: Default on leaves markup unchanged
+- Acceptance: each price component renders identical markup with `showPricing` absent and true.
+
+### REQ-PRICE-007: Page switch reaches every Markdoc price component
+- Acceptance: `MarkdocRenderer` prop `showPricing=false` removes the price from `sessionCard`, `inlineSessionCard` and `sessionCapacity`; a price shows only when the page switch and the per-block `showPricing` are both on.
+
+### REQ-PRICE-008: Camp Sessions page follows the page switch
+- Acceptance: rendering the `content/pages/summer-camp-sessions.mdoc` body with the page switch off yields zero currency matches in all 6 session bars (dates kept); with the switch on, or absent, every bar shows a price.
+- Non-Goals: changing `content/**`; rewriting free-text price copy in the page body ("Pricing & Early Bird" card).
+
+### REQ-PRICE-009: Page-level CMS "Show pricing" checkbox
+- Acceptance: the pages collection has a top-level checkbox `showPricing`, label "Show pricing", defaultValue true, description "Uncheck to hide all prices on this page; dates stay".
